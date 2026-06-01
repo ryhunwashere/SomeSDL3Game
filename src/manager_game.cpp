@@ -9,17 +9,24 @@ constexpr float MOVE_SPEED = 4.0f;
 
 bool manager::GameManager::initialize() 
 {
-    if (!SDL_InitSubSystem(SDL_INIT_VIDEO)) return false;
+    if (!SDL_InitSubSystem(SDL_INIT_VIDEO)) 
+        return false;
 
-    if (!engine::RendererEngine::get().initialize("This is a window", 640, 480)) return false;
+    engine::RendererEngine& renderer = engine::RendererEngine::get();
+    if (!renderer.initialize("This is a window", 640, 480)) 
+        return false;
 
-    if (!manager::TextManager::get().initialize(engine::RendererEngine::get().get_sdl_renderer())) return false;
+    manager::TextManager& text_manager = manager::TextManager::get();
+    if (!text_manager.initialize(engine::RendererEngine::get().get_sdl_renderer())) 
+        return false;
 
-    m_main_font = manager::TextManager::get().load_font("ZenMaruGothic-Medium.ttf", "zenmaru", m_font_size);
+    m_main_font = text_manager.load_font("ZenMaruGothic-Medium.ttf", "zenmaru", m_font_size);
 
     if (!m_main_font) return false;
 
-    if (!m_timer_text.create(m_main_font, "")) return false;
+    if (!m_timer_text.create(m_main_font, "")) 
+        return false;
+
     m_timer_text.set_color_float(0.0, 0.0, 0.0);
 
     return true;
@@ -47,7 +54,7 @@ void manager::GameManager::update()
         m_timer_text.update_text(timeStr);
     }
 
-    const engine::InputEngine& input = engine::InputEngine::get();
+    engine::InputEngine& input = engine::InputEngine::get();
 
     if (input.is_key_down(SDLK_W))
         m_timer_text.move(0.0f, -10.0f);
@@ -93,8 +100,11 @@ void manager::GameManager::shutdown()
 
     if (m_main_font) TTF_CloseFont(m_main_font);
 
-    manager::TextManager::get().shutdown();
-    engine::RendererEngine::get().shutdown();
+    manager::TextManager& text_manager = manager::TextManager::get();
+    text_manager.shutdown();
+
+    engine::RendererEngine& renderer = engine::RendererEngine::get();
+    renderer.shutdown();
 
     SDL_Quit();
 }
