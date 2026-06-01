@@ -7,7 +7,6 @@
 
 using namespace engine;
 using namespace manager;
-using namespace engine;
 
 constexpr float MOVE_SPEED = 4.0f;
 
