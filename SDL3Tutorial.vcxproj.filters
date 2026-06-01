@@ -19,12 +19,6 @@
     <Filter Include="Header Files\Engine">
       <UniqueIdentifier>{7789095c-be91-443d-a802-24a7eeec1574}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game">
-      <UniqueIdentifier>{f6a10277-c8de-452f-bcf4-7881b84cc0f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{83bf69d2-997a-4101-8c07-e6b8fdd56846}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Manager">
       <UniqueIdentifier>{72cf4402-3b78-4c3e-a1af-c5dd354c2cd2}</UniqueIdentifier>
     </Filter>
@@ -45,14 +39,14 @@
     <ClCompile Include="src\engine_renderer.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\game.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\manager_text.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
     <ClCompile Include="src\entity_text.cpp">
       <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\manager_game.cpp">
+      <Filter>Source Files\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,14 +56,14 @@
     <ClInclude Include="src\engine_renderer.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\game.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\manager_text.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="src\entity_text.h">
       <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\manager_game.h">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

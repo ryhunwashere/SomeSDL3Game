@@ -11,7 +11,7 @@ namespace engine {
             return s_instance;
         }
 
-        void update_key(SDL_Keycode key, bool is_pressed)
+        void update_key_state(SDL_Keycode key, bool is_pressed)
         {
             m_keystates_map[key] = is_pressed;
         }
@@ -21,6 +21,12 @@ namespace engine {
             auto it = m_keystates_map.find(key);
             return it != m_keystates_map.end() ? it->second : false;
         }
+
+        // Prevent copying and moving
+        InputEngine(const InputEngine&)             = delete;
+        InputEngine& operator=(const InputEngine&)  = delete;
+        InputEngine(InputEngine&&)                  = delete;
+        InputEngine& operator=(InputEngine&&)       = delete;
 
     private:
         InputEngine() = default;

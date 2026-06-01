@@ -22,6 +22,12 @@ namespace engine {
             return m_renderer;
         }
 
+        // Prevent copying and moving
+        RendererEngine(const RendererEngine&) = delete;
+        RendererEngine& operator=(const RendererEngine&) = delete;
+        RendererEngine(RendererEngine&&) = delete;
+        RendererEngine& operator=(RendererEngine&&) = delete;
+
     private:
         RendererEngine() = default;
         SDL_Window* m_window = nullptr;
