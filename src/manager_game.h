@@ -9,16 +9,15 @@ namespace manager {
         GameManager() = default;
         ~GameManager() = default;
 
-        bool initialize();
-        void handle_event(SDL_Event* event);
+        bool init();
+        void handleEvent(SDL_Event * event);
         void update();
         void draw();
         void shutdown();
 
     private:
-        TTF_Font* m_main_font = nullptr;
-        entity::TextEntity m_timer_text;
-        float m_font_size = 100.0f;
-        char m_text_buffer[256]{};
+        entity::TextEntity m_timerText;
+        float m_timerTextSpeed = 5.0f;
+        char m_textBuffer[256]{};
     };
 };

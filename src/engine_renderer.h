@@ -11,16 +11,13 @@ namespace engine {
             return s_instance;
         }
 
-        bool initialize(const std::string& title, int width, int height);
+        bool init(const std::string& title, int width, int height);
         void clear(float red, float green, float blue);
         void clear(float red, float green, float blue, float alpha);
         void present();
         void shutdown();
 
-        SDL_Renderer* get_sdl_renderer() const
-        {
-            return m_renderer;
-        }
+        SDL_Renderer* getRenderer() const;
 
         // Prevent copying and moving
         RendererEngine(const RendererEngine&) = delete;
@@ -32,5 +29,7 @@ namespace engine {
         RendererEngine() = default;
         SDL_Window* m_window = nullptr;
         SDL_Renderer* m_renderer = nullptr;
+        const char* NULL_RENDERER_ERROR = "Renderer is null";
+        const char* NULL_WINDOW_ERROR = "Window is null";
     };
 };

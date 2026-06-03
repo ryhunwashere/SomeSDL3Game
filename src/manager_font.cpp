@@ -1,20 +1,20 @@
-#include "manager_text.h"
 #include <stdexcept>
 #include <algorithm>
 #include <cctype>
+#include "manager_font.h"
 
 using namespace manager;
 
-bool TextManager::initialize(SDL_Renderer* renderer) 
+bool FontManager::init(SDL_Renderer* renderer)
 {
     if (!TTF_Init()) return false;
     m_engine = TTF_CreateRendererTextEngine(renderer);
     return m_engine != nullptr;
 }
 
-TTF_Font* TextManager::load_font(const std::string& path, const std::string& key, float size)
+TTF_Font* FontManager::loadFont(const std::string& path, const std::string& name, float size)
 {
-    if (get_font_map()[path])
+    if (m_fontMap[name])
     {
         const char* err = "Font already exist";
         SDL_Log(err);
@@ -29,22 +29,22 @@ TTF_Font* TextManager::load_font(const std::string& path, const std::string& key
         throw std::runtime_error("Font failed to load: " + path);
     }
 
-    get_font_map()[key] = font;
+    m_fontMap[name] = font;
 
     return font;
 }
 
-TTF_Font* TextManager::get_font(const std::string& key)
+TTF_Font* FontManager::getFont(const std::string& name)
 {
-    TTF_Font* font = get_font_map()[key];
+    TTF_Font* font = m_fontMap[name];
 
     if (!font)
-        throw std::runtime_error("Font does not exist: " + key);
+        throw std::runtime_error("Font does not exist: " + name);
 
     return font;
 }
 
-void TextManager::shutdown()
+void FontManager::shutdown()
 {
     if (m_engine) TTF_DestroyRendererTextEngine(m_engine);
 

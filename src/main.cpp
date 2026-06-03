@@ -6,7 +6,7 @@ SDL_AppResult SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_un
 {
     manager::GameManager* game_context = new manager::GameManager();
 
-    if (!game_context->initialize()) 
+    if (!game_context->init())
     {
         delete game_context;
         SDL_Log("SDL Error: %s", SDL_GetError());
@@ -27,7 +27,7 @@ SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
         || (event->type == SDL_EVENT_KEY_DOWN && event->key.key == SDLK_ESCAPE))
         return SDL_APP_SUCCESS;
 
-    game_context->handle_event(event);
+    game_context->handleEvent(event);
 
     return SDL_APP_CONTINUE;
 }

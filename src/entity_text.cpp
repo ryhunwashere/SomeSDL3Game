@@ -1,68 +1,83 @@
-#include "entity_text.h"
-#include "manager_text.h"
 #include <stdexcept>
 #include <string>
+#include "entity_text.h"
+#include "manager_font.h"
 
-bool entity::TextEntity::create(TTF_Font* font, const std::string& initialText) 
+using namespace entity;
+
+bool TextEntity::create(TTF_Font* font, const std::string& initialText) 
 {
-    TTF_TextEngine* engine = manager::TextManager::get().get_raw_engine();
-    m_text_obj = TTF_CreateText(engine, font, initialText.c_str(), initialText.length());
+    TTF_TextEngine* engine = manager::FontManager::get().getRawEngine();
+    m_text = TTF_CreateText(engine, font, initialText.c_str(), initialText.length());
 
-    return m_text_obj != nullptr;
+    return m_text != nullptr;
 }
 
-void entity::TextEntity::update_text(const std::string& text)
+void TextEntity::updateText(const std::string& text)
 {
-    if (m_text_obj)
-        TTF_SetTextString(m_text_obj, text.c_str(), text.length());
+    if (m_text)
+        TTF_SetTextString(m_text, text.c_str(), text.length());
 }
 
-void entity::TextEntity::set_color_float(float r, float g, float b, float a)
+void TextEntity::setColor(float r, float g, float b, float a)
 {
-    if (m_text_obj)
-        TTF_SetTextColorFloat(m_text_obj, r, g, b, a);
+    if (m_text)
+        TTF_SetTextColorFloat(m_text, r, g, b, a);
 }
 
-void entity::TextEntity::set_color_float(float r, float g, float b)
+void TextEntity::setColor(float r, float g, float b)
 {
-    TextEntity::set_color_float(r, g, b, SDL_ALPHA_OPAQUE_FLOAT);
+    setColor(r, g, b, SDL_ALPHA_OPAQUE_FLOAT);
 }
 
-void entity::TextEntity::set_position(float x, float y)
+void TextEntity::setPosition(float x, float y)
 {
-    if (m_text_obj)
+    if (!m_text) return;
+
+    m_x = x;
+    m_y = y;
+}
+
+void TextEntity::move(float deltaX, float deltaY)
+{
+    if (!m_text) return;
+    
+    m_x += deltaX;
+    m_y += deltaY;
+}
+
+void TextEntity::moveX(float deltaX)
+{
+    move(deltaX, 0.0f);
+}
+
+void TextEntity::moveY(float deltaY)
+{
+    move(0.0f, deltaY);
+}
+
+void TextEntity::draw()
+{
+    if (!m_text) return;
+
+    if (!TTF_DrawRendererText(m_text, m_x, m_y))
     {
-        m_pos_x = x;
-        m_pos_y = y;
+        SDL_Log(SDL_GetError());
+        throw std::runtime_error(SDL_GetError());
     }
 }
 
-void entity::TextEntity::move(float x, float y)
+void TextEntity::destroy() 
 {
-    if (m_text_obj)
+    if (m_text) 
     {
-        m_pos_x += x;
-        m_pos_y += y;
+        TTF_DestroyText(m_text);
+        m_text = nullptr;
     }
-}
 
-void entity::TextEntity::draw()
-{
-    if (m_text_obj)
+    if (m_font) 
     {
-        if (!TTF_DrawRendererText(m_text_obj, m_pos_x, m_pos_y))
-        {
-            SDL_Log(SDL_GetError());
-            throw std::runtime_error(SDL_GetError());
-        }
-    }
-}
-
-void entity::TextEntity::destroy()
-{
-    if (m_text_obj)
-    {
-        TTF_DestroyText(m_text_obj);
-        m_text_obj = nullptr;
+        TTF_CloseFont(m_font);
+        m_font = nullptr;
     }
 }

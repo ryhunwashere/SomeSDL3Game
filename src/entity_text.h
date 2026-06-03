@@ -9,36 +9,38 @@ namespace entity {
         ~TextEntity() { destroy(); }
 
         bool create(TTF_Font* font, const std::string& initial_text);
-        void update_text(const std::string& text);  // Change the text into the given string value.
 
-        void set_color_float(float r, float g, float b, float a);
-        void set_color_float(float r, float g, float b);
+        void updateText(const std::string& text);
 
-        /* Set the text position exactly into the provided x& y values.*/
-        void set_position(float x, float y);
+        void setColor(float r, float g, float b, float a);
+        void setColor(float r, float g, float b);
 
-        /* Increment the text position by provided x& y values. */
-        void move(float x, float y);
+        void setPosition(float x, float y);
 
-        /* Draw text into current m_pos_x & m_pos_y. */
+        void move(float deltaX, float deltaY);
+        void moveX(float deltaX);
+        void moveY(float deltaY);
+
         void draw();
 
         void destroy();
 
-        float get_x() const
+        float getX() const
         {
-            return m_pos_x;
+            return m_x;
         }
 
-        float get_y() const
+        float getY() const
         {
-            return m_pos_y;
+            return m_y;
         }
 
     private:
-        TTF_Text* m_text_obj = nullptr;
-        float m_pos_x = 0.0f;
-        float m_pos_y = 0.0f;
-        char m_text_buffer[256]{};
+        TTF_Text* m_text = nullptr;
+        TTF_Font* m_font = nullptr;
+        float m_x = 0.0f;
+        float m_y = 0.0f;
+        float m_size = 16.0f;
+        char m_textBuffer[256]{};
     };
 }

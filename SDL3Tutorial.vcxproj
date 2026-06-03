@@ -187,18 +187,19 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine_input.cpp" />
     <ClCompile Include="src\entity_text.cpp" />
     <ClCompile Include="src\manager_game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\engine_renderer.cpp" />
-    <ClCompile Include="src\manager_text.cpp" />
+    <ClCompile Include="src\manager_font.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity_text.h" />
     <ClInclude Include="src\manager_game.h" />
     <ClInclude Include="src\engine_input.h" />
     <ClInclude Include="src\engine_renderer.h" />
-    <ClInclude Include="src\manager_text.h" />
+    <ClInclude Include="src\manager_font.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

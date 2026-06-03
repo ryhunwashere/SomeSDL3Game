@@ -11,16 +11,9 @@ namespace engine {
             return s_instance;
         }
 
-        void update_key_state(SDL_Keycode key, bool is_pressed)
-        {
-            m_keystates_map[key] = is_pressed;
-        }
+        void updateKeyState(SDL_Keycode key, bool isPressed);
 
-        bool is_key_down(SDL_Keycode key) const
-        {
-            auto it = m_keystates_map.find(key);
-            return it != m_keystates_map.end() ? it->second : false;
-        }
+        bool isKeyDown(SDL_Keycode key) const;
 
         // Prevent copying and moving
         InputEngine(const InputEngine&)             = delete;
@@ -30,6 +23,6 @@ namespace engine {
 
     private:
         InputEngine() = default;
-        std::unordered_map<SDL_Keycode, bool> m_keystates_map;
+        std::unordered_map<SDL_Keycode, bool> m_keystateMap;
     };
 };
