@@ -27,7 +27,7 @@ FontManager::~FontManager() {
     TTF_Quit();
 }
 
-FontManager& FontManager::get() {
+auto FontManager::get() -> FontManager& {
     static FontManager instance;
     return instance;
 }
@@ -36,7 +36,7 @@ void FontManager::throwFontError(const std::string& message) {
     throw std::runtime_error(message + " | SDL_Error: " + SDL_GetError());
 }
 
-TTF_Font* FontManager::loadFont(const std::string& path, float initialSize) {
+auto FontManager::loadFont(const std::string& path, float initialSize) -> TTF_Font* {
     auto& fontData = m_fontMap[path];
 
     if (fontData.font != nullptr) return fontData.font;
@@ -51,7 +51,7 @@ TTF_Font* FontManager::loadFont(const std::string& path, float initialSize) {
     return fontData.font;
 }
 
-TTF_Font* FontManager::copyFont(const std::string& path) {
+auto FontManager::copyFont(const std::string& path) -> TTF_Font* {
     TTF_Font* existingFont = loadFont(path, DEFAULT_INITIAL_SIZE);
 
     TTF_Font* copiedFont = TTF_CopyFont(existingFont);

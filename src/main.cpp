@@ -4,7 +4,7 @@
 #include <memory>
 #include "manager_game.h"
 
-SDL_AppResult SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
+auto SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) -> SDL_AppResult {
     try {
         auto gameContext = std::make_unique<manager::GameManager>();
         *appstate = gameContext.release();
@@ -18,8 +18,8 @@ SDL_AppResult SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_un
     }
 }
 
-SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event) {
-    manager::GameManager* gameContext = static_cast<manager::GameManager*>(appstate);
+auto SDL_AppEvent(void* appstate, SDL_Event* event) -> SDL_AppResult {
+    auto* gameContext = static_cast<manager::GameManager*>(appstate);
 
     if (event->type == SDL_EVENT_QUIT 
         || (event->type == SDL_EVENT_KEY_DOWN && event->key.key == SDLK_ESCAPE))
@@ -30,7 +30,7 @@ SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event) {
     return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppIterate(void* appstate) {
+auto SDL_AppIterate(void* appstate) -> SDL_AppResult {
     auto* gameContext = static_cast<manager::GameManager*>(appstate);
 
     gameContext->update();

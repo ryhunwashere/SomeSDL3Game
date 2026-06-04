@@ -6,17 +6,17 @@
 namespace engine {
     class RendererEngine {
     public:
-        static RendererEngine& get();
+        static auto get() -> RendererEngine&;
 
         void clear(float red, float green, float blue, float alpha);
         void clear(float red, float green, float blue);
         void present();
-        SDL_Renderer* getRenderer() const;
+        [[nodiscard]] auto getRenderer() const -> SDL_Renderer*;
 
-        RendererEngine(const RendererEngine&)               = delete;
-        RendererEngine& operator=(const RendererEngine&)    = delete;
-        RendererEngine(RendererEngine&&)                    = delete;
-        RendererEngine& operator=(RendererEngine&&)         = delete;
+        RendererEngine(const RendererEngine&)                       = delete;
+        auto operator=(const RendererEngine&) -> RendererEngine&    = delete;
+        RendererEngine(RendererEngine&&)                            = delete;
+        auto operator=(RendererEngine&&) -> RendererEngine&         = delete;
 
     private:
         RendererEngine();

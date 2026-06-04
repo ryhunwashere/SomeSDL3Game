@@ -1,22 +1,35 @@
 #pragma once
+#include "common_vector2.h"
 
 namespace entity {
     class Entity {
     public:
         virtual ~Entity() = 0;
 
-        virtual void setPosition(float x, float y) { m_x = x; m_y = y; }
-        virtual void move(float deltaX, float deltaY) { m_x += deltaX; m_y += deltaY; }
-        void moveX(float deltaX) { move(deltaX, 0.0f); }
-        void moveY(float deltaY) { move(0.0f, deltaY); }
+        virtual void setPosition(common::Vector2 vec2) { 
+            m_pos.x = vec2.x;
+            m_pos.y = vec2.y;
+        }
 
-        float getX() const { return m_x; }
-        float getY() const { return m_y; }
+        virtual void move(common::Vector2 deltaVec2) { 
+            m_pos.x += deltaVec2.x;
+            m_pos.y += deltaVec2.y;
+        }
+
+        void moveX(float deltaX) { 
+            move({ deltaX, 0.0f }); 
+        }
+
+        void moveY(float deltaY) { 
+            move({ 0.0f, deltaY }); 
+        }
+
+        [[nodiscard]] auto getX() const -> float { return m_pos.x; }
+        [[nodiscard]] auto getY() const -> float { return m_pos.y; }
 
     protected:
-        float m_x = 0.0f;
-        float m_y = 0.0f;
+        common::Vector2 m_pos = { 0.0f, 0.0f };
     };
 
-    inline Entity::~Entity() {}
+    inline Entity::~Entity() = default;
 }

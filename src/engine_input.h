@@ -5,20 +5,20 @@
 namespace engine {
     class InputEngine {
     public:
-        static InputEngine& get() {
-            static InputEngine s_instance;
-            return s_instance;
+        static auto get() -> InputEngine& {
+            static InputEngine instance;
+            return instance;
         }
 
         void updateKeyState(SDL_Keycode key, bool isPressed);
 
-        bool isKeyDown(SDL_Keycode key) const;
+        [[nodiscard]] auto isKeyDown(SDL_Keycode key) const -> bool;
 
         // Prevent copying and moving
-        InputEngine(const InputEngine&)             = delete;
-        InputEngine& operator=(const InputEngine&)  = delete;
-        InputEngine(InputEngine&&)                  = delete;
-        InputEngine& operator=(InputEngine&&)       = delete;
+        InputEngine(const InputEngine&)                     = delete;
+        auto operator=(const InputEngine&) -> InputEngine&  = delete;
+        InputEngine(InputEngine&&)                          = delete;
+        auto operator=(InputEngine&&) -> InputEngine&       = delete;
 
     private:
         InputEngine()   = default;

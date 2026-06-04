@@ -43,12 +43,20 @@ RendererEngine::RendererEngine() {
 }
 
 RendererEngine::~RendererEngine() {
-    if (m_renderer) SDL_DestroyRenderer(m_renderer);
-    if (m_window) SDL_DestroyWindow(m_window);
+    if (m_renderer) {
+        SDL_DestroyRenderer(m_renderer);
+        m_renderer = nullptr;
+    }
+
+    if (m_window) {
+        SDL_DestroyWindow(m_window);
+        m_window = nullptr;
+    }
+
     SDL_Log("RendererEngine resources unloaded.");
 }
 
-RendererEngine& RendererEngine::get() {
+auto RendererEngine::get() -> RendererEngine& {
     static RendererEngine instance;
     return instance;
 }
@@ -82,7 +90,7 @@ void RendererEngine::present() {
         );
 }
 
-SDL_Renderer* RendererEngine::getRenderer() const {
+auto RendererEngine::getRenderer() const -> SDL_Renderer* {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 

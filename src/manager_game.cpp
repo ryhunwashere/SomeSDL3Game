@@ -9,7 +9,7 @@
 
 using namespace manager;
 
-constexpr float MOVE_SPEED = 4.0f;
+//constexpr float MOVE_SPEED = 4.0f;
 
 GameManager::GameManager() {
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO)) 
@@ -17,7 +17,7 @@ GameManager::GameManager() {
             std::string("SDL video initialization failure: ") + SDL_GetError()
         );
 
-    m_timerText = std::make_unique<entity::TextEntity>("ZenMaruGothic-Medium.ttf", "");
+    m_timerText = std::make_unique<entity::TextEntity>("ZenMaruGothic-Medium.ttf");
     m_timerText->setColor(0.0, 0.0, 0.0);
 
     SDL_Log("GameManager and subsystems initialized.");
@@ -28,7 +28,7 @@ GameManager::~GameManager() {
     SDL_Log("GameManager and subsystems unloaded.");
 }
 
-GameManager& GameManager::get() {
+auto GameManager::get() -> GameManager& {
     static GameManager instance;
     return instance;
 }
@@ -44,33 +44,40 @@ void GameManager::handleEvent(SDL_Event* event) {
 
 void GameManager::update() {
     const double now = static_cast<double>(SDL_GetTicks()) / 1000.0;
-    const double rounded_now = std::round(now * 10.0) / 10.0;
+    const double roundedNow = std::round(now * 10.0) / 10.0;
 
-    auto [ptr, ec] = std::to_chars(m_textBuffer, m_textBuffer + sizeof(m_textBuffer), rounded_now, std::chars_format::fixed, 1);
+    auto [ptr, ec] = std::to_chars(
+        m_textBuffer.data(), 
+        m_textBuffer.data() + m_textBuffer.size(), 
+        roundedNow, 
+        std::chars_format::fixed, 
+        1
+    );
+
     if (ec == std::errc()) {
-        std::string timeStr(m_textBuffer, ptr - m_textBuffer);
+        std::string timeStr(m_textBuffer.data(), ptr - m_textBuffer.data());
         m_timerText->updateText(timeStr);
     }
 
-    engine::InputEngine& input = engine::InputEngine::get();
+    auto& input = engine::InputEngine::get();
 
     if (input.isKeyDown(SDLK_W))
-        m_timerText->move(0.0f, -m_timerTextSpeed);
+        m_timerText->moveY(-m_timerTextSpeed);
     if (input.isKeyDown(SDLK_S))
-        m_timerText->move(0.0f, m_timerTextSpeed);
+        m_timerText->moveY(m_timerTextSpeed);
     if (input.isKeyDown(SDLK_A))
-        m_timerText->move(-m_timerTextSpeed, 0.0f);
+        m_timerText->moveX(-m_timerTextSpeed);
     if (input.isKeyDown(SDLK_D))
-        m_timerText->move(m_timerTextSpeed, 0.0f);
+        m_timerText->moveX(m_timerTextSpeed);
 }
 
 void GameManager::draw() {
     const double now = static_cast<double>(SDL_GetTicks()) / 1000.0;
-    const float red = static_cast<float>(0.5 + 0.5 * SDL_sin(now));
-    const float green = static_cast<float>(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
-    const float blue = static_cast<float>(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 4 / 3));
+    const auto red = static_cast<float>(0.5 + 0.5 * SDL_sin(now));
+    const auto green = static_cast<float>(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
+    const auto blue = static_cast<float>(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 4 / 3));
 
-    engine::RendererEngine& renderer = engine::RendererEngine::get();
+    auto& renderer = engine::RendererEngine::get();
 
     renderer.clear(red, green, blue);
 

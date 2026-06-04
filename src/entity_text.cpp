@@ -5,13 +5,13 @@
 
 using namespace entity;
 
-TextEntity::TextEntity(const std::string& fontPath, const std::string& initialText) {
+TextEntity::TextEntity(const std::string& fontPath) {
     TTF_Font* copiedFont = manager::FontManager::get().copyFont(fontPath);
     TTF_TextEngine* textEngine = manager::FontManager::get().getTextEngine();
 
     m_font = copiedFont;
 
-    m_text = TTF_CreateText(textEngine, copiedFont, initialText.c_str(), initialText.length());
+    m_text = TTF_CreateText(textEngine, copiedFont, "", 1);
 
     if (!m_text)
         throw std::runtime_error(
@@ -48,7 +48,7 @@ void TextEntity::setColor(float r, float g, float b) {
 void TextEntity::draw() {
     if (!m_text) return;
 
-    if (!TTF_DrawRendererText(m_text, m_x, m_y))
+    if (!TTF_DrawRendererText(m_text, m_pos.x, m_pos.y))
         throw std::runtime_error(
             std::string("Text drawing failed: ") + SDL_GetError()
         );

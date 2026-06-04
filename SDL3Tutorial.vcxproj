@@ -78,6 +78,9 @@
     <ExternalIncludePath>C:\DevGame\vclib\SDL3-3.4.8\include;C:\DevGame\vclib\SDL3_ttf-3.2.0\include;$(ExternalIncludePath)</ExternalIncludePath>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
+    <MaxNumberOfProcesses>4</MaxNumberOfProcesses>
+    <ClangTidyChecks>bugprone-*,clang-analyzer-*performance-*,modernize-*,</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>C:\DevGame\vclib\SDL3-3.4.8\lib\x64;C:\DevGame\vclib\SDL3_ttf-3.2.0\lib\x64;$(LibraryPath)</LibraryPath>
@@ -201,6 +204,7 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
     <ClCompile Include="src\manager_font.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\common_vector2.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\entity_text.h" />
     <ClInclude Include="src\interface_drawable.h" />

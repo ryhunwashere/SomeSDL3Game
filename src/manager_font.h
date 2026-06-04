@@ -7,18 +7,18 @@
 namespace manager {
     class FontManager {
     public:
-        static FontManager& get();
+        static auto get() -> FontManager&;
 
-        TTF_Font* loadFont(const std::string& path, float initialSize);
+        auto loadFont(const std::string& path, float initialSize) -> TTF_Font*;
 
-        TTF_Font* copyFont(const std::string& path);
+        auto copyFont(const std::string& path) -> TTF_Font*;
 
-        TTF_TextEngine* getTextEngine() const { return m_engine; }
+        [[nodiscard]] auto getTextEngine() const -> TTF_TextEngine* { return m_engine; }
 
-        FontManager(const FontManager&)             = delete;
-        FontManager& operator=(const FontManager&)  = delete;
-        FontManager(FontManager&&)                  = delete;
-        FontManager& operator=(FontManager&&)       = delete;
+        FontManager(const FontManager&)                     = delete;
+        auto operator=(const FontManager&) -> FontManager&  = delete;
+        FontManager(FontManager&&)                          = delete;
+        auto operator=(FontManager&&) -> FontManager&       = delete;
 
     private:
         FontManager();
