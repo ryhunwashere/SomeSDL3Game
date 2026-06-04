@@ -17,6 +17,8 @@ RendererEngine::RendererEngine() {
             std::string("Window initialization failed: ") + SDL_GetError()
         );
 
+    SDL_Log("Window initialized.");
+
     SDL_PropertiesID props = SDL_CreateProperties();
     SDL_SetPointerProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, m_window);
     m_renderer = SDL_CreateRendererWithProperties(props);
@@ -39,26 +41,21 @@ RendererEngine::RendererEngine() {
             std::string("Set renderer failed: ") + SDL_GetError()
         );
 
-    SDL_Log("RendererEngine resources initialized.");
+    SDL_Log("Renderer initialized.");
 }
 
 RendererEngine::~RendererEngine() {
     if (m_renderer) {
         SDL_DestroyRenderer(m_renderer);
         m_renderer = nullptr;
+        SDL_Log("Renderer unloaded.");
     }
 
     if (m_window) {
         SDL_DestroyWindow(m_window);
         m_window = nullptr;
+        SDL_Log("Window unloaded.");
     }
-
-    SDL_Log("RendererEngine resources unloaded.");
-}
-
-auto RendererEngine::get() -> RendererEngine& {
-    static RendererEngine instance;
-    return instance;
 }
 
 void RendererEngine::clear(float red, float green, float blue, float alpha) {

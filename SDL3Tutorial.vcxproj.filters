@@ -37,6 +37,9 @@
     <Filter Include="Header Files\Common">
       <UniqueIdentifier>{0f98fe25-7c1e-45f0-b8e8-82eedb55ab55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Abstract">
+      <UniqueIdentifier>{63a97504-7d70-421e-97c3-c4c7118e4626}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="src\engine_text.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\abstract_singleton.h">
+      <Filter>Header Files\Abstract</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

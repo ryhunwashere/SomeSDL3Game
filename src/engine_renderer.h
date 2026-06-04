@@ -2,21 +2,17 @@
 #include <SDL3/SDL.h>
 #include <string>
 #include <memory>
+#include "abstract_singleton.h"
 
 namespace engine {
-    class RendererEngine {
-    public:
-        static auto get() -> RendererEngine&;
+    class RendererEngine : public abstract::Singleton<RendererEngine> {
+        friend class abstract::Singleton<RendererEngine>;
 
+    public:
         void clear(float red, float green, float blue, float alpha);
         void clear(float red, float green, float blue);
         void present();
         [[nodiscard]] auto getRenderer() const -> SDL_Renderer*;
-
-        RendererEngine(const RendererEngine&)                       = delete;
-        auto operator=(const RendererEngine&) -> RendererEngine&    = delete;
-        RendererEngine(RendererEngine&&)                            = delete;
-        auto operator=(RendererEngine&&) -> RendererEngine&         = delete;
 
     private:
         RendererEngine();

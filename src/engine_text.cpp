@@ -1,6 +1,4 @@
 #include <stdexcept>
-#include <algorithm>
-#include <cctype>
 #include "engine_text.h"
 #include "engine_renderer.h"
 
@@ -18,6 +16,8 @@ TextEngine::TextEngine() {
 
     if (!m_engine)
         throwFontError("Text engine init error.");
+
+    SDL_Log("Text engine initialized.");
 }
 
 TextEngine::~TextEngine() {
@@ -25,11 +25,8 @@ TextEngine::~TextEngine() {
         TTF_DestroyRendererTextEngine(m_engine);
 
     TTF_Quit();
-}
 
-auto TextEngine::get() -> TextEngine& {
-    static TextEngine instance;
-    return instance;
+    SDL_Log("Text engine unloaded.");
 }
 
 void TextEngine::throwFontError(const std::string& message) {

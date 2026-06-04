@@ -213,6 +213,7 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
     <ClInclude Include="src\engine_input.h" />
     <ClInclude Include="src\engine_renderer.h" />
     <ClInclude Include="src\engine_text.h" />
+    <ClInclude Include="src\abstract_singleton.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

@@ -3,22 +3,16 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <string>
 #include <unordered_map>
+#include "abstract_singleton.h"
 
 namespace engine {
-    class TextEngine {
+    class TextEngine : public abstract::Singleton<TextEngine> {
+        friend class abstract::Singleton<TextEngine>;
+
     public:
-        static auto get() -> TextEngine&;
-
         auto loadFont(const std::string& path, float initialSize) -> TTF_Font*;
-
         auto copyFont(const std::string& path) -> TTF_Font*;
-
         [[nodiscard]] auto getTextEngine() const -> TTF_TextEngine* { return m_engine; }
-
-        TextEngine(const TextEngine&)                     = delete;
-        auto operator=(const TextEngine&) -> TextEngine&  = delete;
-        TextEngine(TextEngine&&)                          = delete;
-        auto operator=(TextEngine&&) -> TextEngine&       = delete;
 
     private:
         TextEngine();
