@@ -2,8 +2,10 @@
 #include <SDL3/SDL.h>
 #include <unordered_map>
 
-namespace engine {
-    class InputEngine {
+namespace engine 
+{
+    class InputEngine 
+    {
     public:
         static InputEngine& get()
         {
@@ -22,7 +24,8 @@ namespace engine {
         InputEngine& operator=(InputEngine&&)       = delete;
 
     private:
-        InputEngine() = default;
+        InputEngine()   = default;
+        ~InputEngine()  = default;
         std::unordered_map<SDL_Keycode, bool> m_keystateMap;
     };
 };

@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Entity">
       <UniqueIdentifier>{ad97003d-333c-40d7-b058-751fa985b814}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Interface">
+      <UniqueIdentifier>{51de335e-45e4-41c5-8e41-55f420e0516b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -68,5 +71,17 @@
     <ClInclude Include="src\manager_game.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="src\interface_updatable.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interface_drawable.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entity.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

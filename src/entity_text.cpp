@@ -5,12 +5,34 @@
 
 using namespace entity;
 
-bool TextEntity::create(TTF_Font* font, const std::string& initialText) 
+TextEntity::TextEntity(const std::string& fontPath, const std::string& initialText)
 {
-    TTF_TextEngine* engine = manager::FontManager::get().getRawEngine();
-    m_text = TTF_CreateText(engine, font, initialText.c_str(), initialText.length());
+    TTF_Font* copiedFont = manager::FontManager::get().copyFont(fontPath);
+    TTF_TextEngine* textEngine = manager::FontManager::get().getTextEngine();
 
-    return m_text != nullptr;
+    m_font = copiedFont;
+
+    m_text = TTF_CreateText(textEngine, copiedFont, initialText.c_str(), initialText.length());
+
+    if (!m_text)
+        throw std::runtime_error(
+            std::string("Text entity creation failed: ") + SDL_GetError()
+        );
+}
+
+TextEntity::~TextEntity()
+{
+    if (m_text)
+    {
+        TTF_DestroyText(m_text);
+        m_text = nullptr;
+    }
+
+    if (m_font)
+    {
+        TTF_CloseFont(m_font);
+        m_font = nullptr;
+    }
 }
 
 void TextEntity::updateText(const std::string& text)
@@ -30,54 +52,12 @@ void TextEntity::setColor(float r, float g, float b)
     setColor(r, g, b, SDL_ALPHA_OPAQUE_FLOAT);
 }
 
-void TextEntity::setPosition(float x, float y)
-{
-    if (!m_text) return;
-
-    m_x = x;
-    m_y = y;
-}
-
-void TextEntity::move(float deltaX, float deltaY)
-{
-    if (!m_text) return;
-    
-    m_x += deltaX;
-    m_y += deltaY;
-}
-
-void TextEntity::moveX(float deltaX)
-{
-    move(deltaX, 0.0f);
-}
-
-void TextEntity::moveY(float deltaY)
-{
-    move(0.0f, deltaY);
-}
-
 void TextEntity::draw()
 {
     if (!m_text) return;
 
     if (!TTF_DrawRendererText(m_text, m_x, m_y))
-    {
-        SDL_Log(SDL_GetError());
-        throw std::runtime_error(SDL_GetError());
-    }
-}
-
-void TextEntity::destroy() 
-{
-    if (m_text) 
-    {
-        TTF_DestroyText(m_text);
-        m_text = nullptr;
-    }
-
-    if (m_font) 
-    {
-        TTF_CloseFont(m_font);
-        m_font = nullptr;
-    }
+        throw std::runtime_error(
+            std::string("Text drawing failed: ") + SDL_GetError()
+        );
 }

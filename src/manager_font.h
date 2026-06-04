@@ -4,23 +4,18 @@
 #include <string>
 #include <unordered_map>
 
-namespace manager {
-    class FontManager {
+namespace manager 
+{
+    class FontManager 
+    {
     public:
-        static FontManager& get()
-        {
-            static FontManager instance;
-            return instance;
-        }
+        static FontManager& get();
 
-        bool init(SDL_Renderer* renderer);
-        void shutdown();
+        TTF_Font* loadFont(const std::string& path, float initialSize);
 
-        TTF_Font* loadFont(const std::string& path, const std::string& name, float size);
+        TTF_Font* copyFont(const std::string& path);
 
-        TTF_Font* getFont(const std::string& name);
-
-        TTF_TextEngine* getRawEngine() const { return m_engine; }
+        TTF_TextEngine* getTextEngine() const { return m_engine; }
 
         FontManager(const FontManager&)             = delete;
         FontManager& operator=(const FontManager&)  = delete;
@@ -28,11 +23,19 @@ namespace manager {
         FontManager& operator=(FontManager&&)       = delete;
 
     private:
-        FontManager() = default;
-        ~FontManager() = default;
+        FontManager();
+        ~FontManager();
+
+        void throwFontError(const std::string& message);
+
+        struct FontInfo
+        {
+            TTF_Font* font = nullptr;
+            float size = 0.0f;
+        };
 
         TTF_TextEngine* m_engine = nullptr;
 
-        std::unordered_map<std::string, TTF_Font*> m_fontMap;
+        std::unordered_map<std::string, FontInfo> m_fontMap;
     };
 }

@@ -1,46 +1,29 @@
 #pragma once
 #include <SDL3_ttf/SDL_ttf.h>
 #include <string>
+#include "interface_drawable.h"
+#include "entity.h"
 
-namespace entity {
-    class TextEntity {
+namespace entity 
+{
+    class TextEntity : public Entity, public interface::IDrawable
+    {
     public:
-        TextEntity() = default;
-        ~TextEntity() { destroy(); }
-
-        bool create(TTF_Font* font, const std::string& initial_text);
+        TextEntity(const std::string& fontPath, const std::string& initialText);
+        ~TextEntity();
 
         void updateText(const std::string& text);
+        void draw() override;
 
         void setColor(float r, float g, float b, float a);
         void setColor(float r, float g, float b);
 
-        void setPosition(float x, float y);
-
-        void move(float deltaX, float deltaY);
-        void moveX(float deltaX);
-        void moveY(float deltaY);
-
-        void draw();
-
-        void destroy();
-
-        float getX() const
-        {
-            return m_x;
-        }
-
-        float getY() const
-        {
-            return m_y;
-        }
+        float getSize() const { return m_size; }
 
     private:
-        TTF_Text* m_text = nullptr;
-        TTF_Font* m_font = nullptr;
-        float m_x = 0.0f;
-        float m_y = 0.0f;
-        float m_size = 16.0f;
+        TTF_Text* m_text    = nullptr;
+        TTF_Font* m_font    = nullptr;
+        float m_size        = 16.0f;
         char m_textBuffer[256]{};
     };
 }

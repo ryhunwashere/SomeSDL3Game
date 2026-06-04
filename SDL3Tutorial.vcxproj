@@ -130,6 +130,8 @@
       <OmitFramePointers>false</OmitFramePointers>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>true</EnablePREfast>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MinimalRebuild>true</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -170,6 +172,10 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,11 +201,17 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
     <ClCompile Include="src\manager_font.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\entity_text.h" />
+    <ClInclude Include="src\interface_drawable.h" />
+    <ClInclude Include="src\interface_updatable.h" />
     <ClInclude Include="src\manager_game.h" />
     <ClInclude Include="src\engine_input.h" />
     <ClInclude Include="src\engine_renderer.h" />
     <ClInclude Include="src\manager_font.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
