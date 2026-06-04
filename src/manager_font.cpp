@@ -8,8 +8,7 @@ using namespace manager;
 
 constexpr float DEFAULT_INITIAL_SIZE = 24.0f;
 
-FontManager::FontManager()
-{
+FontManager::FontManager() {
     if (!TTF_Init())
         throwFontError("SDL TTF init error.");
 
@@ -21,34 +20,29 @@ FontManager::FontManager()
         throwFontError("Text engine init error.");
 }
 
-FontManager::~FontManager()
-{
+FontManager::~FontManager() {
     if (m_engine)
         TTF_DestroyRendererTextEngine(m_engine);
 
     TTF_Quit();
 }
 
-FontManager& FontManager::get()
-{
+FontManager& FontManager::get() {
     static FontManager instance;
     return instance;
 }
 
-void FontManager::throwFontError(const std::string& message) 
-{
+void FontManager::throwFontError(const std::string& message) {
     throw std::runtime_error(message + " | SDL_Error: " + SDL_GetError());
 }
 
-TTF_Font* FontManager::loadFont(const std::string& path, float initialSize)
-{
+TTF_Font* FontManager::loadFont(const std::string& path, float initialSize) {
     auto& fontData = m_fontMap[path];
 
     if (fontData.font != nullptr) return fontData.font;
 
     fontData.font = TTF_OpenFont(path.c_str(), initialSize);
-    if (!fontData.font) 
-    {
+    if (!fontData.font) {
         m_fontMap.erase(path);
         throwFontError("Font failed to load. | Path: " + path);
     }
@@ -57,8 +51,7 @@ TTF_Font* FontManager::loadFont(const std::string& path, float initialSize)
     return fontData.font;
 }
 
-TTF_Font* FontManager::copyFont(const std::string& path)
-{
+TTF_Font* FontManager::copyFont(const std::string& path) {
     TTF_Font* existingFont = loadFont(path, DEFAULT_INITIAL_SIZE);
 
     TTF_Font* copiedFont = TTF_CopyFont(existingFont);

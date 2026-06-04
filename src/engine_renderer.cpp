@@ -10,8 +10,7 @@ const char* WINDOW_TITLE        = "This is a window";
 const char* NULL_RENDERER_ERROR = "Renderer is null";
 const char* NULL_WINDOW_ERROR   = "Window is null";
 
-RendererEngine::RendererEngine()
-{
+RendererEngine::RendererEngine() {
     m_window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
     if (!m_window)
         throw std::runtime_error(
@@ -23,8 +22,7 @@ RendererEngine::RendererEngine()
     m_renderer = SDL_CreateRendererWithProperties(props);
     SDL_DestroyProperties(props);
 
-    if (!m_renderer) 
-    {
+    if (!m_renderer) {
         SDL_DestroyWindow(m_window);
         throw std::runtime_error(
             std::string("Renderer initialization failed: ") + SDL_GetError()
@@ -44,21 +42,18 @@ RendererEngine::RendererEngine()
     SDL_Log("RendererEngine resources initialized.");
 }
 
-RendererEngine::~RendererEngine()
-{
+RendererEngine::~RendererEngine() {
     if (m_renderer) SDL_DestroyRenderer(m_renderer);
     if (m_window) SDL_DestroyWindow(m_window);
     SDL_Log("RendererEngine resources unloaded.");
 }
 
-RendererEngine& RendererEngine::get()
-{
+RendererEngine& RendererEngine::get() {
     static RendererEngine instance;
     return instance;
 }
 
-void RendererEngine::clear(float red, float green, float blue, float alpha)
-{
+void RendererEngine::clear(float red, float green, float blue, float alpha) {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
@@ -73,13 +68,11 @@ void RendererEngine::clear(float red, float green, float blue, float alpha)
         );
 }
 
-void RendererEngine::clear(float red, float green, float blue)
-{
+void RendererEngine::clear(float red, float green, float blue) {
     RendererEngine::clear(red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);
 }
 
-void RendererEngine::present()
-{
+void RendererEngine::present() {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
@@ -89,8 +82,7 @@ void RendererEngine::present()
         );
 }
 
-SDL_Renderer* RendererEngine::getRenderer() const
-{
+SDL_Renderer* RendererEngine::getRenderer() const {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 

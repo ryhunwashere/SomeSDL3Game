@@ -4,10 +4,8 @@
 #include "interface_drawable.h"
 #include "entity.h"
 
-namespace entity 
-{
-    class TextEntity : public Entity, public interface::IDrawable
-    {
+namespace entity {
+    class TextEntity : public Entity, public interface::IDrawable {
     public:
         TextEntity(const std::string& fontPath, const std::string& initialText);
         ~TextEntity();

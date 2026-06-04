@@ -5,8 +5,7 @@
 
 using namespace entity;
 
-TextEntity::TextEntity(const std::string& fontPath, const std::string& initialText)
-{
+TextEntity::TextEntity(const std::string& fontPath, const std::string& initialText) {
     TTF_Font* copiedFont = manager::FontManager::get().copyFont(fontPath);
     TTF_TextEngine* textEngine = manager::FontManager::get().getTextEngine();
 
@@ -20,40 +19,33 @@ TextEntity::TextEntity(const std::string& fontPath, const std::string& initialTe
         );
 }
 
-TextEntity::~TextEntity()
-{
-    if (m_text)
-    {
+TextEntity::~TextEntity() {
+    if (m_text) {
         TTF_DestroyText(m_text);
         m_text = nullptr;
     }
 
-    if (m_font)
-    {
+    if (m_font) {
         TTF_CloseFont(m_font);
         m_font = nullptr;
     }
 }
 
-void TextEntity::updateText(const std::string& text)
-{
+void TextEntity::updateText(const std::string& text) {
     if (m_text)
         TTF_SetTextString(m_text, text.c_str(), text.length());
 }
 
-void TextEntity::setColor(float r, float g, float b, float a)
-{
+void TextEntity::setColor(float r, float g, float b, float a) {
     if (m_text)
         TTF_SetTextColorFloat(m_text, r, g, b, a);
 }
 
-void TextEntity::setColor(float r, float g, float b)
-{
+void TextEntity::setColor(float r, float g, float b) {
     setColor(r, g, b, SDL_ALPHA_OPAQUE_FLOAT);
 }
 
-void TextEntity::draw()
-{
+void TextEntity::draw() {
     if (!m_text) return;
 
     if (!TTF_DrawRendererText(m_text, m_x, m_y))

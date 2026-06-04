@@ -2,13 +2,10 @@
 #include <SDL3/SDL.h>
 #include <unordered_map>
 
-namespace engine 
-{
-    class InputEngine 
-    {
+namespace engine {
+    class InputEngine {
     public:
-        static InputEngine& get()
-        {
+        static InputEngine& get() {
             static InputEngine s_instance;
             return s_instance;
         }

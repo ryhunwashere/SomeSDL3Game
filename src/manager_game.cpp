@@ -11,8 +11,7 @@ using namespace manager;
 
 constexpr float MOVE_SPEED = 4.0f;
 
-GameManager::GameManager()
-{
+GameManager::GameManager() {
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO)) 
         throw std::runtime_error(
             std::string("SDL video initialization failure: ") + SDL_GetError()
@@ -24,20 +23,17 @@ GameManager::GameManager()
     SDL_Log("GameManager and subsystems initialized.");
 }
 
-GameManager::~GameManager()
-{
+GameManager::~GameManager() {
     SDL_Quit();
     SDL_Log("GameManager and subsystems unloaded.");
 }
 
-GameManager& GameManager::get()
-{
+GameManager& GameManager::get() {
     static GameManager instance;
     return instance;
 }
 
-void GameManager::handleEvent(SDL_Event* event)
-{
+void GameManager::handleEvent(SDL_Event* event) {
     engine::InputEngine& input = engine::InputEngine::get();
 
     if (event->type == SDL_EVENT_KEY_DOWN) 
@@ -46,14 +42,12 @@ void GameManager::handleEvent(SDL_Event* event)
         input.updateKeyState(event->key.key, false);
 }
 
-void GameManager::update() 
-{
+void GameManager::update() {
     const double now = static_cast<double>(SDL_GetTicks()) / 1000.0;
     const double rounded_now = std::round(now * 10.0) / 10.0;
 
     auto [ptr, ec] = std::to_chars(m_textBuffer, m_textBuffer + sizeof(m_textBuffer), rounded_now, std::chars_format::fixed, 1);
-    if (ec == std::errc()) 
-    {
+    if (ec == std::errc()) {
         std::string timeStr(m_textBuffer, ptr - m_textBuffer);
         m_timerText->updateText(timeStr);
     }
@@ -70,8 +64,7 @@ void GameManager::update()
         m_timerText->move(m_timerTextSpeed, 0.0f);
 }
 
-void GameManager::draw()
-{
+void GameManager::draw() {
     const double now = static_cast<double>(SDL_GetTicks()) / 1000.0;
     const float red = static_cast<float>(0.5 + 0.5 * SDL_sin(now));
     const float green = static_cast<float>(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));

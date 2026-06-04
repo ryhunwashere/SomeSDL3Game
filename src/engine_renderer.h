@@ -3,10 +3,8 @@
 #include <string>
 #include <memory>
 
-namespace engine 
-{
-    class RendererEngine 
-    {
+namespace engine {
+    class RendererEngine {
     public:
         static RendererEngine& get();
 

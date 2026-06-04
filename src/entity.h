@@ -1,9 +1,7 @@
 #pragma once
 
-namespace entity
-{
-    class Entity
-    {
+namespace entity {
+    class Entity {
     public:
         virtual ~Entity() = 0;
 

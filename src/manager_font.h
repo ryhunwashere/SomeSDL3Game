@@ -4,10 +4,8 @@
 #include <string>
 #include <unordered_map>
 
-namespace manager 
-{
-    class FontManager 
-    {
+namespace manager {
+    class FontManager {
     public:
         static FontManager& get();
 
@@ -28,8 +26,7 @@ namespace manager
 
         void throwFontError(const std::string& message);
 
-        struct FontInfo
-        {
+        struct FontInfo {
             TTF_Font* font = nullptr;
             float size = 0.0f;
         };

@@ -5,10 +5,8 @@
 #include "interface_updatable.h"
 #include "interface_drawable.h"
 
-namespace manager 
-{
-    class GameManager : public interface::IUpdatable, public interface::IDrawable
-    {
+namespace manager {
+    class GameManager : public interface::IUpdatable, public interface::IDrawable {
     public:
         static GameManager& get();
 
