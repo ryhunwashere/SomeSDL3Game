@@ -5,7 +5,6 @@
 #include "manager_game.h"
 #include "engine_renderer.h"
 #include "engine_input.h"
-#include "manager_font.h"
 
 using namespace manager;
 

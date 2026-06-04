@@ -1,13 +1,13 @@
 #include <stdexcept>
 #include <string>
 #include "entity_text.h"
-#include "manager_font.h"
+#include "engine_text.h"
 
 using namespace entity;
 
 TextEntity::TextEntity(const std::string& fontPath) {
-    TTF_Font* copiedFont = manager::FontManager::get().copyFont(fontPath);
-    TTF_TextEngine* textEngine = manager::FontManager::get().getTextEngine();
+    TTF_Font* copiedFont = engine::TextEngine::get().copyFont(fontPath);
+    TTF_TextEngine* textEngine = engine::TextEngine::get().getTextEngine();
 
     m_font = copiedFont;
 

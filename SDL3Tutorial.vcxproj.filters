@@ -45,9 +45,6 @@
     <ClCompile Include="src\engine_renderer.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\manager_font.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="src\entity_text.cpp">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
@@ -57,6 +54,9 @@
     <ClCompile Include="src\engine_input.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine_text.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine_input.h">
@@ -64,9 +64,6 @@
     </ClInclude>
     <ClInclude Include="src\engine_renderer.h">
       <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\manager_font.h">
-      <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="src\entity_text.h">
       <Filter>Header Files\Entity</Filter>
@@ -85,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="src\common_vector2.h">
       <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine_text.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,10 +4,10 @@
 #include <string>
 #include <unordered_map>
 
-namespace manager {
-    class FontManager {
+namespace engine {
+    class TextEngine {
     public:
-        static auto get() -> FontManager&;
+        static auto get() -> TextEngine&;
 
         auto loadFont(const std::string& path, float initialSize) -> TTF_Font*;
 
@@ -15,14 +15,14 @@ namespace manager {
 
         [[nodiscard]] auto getTextEngine() const -> TTF_TextEngine* { return m_engine; }
 
-        FontManager(const FontManager&)                     = delete;
-        auto operator=(const FontManager&) -> FontManager&  = delete;
-        FontManager(FontManager&&)                          = delete;
-        auto operator=(FontManager&&) -> FontManager&       = delete;
+        TextEngine(const TextEngine&)                     = delete;
+        auto operator=(const TextEngine&) -> TextEngine&  = delete;
+        TextEngine(TextEngine&&)                          = delete;
+        auto operator=(TextEngine&&) -> TextEngine&       = delete;
 
     private:
-        FontManager();
-        ~FontManager();
+        TextEngine();
+        ~TextEngine();
 
         void throwFontError(const std::string& message);
 

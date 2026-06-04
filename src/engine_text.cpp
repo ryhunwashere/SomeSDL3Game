@@ -1,14 +1,14 @@
 #include <stdexcept>
 #include <algorithm>
 #include <cctype>
-#include "manager_font.h"
+#include "engine_text.h"
 #include "engine_renderer.h"
 
-using namespace manager;
+using namespace engine;
 
 constexpr float DEFAULT_INITIAL_SIZE = 24.0f;
 
-FontManager::FontManager() {
+TextEngine::TextEngine() {
     if (!TTF_Init())
         throwFontError("SDL TTF init error.");
 
@@ -20,23 +20,23 @@ FontManager::FontManager() {
         throwFontError("Text engine init error.");
 }
 
-FontManager::~FontManager() {
+TextEngine::~TextEngine() {
     if (m_engine)
         TTF_DestroyRendererTextEngine(m_engine);
 
     TTF_Quit();
 }
 
-auto FontManager::get() -> FontManager& {
-    static FontManager instance;
+auto TextEngine::get() -> TextEngine& {
+    static TextEngine instance;
     return instance;
 }
 
-void FontManager::throwFontError(const std::string& message) {
+void TextEngine::throwFontError(const std::string& message) {
     throw std::runtime_error(message + " | SDL_Error: " + SDL_GetError());
 }
 
-auto FontManager::loadFont(const std::string& path, float initialSize) -> TTF_Font* {
+auto TextEngine::loadFont(const std::string& path, float initialSize) -> TTF_Font* {
     auto& fontData = m_fontMap[path];
 
     if (fontData.font != nullptr) return fontData.font;
@@ -51,7 +51,7 @@ auto FontManager::loadFont(const std::string& path, float initialSize) -> TTF_Fo
     return fontData.font;
 }
 
-auto FontManager::copyFont(const std::string& path) -> TTF_Font* {
+auto TextEngine::copyFont(const std::string& path) -> TTF_Font* {
     TTF_Font* existingFont = loadFont(path, DEFAULT_INITIAL_SIZE);
 
     TTF_Font* copiedFont = TTF_CopyFont(existingFont);
