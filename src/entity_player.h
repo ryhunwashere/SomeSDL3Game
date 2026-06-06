@@ -13,9 +13,11 @@ namespace rgp {
 
         void draw() override;
         void update() override;
-        auto getTextureInfo() -> const TextureInfo* { return m_textureInfo; };
+        auto getTextureAsset() -> const TextureAsset* { return m_textureAsset; };
 
     private:
-        const TextureInfo* m_textureInfo;
+        const TextureAsset* m_textureAsset;
+
+        void updatePosition();
     };
 };

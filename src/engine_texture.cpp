@@ -5,15 +5,15 @@
 #include "struct_asset.h"
 
 rgp::TextureEngine::~TextureEngine() {
-	for (const auto& [path, textureInfo] : m_textureMap) {
-		SDL_Log("Unloading texture: %s", textureInfo.path.c_str());
-		SDL_DestroyTexture(textureInfo.texture);
+	for (const auto& [path, textureAsset] : m_textureMap) {
+		SDL_Log("Unloading texture: %s", textureAsset.path.c_str());
+		SDL_DestroyTexture(textureAsset.texture);
 	}
 
 	SDL_Log("All textures succesfully unloaded.");
 }
 
-auto rgp::TextureEngine::loadPNGTexture(const std::string& path, float initialSize) -> const TextureInfo& {
+auto rgp::TextureEngine::loadPNGTexture(const std::string& path, float initialSize) -> const TextureAsset& {
     auto it = m_textureMap.find(path);
     if (it != m_textureMap.end()) return it->second;
 
@@ -37,19 +37,19 @@ auto rgp::TextureEngine::loadPNGTexture(const std::string& path, float initialSi
 
     auto [insertedIt, success] = m_textureMap.insert_or_assign(
         path, 
-        TextureInfo{ texture, path, initialSize }
+        TextureAsset{ texture, path, initialSize }
     );
 
     return insertedIt->second;
 }
 
-void rgp::TextureEngine::unloadTexture(const TextureInfo& textureInfo) {
-    SDL_DestroyTexture(textureInfo.texture);
+void rgp::TextureEngine::unloadTexture(const TextureAsset& textureAsset) {
+    SDL_DestroyTexture(textureAsset.texture);
 
     SDL_Log("Texture destroy from struct: %s", SDL_GetError());
     SDL_ClearError();
 
-    m_textureMap.erase(textureInfo.path);
+    m_textureMap.erase(textureAsset.path);
 }
 
 void rgp::TextureEngine::unloadTexture(const std::string& path) {
@@ -67,7 +67,7 @@ void rgp::TextureEngine::unloadTexture(const std::string& path) {
     m_textureMap.erase(path);
 }
 
-auto rgp::TextureEngine::getTexture(const std::string& path) -> const TextureInfo& {
+auto rgp::TextureEngine::getTexture(const std::string& path) -> const TextureAsset& {
 	if (m_textureMap.find(path) == m_textureMap.end())
 		throw std::runtime_error("PNG texture not found: " + path);
 

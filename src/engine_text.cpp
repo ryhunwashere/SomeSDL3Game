@@ -22,8 +22,8 @@ rgp::TextEngine::TextEngine() {
 
 rgp::TextEngine::~TextEngine() {
     if (m_textEngine) {
-        for (auto& [path, fontInfo] : m_fontMap) {
-            TTF_CloseFont(fontInfo.font);
+        for (auto& [path, fontAsset] : m_fontMap) {
+            TTF_CloseFont(fontAsset.font);
             SDL_Log("Unloaded font: %s", path.c_str());
         }
 

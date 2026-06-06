@@ -4,13 +4,13 @@
 #include <string>
 
 namespace rgp {
-    struct TextureInfo {
+    struct TextureAsset {
         SDL_Texture* texture = nullptr;
         std::string path;
         float size = 0.0f;
     };
 
-    struct FontInfo {
+    struct FontAsset {
         TTF_Font* font = nullptr;
         float size = 0.0f;
     };
