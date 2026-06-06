@@ -1,6 +1,6 @@
 #pragma once
 
-namespace interface {
+namespace rgp {
 	class IUpdatable {
 	public:
 		virtual ~IUpdatable() = default;

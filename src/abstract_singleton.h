@@ -1,6 +1,6 @@
 #pragma once
 
-namespace abstract {
+namespace rgp {
     template <typename T>
     class Singleton {
     public:

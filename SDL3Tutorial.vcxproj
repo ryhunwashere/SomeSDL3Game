@@ -42,9 +42,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <EnableASAN>true</EnableASAN>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -52,6 +53,7 @@
     <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -76,15 +78,18 @@
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
     <ExternalIncludePath>C:\DevGame\vclib\SDL3-3.4.8\include;C:\DevGame\vclib\SDL3_ttf-3.2.0\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <MaxNumberOfProcesses>4</MaxNumberOfProcesses>
+    <MaxNumberOfProcesses>0</MaxNumberOfProcesses>
     <ClangTidyChecks>bugprone-*,clang-analyzer-*performance-*,modernize-*,</ClangTidyChecks>
+    <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>C:\DevGame\vclib\SDL3-3.4.8\lib\x64;C:\DevGame\vclib\SDL3_ttf-3.2.0\lib\x64;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>C:\DevGame\vclib\SDL3-3.4.8\include;C:\DevGame\vclib\SDL3_ttf-3.2.0\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -135,6 +140,8 @@
       <EnablePREfast>true</EnablePREfast>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
+      <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -175,7 +182,7 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <ExceptionHandling>false</ExceptionHandling>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <DebugInformationFormat>None</DebugInformationFormat>
@@ -197,23 +204,35 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\engine_input.cpp" />
+    <ClCompile Include="src\engine_texture.cpp" />
+    <ClCompile Include="src\entity_player.cpp" />
     <ClCompile Include="src\entity_text.cpp" />
     <ClCompile Include="src\manager_game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\engine_renderer.cpp" />
     <ClCompile Include="src\engine_text.cpp" />
+    <ClCompile Include="src\manager_scene.cpp" />
+    <ClCompile Include="src\scene_level.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\common_vector2.h" />
     <ClInclude Include="src\entity.h" />
+    <ClInclude Include="src\entity_player.h" />
     <ClInclude Include="src\entity_text.h" />
     <ClInclude Include="src\interface_drawable.h" />
+    <ClInclude Include="src\interface_eventhandlable.h" />
     <ClInclude Include="src\interface_updatable.h" />
     <ClInclude Include="src\manager_game.h" />
     <ClInclude Include="src\engine_input.h" />
     <ClInclude Include="src\engine_renderer.h" />
     <ClInclude Include="src\engine_text.h" />
     <ClInclude Include="src\abstract_singleton.h" />
+    <ClInclude Include="src\manager_scene.h" />
+    <ClInclude Include="src\engine_texture.h" />
+    <ClInclude Include="src\scene.h" />
+    <ClInclude Include="src\scene_level.h" />
+    <ClInclude Include="src\struct_framecontext.h" />
+    <ClInclude Include="src\struct_asset.h" />
+    <ClInclude Include="src\struct_vector2f.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

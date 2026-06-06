@@ -1,20 +1,20 @@
 #pragma once
-#include <SDL3/SDL.h>
 #include <unordered_map>
+#include <SDL3/SDL.h>
 #include "abstract_singleton.h"
 
-namespace engine {
-    class InputEngine : public abstract::Singleton<InputEngine> {
-        friend class abstract::Singleton<InputEngine>;
+namespace rgp {
+    class InputEngine : public Singleton<InputEngine> {
+        friend class Singleton<InputEngine>;
 
     public:
-        void updateKeyState(SDL_Keycode key, bool isPressed);
-        [[nodiscard]] auto isKeyDown(SDL_Keycode key) const -> bool;
+        void updateKeyState(SDL_Scancode scancode, bool isPressed);
+        [[nodiscard]] auto isKeyDown(SDL_Scancode scancode) const -> bool;
 
     private:
         InputEngine()   = default;
         ~InputEngine()  = default;
 
-        std::unordered_map<SDL_Keycode, bool> m_keystateMap;
+        std::unordered_map<SDL_Scancode, bool> m_keystateMap;
     };
 };

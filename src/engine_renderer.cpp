@@ -2,15 +2,13 @@
 #include <stdexcept>
 #include "engine_renderer.h"
 
-using namespace engine;
-
 constexpr int WINDOW_WIDTH      = 800;
 constexpr int WINDOW_HEIGHT     = 600;
 const char* WINDOW_TITLE        = "This is a window";
 const char* NULL_RENDERER_ERROR = "Renderer is null";
 const char* NULL_WINDOW_ERROR   = "Window is null";
 
-RendererEngine::RendererEngine() {
+rgp::RendererEngine::RendererEngine() {
     m_window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
     if (!m_window)
         throw std::runtime_error(
@@ -44,7 +42,7 @@ RendererEngine::RendererEngine() {
     SDL_Log("Renderer initialized.");
 }
 
-RendererEngine::~RendererEngine() {
+rgp::RendererEngine::~RendererEngine() {
     if (m_renderer) {
         SDL_DestroyRenderer(m_renderer);
         m_renderer = nullptr;
@@ -58,7 +56,14 @@ RendererEngine::~RendererEngine() {
     }
 }
 
-void RendererEngine::clear(float red, float green, float blue, float alpha) {
+auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
+    if (!m_renderer)
+        throw std::runtime_error(NULL_RENDERER_ERROR);
+
+    return m_renderer;
+}
+
+void rgp::RendererEngine::draw(float red, float green, float blue, float alpha) {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
@@ -66,18 +71,26 @@ void RendererEngine::clear(float red, float green, float blue, float alpha) {
         throw std::runtime_error(
             std::string("Set draw color error: ") + SDL_GetError()
         );
+}
 
-    if (!SDL_RenderClear(m_renderer))
+void rgp::RendererEngine::draw(float r, float g, float b, float a, SDL_Texture* texture, const SDL_FRect* dstrect) {
+    if (!m_renderer)
+        throw std::runtime_error(NULL_RENDERER_ERROR);
+
+    if (!SDL_SetTextureColorModFloat(texture, r, g, b) ||
+        !SDL_SetTextureAlphaModFloat(texture, a)) {
         throw std::runtime_error(
-            std::string("Render clear error: ") + SDL_GetError()
+            std::string("Set texture mod error: ") + SDL_GetError()
+        );
+    }
+
+    if (!SDL_RenderTexture(m_renderer, texture, nullptr, dstrect))
+        throw std::runtime_error(
+            std::string("Render texture error: ") + SDL_GetError()
         );
 }
 
-void RendererEngine::clear(float red, float green, float blue) {
-    RendererEngine::clear(red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);
-}
-
-void RendererEngine::present() {
+void rgp::RendererEngine::present() {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
@@ -87,9 +100,12 @@ void RendererEngine::present() {
         );
 }
 
-auto RendererEngine::getRenderer() const -> SDL_Renderer* {
+void rgp::RendererEngine::clear() {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
-    return m_renderer;
+    if (!SDL_RenderClear(m_renderer))
+        throw std::runtime_error(
+            std::string("Render clear error: ") + SDL_GetError()
+        );
 }

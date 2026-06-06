@@ -1,34 +1,26 @@
 #pragma once
-#include "common_vector2.h"
+#include <SDL3/SDL.h>
+#include "struct_vector2f.h"
 
-namespace entity {
+namespace rgp {
     class Entity {
     public:
         virtual ~Entity() = 0;
 
-        virtual void setPosition(common::Vector2 vec2) { 
-            m_pos.x = vec2.x;
-            m_pos.y = vec2.y;
-        }
+        void setPosition(Vector2F pos)                      { m_pos = pos; }
+        void movePosition(Vector2F deltaPos)                { m_pos += deltaPos; }
 
-        virtual void move(common::Vector2 deltaVec2) { 
-            m_pos.x += deltaVec2.x;
-            m_pos.y += deltaVec2.y;
-        }
+        void moveX(float deltaX)                            { m_pos.x += deltaX; }
+        void moveY(float deltaY)                            { m_pos.y += deltaY; }
+        void setX(float x)                                  { m_pos.x = x; }
+        void setY(float y)                                  { m_pos.y = y; }
 
-        void moveX(float deltaX) { 
-            move({ deltaX, 0.0f }); 
-        }
+        [[nodiscard]] auto getX()        const -> float     { return m_pos.x; }
+        [[nodiscard]] auto getY()        const -> float     { return m_pos.y; }
+        [[nodiscard]] auto getPosition() const -> Vector2F  { return m_pos; }
 
-        void moveY(float deltaY) { 
-            move({ 0.0f, deltaY }); 
-        }
-
-        [[nodiscard]] auto getX() const -> float { return m_pos.x; }
-        [[nodiscard]] auto getY() const -> float { return m_pos.y; }
-
-    protected:
-        common::Vector2 m_pos = { 0.0f, 0.0f };
+    private:
+        Vector2F m_pos = { 0.0f, 0.0f };
     };
 
     inline Entity::~Entity() = default;

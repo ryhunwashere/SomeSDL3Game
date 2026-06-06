@@ -1,12 +1,15 @@
+#include <SDL3/SDL.h>
 #include "engine_input.h"
 
-using namespace engine;
-
-void InputEngine::updateKeyState(SDL_Keycode key, bool isPressed) {
-	m_keystateMap[key] = isPressed;
+void rgp::InputEngine::updateKeyState(SDL_Scancode scancode, bool isPressed) {
+	m_keystateMap[scancode] = isPressed;
 }
 
-auto InputEngine::isKeyDown(SDL_Keycode key) const -> bool {
-	auto iterator = m_keystateMap.find(key);
-	return iterator != m_keystateMap.end() ? iterator->second : false;
+auto rgp::InputEngine::isKeyDown(SDL_Scancode scancode) const -> bool {
+    auto iterator = m_keystateMap.find(scancode);
+
+    if (iterator != m_keystateMap.end())
+        return iterator->second;
+
+    return false;
 }

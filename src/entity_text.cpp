@@ -3,11 +3,9 @@
 #include "entity_text.h"
 #include "engine_text.h"
 
-using namespace entity;
-
-TextEntity::TextEntity(const std::string& fontPath) {
-    TTF_Font* copiedFont = engine::TextEngine::get().copyFont(fontPath);
-    TTF_TextEngine* textEngine = engine::TextEngine::get().getTextEngine();
+rgp::TextEntity::TextEntity(const std::string& fontPath) {
+    TTF_Font* copiedFont = rgp::TextEngine::get().copyFont(fontPath);
+    TTF_TextEngine* textEngine = rgp::TextEngine::get().getTextEngine();
 
     m_font = copiedFont;
 
@@ -19,36 +17,32 @@ TextEntity::TextEntity(const std::string& fontPath) {
         );
 }
 
-TextEntity::~TextEntity() {
+rgp::TextEntity::~TextEntity() {
     if (m_text) {
+        SDL_Log("Deleting text: %s", m_text->text);
         TTF_DestroyText(m_text);
         m_text = nullptr;
     }
 
-    if (m_font) {
-        TTF_CloseFont(m_font);
-        m_font = nullptr;
-    }
+    m_font = nullptr;
 }
 
-void TextEntity::updateText(const std::string& text) {
+void rgp::TextEntity::setText(const std::string& text) {
     if (m_text)
         TTF_SetTextString(m_text, text.c_str(), text.length());
 }
 
-void TextEntity::setColor(float r, float g, float b, float a) {
+void rgp::TextEntity::setColor(SDL_Color color) {
     if (m_text)
-        TTF_SetTextColorFloat(m_text, r, g, b, a);
+        TTF_SetTextColorFloat(
+            m_text, color.r, color.g, color.b, color.a
+        );
 }
 
-void TextEntity::setColor(float r, float g, float b) {
-    setColor(r, g, b, SDL_ALPHA_OPAQUE_FLOAT);
-}
-
-void TextEntity::draw() {
+void rgp::TextEntity::draw() {
     if (!m_text) return;
 
-    if (!TTF_DrawRendererText(m_text, m_pos.x, m_pos.y))
+    if (!TTF_DrawRendererText(m_text, getX(), getY()))
         throw std::runtime_error(
             std::string("Text drawing failed: ") + SDL_GetError()
         );

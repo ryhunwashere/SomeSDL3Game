@@ -34,11 +34,20 @@
     <Filter Include="Header Files\Interface">
       <UniqueIdentifier>{51de335e-45e4-41c5-8e41-55f420e0516b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Common">
-      <UniqueIdentifier>{0f98fe25-7c1e-45f0-b8e8-82eedb55ab55}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Abstract">
       <UniqueIdentifier>{63a97504-7d70-421e-97c3-c4c7118e4626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{b10aa086-4e2c-4833-8c53-5b62b4a440e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{3624d962-d92e-4923-b66e-fc0c08ada350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Struct">
+      <UniqueIdentifier>{84b9959e-0b9d-4d6f-b8cb-a1b2b54d6091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{8444da52-aab1-4fa2-815b-a2a82b60f8b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +67,18 @@
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\engine_text.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\manager_scene.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene_level.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entity_player.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine_texture.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,14 +104,38 @@
     <ClInclude Include="src\entity.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="src\common_vector2.h">
-      <Filter>Header Files\Common</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine_text.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\abstract_singleton.h">
       <Filter>Header Files\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\manager_scene.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene_level.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\struct_framecontext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interface_eventhandlable.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entity_player.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine_texture.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\struct_asset.h">
+      <Filter>Header Files\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="src\struct_vector2f.h">
+      <Filter>Header Files\Struct</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
