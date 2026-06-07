@@ -2,6 +2,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <cassert>
 #include "manager_scene.h"
 #include "scene_mainmenu.h"
 #include "scene_level1.h"
@@ -22,10 +23,10 @@ rgp::SceneManager::~SceneManager() {
 void rgp::SceneManager::changeScene(SceneEnum targetScene) {
 	auto it = m_sceneMap.find(targetScene);
 
-	if (it == m_sceneMap.end())
-		throw std::runtime_error("Scene not found: " + std::to_string(targetScene));
+	assert(it != m_sceneMap.end());
+	assert(it->second);
 
-	m_currentScene = std::move(it->second());
+	m_currentScene = it->second();
 }
 
 void rgp::SceneManager::updateCurrentScene() {

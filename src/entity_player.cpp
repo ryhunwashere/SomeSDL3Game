@@ -1,5 +1,6 @@
 #include <string>
 #include <stdexcept>
+#include <cassert>
 #include "entity_player.h"
 #include "engine_texture.h"
 #include "engine_renderer.h"
@@ -22,8 +23,7 @@ rgp::PlayerEntity::~PlayerEntity() {
 }
 
 void rgp::PlayerEntity::draw() {
-	if (!m_textureAsset->texture)
-		throw std::runtime_error("Texture for player is null");
+	assert(m_textureAsset->texture && "Texture for player is null");
 
 	SDL_FRect dstRect{ 
 		getX(),
