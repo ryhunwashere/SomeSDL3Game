@@ -10,16 +10,8 @@
 constexpr float TEXTURE_SIZE = 100.0f;
 constexpr float MOVE_SPEED = 10.0f;
 
-rgp::PlayerEntity::PlayerEntity(const std::string& texturePath) : 
-	m_textureAsset(&rgp::TextureEngine::get().loadPNGTexture(texturePath, TEXTURE_SIZE)) {}
-
-rgp::PlayerEntity::~PlayerEntity() {
-	if (m_textureAsset->texture) {
-		SDL_Log("Unloading player texture...");
-		rgp::TextureEngine::get().unloadTexture(m_textureAsset->path);
-	}
-
-	SDL_Log("Player entity unloaded.");
+rgp::PlayerEntity::PlayerEntity(const std::string& texturePath) {
+	m_textureAsset = rgp::TextureEngine::get().loadPNG(texturePath, TEXTURE_SIZE);
 }
 
 void rgp::PlayerEntity::draw() {
