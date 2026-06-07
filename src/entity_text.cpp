@@ -4,11 +4,8 @@
 #include "engine_text.h"
 
 rgp::TextEntity::TextEntity(const std::string& fontPath) {
-    TTF_Font* copiedFont = rgp::TextEngine::get().copyFont(fontPath);
-    TTF_TextEngine* textEngine = rgp::TextEngine::get().getTextEngine();
-
-    m_font = copiedFont;
-    m_text = TTF_CreateText(textEngine, m_font, "", 1);
+    m_font = rgp::TextEngine::get().copyFont(fontPath);
+    m_text = TTF_CreateText(rgp::TextEngine::get().getTextEngine(), m_font, "", 1);
 
     if (!m_text)
         throw std::runtime_error(

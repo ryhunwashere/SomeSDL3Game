@@ -25,9 +25,7 @@ void rgp::SceneManager::changeScene(SceneEnum targetScene) {
 	if (it == m_sceneMap.end())
 		throw std::runtime_error("Scene not found: " + std::to_string(targetScene));
 
-	std::unique_ptr<Scene> newScene = it->second();
-
-	m_currentScene = std::move(newScene);
+	m_currentScene = std::move(it->second());
 }
 
 void rgp::SceneManager::updateCurrentScene() {

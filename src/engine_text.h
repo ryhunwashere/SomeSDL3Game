@@ -26,6 +26,5 @@ namespace rgp {
         TTF_TextEngine* m_textEngine = nullptr;
 
         std::unordered_map<std::string, FontAsset> m_fontMap;
-        std::vector<TextEntity> m_textEntities; // TODO: use fixed size array in later stage of dev
     };
 }

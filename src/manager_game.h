@@ -19,9 +19,5 @@ namespace rgp {
     private:
         GameManager();
         ~GameManager() override;
-
-        //std::unique_ptr<TextEntity> m_timerText;
-        //std::unique_ptr<PlayerEntity> m_player;
-        //std::array<char, 32> m_textBuffer{};
     };
 };

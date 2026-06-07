@@ -15,8 +15,8 @@ namespace rgp {
         enum SceneEnum { MAIN_MENU, LEVEL_ONE };
 
         void changeScene(SceneEnum targetScene);    
-        void updateCurrentScene();  // called in the main update loop
-        void drawCurrentScene();    // called in the main draw loop
+        void updateCurrentScene();
+        void drawCurrentScene();
 
     private:
         SceneManager();
