@@ -10,7 +10,7 @@ namespace rgp {
         std::string path;
         float size = 0.0f;
 
-        TextureAsset(SDL_Texture* texture, const std::string& path, float size) 
+        TextureAsset(SDL_Texture* texture, const std::string path, float size) 
             : texture(texture), path(path), size(size)
         {
             assert(texture != nullptr && "Texture is null.");

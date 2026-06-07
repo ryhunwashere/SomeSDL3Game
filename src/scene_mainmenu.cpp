@@ -9,16 +9,16 @@
 #include "util_logger.h"
 
 rgp::MainMenuScene::MainMenuScene() : 
-    m_initTime(rgp::Util::getElapsedGameTime()), 
+    m_initTime(rgp::Util::getElapsedGameTime()),
     m_timerText(std::make_unique<rgp::TextEntity>("ZenMaruGothic-Medium.ttf")) 
 {
 	m_timerText->setColor({ 255, 255, 255, SDL_ALPHA_OPAQUE });
 
-	SDL_Log("\nMain menu scene loaded.");
+	SDL_Log("Main menu scene loaded.");
 }
 
 rgp::MainMenuScene::~MainMenuScene() {
-	SDL_Log("\nMain menu scene unloaded.");
+	SDL_Log("Main menu scene unloaded.");
 }
 
 void rgp::MainMenuScene::update() {

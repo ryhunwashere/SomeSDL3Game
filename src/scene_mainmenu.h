@@ -19,6 +19,5 @@ namespace rgp {
 
 		double m_now = 0.0;
 		std::array<char, 32> m_textBuffer{};
-
 	};
 };

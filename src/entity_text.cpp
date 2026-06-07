@@ -20,7 +20,11 @@ rgp::TextEntity::~TextEntity() {
         m_text = nullptr;
     }
 
-    m_font = nullptr;
+    if (m_font) {
+        SDL_Log("Deleting copied font.");
+        TTF_CloseFont(m_font);
+        m_font = nullptr;
+    }
 }
 
 void rgp::TextEntity::setText(const std::string& text) {
