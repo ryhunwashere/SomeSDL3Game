@@ -8,8 +8,7 @@ rgp::TextEntity::TextEntity(const std::string& fontPath) {
     TTF_TextEngine* textEngine = rgp::TextEngine::get().getTextEngine();
 
     m_font = copiedFont;
-
-    m_text = TTF_CreateText(textEngine, copiedFont, "", 1);
+    m_text = TTF_CreateText(textEngine, m_font, "", 1);
 
     if (!m_text)
         throw std::runtime_error(

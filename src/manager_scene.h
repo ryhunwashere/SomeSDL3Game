@@ -1,21 +1,28 @@
 #pragma once
-#include <SDL3/SDL.h>
+#include <unordered_map>
+#include <memory>
+#include <functional>
 #include "abstract_singleton.h"
 #include "interface_drawable.h"
 #include "interface_updatable.h"
-#include "interface_eventhandlable.h"
+#include "scene.h"
 
 namespace rgp {
-    class SceneManager : public Singleton<SceneManager>, public IUpdatable, public IDrawable, public IEventHandlable {
+    class SceneManager : public Singleton<SceneManager> {
         friend class Singleton<SceneManager>;
 
     public:
-        void update() override;
-        void draw() override;
-        void handleEvent(SDL_Event* event) override;
+        enum SceneEnum { MAIN_MENU, LEVEL_ONE };
+
+        void changeScene(SceneEnum targetScene);    
+        void updateCurrentScene();  // called in the main update loop
+        void drawCurrentScene();    // called in the main draw loop
 
     private:
         SceneManager();
-        ~SceneManager() override;
+        ~SceneManager();
+
+        std::unique_ptr<Scene> m_currentScene;
+        std::unordered_map<SceneEnum, std::function<std::unique_ptr<Scene>()>> m_sceneMap;
     };
 };

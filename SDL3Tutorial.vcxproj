@@ -50,7 +50,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -131,17 +131,19 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <UseDynamicDebugging>false</UseDynamicDebugging>
       <OmitFramePointers>false</OmitFramePointers>
       <TreatWarningAsError>true</TreatWarningAsError>
       <EnablePREfast>true</EnablePREfast>
-      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
-      <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -162,7 +164,8 @@
     <PostBuildEvent>
       <Command>xcopy "C:\DevGame\vclib\SDL3_ttf-3.2.0\lib\x64\SDL3_ttf.dll" "$(TargetDir)" /Y /I
 xcopy "C:\DevGame\vclib\SDL3-3.4.8\lib\x64\SDL3.dll" "$(TargetDir)" /Y /I
-xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
+xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I
+xcopy "$(SolutionDir)player1_sprite.png" "$(TargetDir)" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -172,7 +175,7 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -181,11 +184,12 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <DebugInformationFormat>None</DebugInformationFormat>
+      <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -199,7 +203,8 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
     <PostBuildEvent>
       <Command>xcopy "C:\DevGame\vclib\SDL3_ttf-3.2.0\lib\x64\SDL3_ttf.dll" "$(TargetDir)" /Y /I
 xcopy "C:\DevGame\vclib\SDL3-3.4.8\lib\x64\SDL3.dll" "$(TargetDir)" /Y /I
-xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
+xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I
+xcopy "$(SolutionDir)player1_sprite.png" "$(TargetDir)" /Y /I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -212,7 +217,9 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
     <ClCompile Include="src\engine_renderer.cpp" />
     <ClCompile Include="src\engine_text.cpp" />
     <ClCompile Include="src\manager_scene.cpp" />
-    <ClCompile Include="src\scene_level.cpp" />
+    <ClCompile Include="src\scene_mainmenu.cpp" />
+    <ClCompile Include="src\scene_level1.cpp" />
+    <ClCompile Include="src\util_logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity.h" />
@@ -229,10 +236,11 @@ xcopy "$(SolutionDir)ZenMaruGothic-Medium.ttf" "$(TargetDir)" /Y /I</Command>
     <ClInclude Include="src\manager_scene.h" />
     <ClInclude Include="src\engine_texture.h" />
     <ClInclude Include="src\scene.h" />
-    <ClInclude Include="src\scene_level.h" />
-    <ClInclude Include="src\struct_framecontext.h" />
+    <ClInclude Include="src\scene_mainmenu.h" />
+    <ClInclude Include="src\scene_level1.h" />
     <ClInclude Include="src\struct_asset.h" />
     <ClInclude Include="src\struct_vector2f.h" />
+    <ClInclude Include="src\util_logger.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

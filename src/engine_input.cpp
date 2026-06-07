@@ -1,15 +1,27 @@
 #include <SDL3/SDL.h>
+#include <array>
 #include "engine_input.h"
 
-void rgp::InputEngine::updateKeyState(SDL_Scancode scancode, bool isPressed) {
-	m_keystateMap[scancode] = isPressed;
+void rgp::InputEngine::keepTrackOfPreviousState() {
+    m_previousKeys = m_currentKeys;
+}
+
+void rgp::InputEngine::updateKeyDownState(SDL_Scancode scancode, bool isDown) {
+    m_currentKeys[scancode] = isDown;
 }
 
 auto rgp::InputEngine::isKeyDown(SDL_Scancode scancode) const -> bool {
-    auto iterator = m_keystateMap.find(scancode);
+    auto it = m_currentKeys.find(scancode);
+    return (it != m_currentKeys.end()) ? it->second : false;
+}
 
-    if (iterator != m_keystateMap.end())
-        return iterator->second;
+auto rgp::InputEngine::isKeyJustPressed(SDL_Scancode scancode) const -> bool {
+    auto itCurrent = m_currentKeys.find(scancode);
+    bool currentDown = (itCurrent != m_currentKeys.end()) ? itCurrent->second : false;
 
-    return false;
+    auto itPrevious = m_previousKeys.find(scancode);
+    bool previousDown = (itPrevious != m_previousKeys.end()) ? itPrevious->second : false;
+
+    // true if down now, but wasn't down in the last frame
+    return currentDown && !previousDown;
 }

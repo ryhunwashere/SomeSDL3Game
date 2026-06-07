@@ -16,8 +16,8 @@ namespace rgp {
         [[nodiscard]] auto getSize() const -> float { return m_size; }
 
     private:
-        TTF_Text* m_text    = nullptr;
-        TTF_Font* m_font    = nullptr;
-        float m_size        = 16.0f;
+        TTF_Font* m_font;
+        TTF_Text* m_text;
+        float m_size = 16.0f;
     };
 }
