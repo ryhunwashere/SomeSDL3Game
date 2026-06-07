@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include "abstract_singleton.h"
-#include "struct_asset.h"
+#include "struct_asset_texture.h"
 
 namespace rgp {
     class TextureEngine : public Singleton<TextureEngine> {

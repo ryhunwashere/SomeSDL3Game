@@ -9,9 +9,4 @@ namespace rgp {
         std::string path;
         float size = 0.0f;
     };
-
-    struct FontAsset {
-        TTF_Font* font = nullptr;
-        float size = 0.0f;
-    };
 }

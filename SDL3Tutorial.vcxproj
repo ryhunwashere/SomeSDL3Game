@@ -238,7 +238,8 @@ xcopy "$(SolutionDir)player1_sprite.png" "$(TargetDir)" /Y /I</Command>
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\scene_mainmenu.h" />
     <ClInclude Include="src\scene_level1.h" />
-    <ClInclude Include="src\struct_asset.h" />
+    <ClInclude Include="src\struct_asset_font.h" />
+    <ClInclude Include="src\struct_asset_texture.h" />
     <ClInclude Include="src\struct_vector2f.h" />
     <ClInclude Include="src\util_logger.h" />
   </ItemGroup>

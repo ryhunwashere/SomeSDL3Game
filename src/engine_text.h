@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "abstract_singleton.h"
-#include "struct_asset.h"
+#include "struct_asset_font.h"
 #include "entity_text.h"
 
 namespace rgp {

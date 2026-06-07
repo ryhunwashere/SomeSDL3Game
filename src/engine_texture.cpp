@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include "engine_texture.h"
 #include "engine_renderer.h"
-#include "struct_asset.h"
+#include "struct_asset_texture.h"
 
 rgp::TextureEngine::~TextureEngine() {
 	for (const auto& [path, textureAsset] : m_textureMap) {
