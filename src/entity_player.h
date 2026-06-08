@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "interface_drawable.h"
 #include "interface_updatable.h"
-#include "struct_asset_texture.h"
+#include "asset_texture.h"
 
 namespace rgp {
     class PlayerEntity : public Entity, public IDrawable, public IUpdatable {

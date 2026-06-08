@@ -5,7 +5,7 @@
 #include "engine_texture.h"
 #include "engine_renderer.h"
 #include "engine_input.h"
-#include "struct_vector2f.h"
+#include "type_vector2f.h"
 
 constexpr float TEXTURE_SIZE = 100.0f;
 constexpr float MOVE_SPEED = 10.0f;

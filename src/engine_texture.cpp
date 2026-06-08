@@ -3,7 +3,7 @@
 #include <memory>
 #include "engine_texture.h"
 #include "engine_renderer.h"
-#include "struct_asset_texture.h"
+#include "asset_texture.h"
 
 auto rgp::TextureEngine::loadPNG(const std::string &path, const float &initialSize) -> const std::shared_ptr<const TextureAsset> {
     if (auto existing = getTexture(path)) return existing;

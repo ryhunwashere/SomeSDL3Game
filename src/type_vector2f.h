@@ -15,7 +15,7 @@ namespace rgp {
 
         auto operator+(const Vector2F& o) const -> Vector2F { return Vector2F(*this) += o; }
         auto operator-(const Vector2F& o) const -> Vector2F { return Vector2F(*this) -= o; }
-        auto operator*(float scalar)     const  -> Vector2F { return Vector2F(*this) *= scalar; }
-        auto operator/(float scalar)     const  -> Vector2F { return Vector2F(*this) /= scalar; }
+        auto operator*(float scalar)      const -> Vector2F { return Vector2F(*this) *= scalar; }
+        auto operator/(float scalar)      const -> Vector2F { return Vector2F(*this) /= scalar; }
     };
 };

@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 #include "abstract_singleton.h"
-#include "struct_asset_texture.h"
+#include "asset_texture.h"
 
 namespace rgp {
     class TextureEngine : public Singleton<TextureEngine> {
