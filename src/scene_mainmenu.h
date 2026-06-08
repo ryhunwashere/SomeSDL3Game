@@ -15,9 +15,6 @@ namespace rgp {
 
 	private:
 		const double m_initTime;
-		const std::unique_ptr<TextEntity> m_timerText;
-
 		double m_now = 0.0;
-		std::array<char, 32> m_textBuffer{};
 	};
 };

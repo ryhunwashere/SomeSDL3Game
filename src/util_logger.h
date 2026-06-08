@@ -9,7 +9,7 @@ namespace rgp {
 
         /* Get total elapsed time in double since the first tick. */
         [[nodiscard]] static auto getElapsedGameTime() -> double {
-            return static_cast<const double>(SDL_GetTicks()) / 1000.0;
+            return static_cast<const double>(SDL_GetTicks());
         }
     };
 };
