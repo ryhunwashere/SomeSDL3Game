@@ -23,8 +23,10 @@ rgp::TextEngine::TextEngine() {
 rgp::TextEngine::~TextEngine() {
     if (m_textEngine) {
         for (auto& [path, fontAsset] : m_fontMap) {
-            TTF_CloseFont(fontAsset.font);
-            SDL_Log("Unloaded font: %s", path.c_str());
+            if (fontAsset.font) {
+                TTF_CloseFont(fontAsset.font);
+                SDL_Log("Unloaded font: %s", path.c_str());
+            }
         }
 
         TTF_DestroyRendererTextEngine(m_textEngine);
