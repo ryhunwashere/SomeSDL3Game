@@ -11,11 +11,6 @@
 #include "engine_text.h"
 
 rgp::GameManager::GameManager() {
-    if (!SDL_InitSubSystem(SDL_INIT_VIDEO)) 
-        throw std::runtime_error(
-            std::string("SDL video initialization failure: ") + SDL_GetError()
-        );
-
     // ensure these are initiated first
     rgp::RendererEngine::get();
     rgp::TextureEngine::get();

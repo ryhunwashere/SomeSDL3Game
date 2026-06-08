@@ -9,6 +9,11 @@ const char* NULL_RENDERER_ERROR = "Renderer is null";
 const char* NULL_WINDOW_ERROR   = "Window is null";
 
 rgp::RendererEngine::RendererEngine() {
+    if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
+        throw std::runtime_error(
+            std::string("SDL video initialization failure: ") + SDL_GetError()
+        );
+
     m_window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
     if (!m_window)
         throw std::runtime_error(
