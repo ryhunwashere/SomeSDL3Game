@@ -7,11 +7,11 @@
 #include "scene_mainmenu.h"
 #include "scene_level1.h"
 
-rgp::SceneManager::SceneManager() {
-	m_sceneMap[MAIN_MENU] = []() { return std::make_unique<MainMenuScene>(); };
-	m_sceneMap[LEVEL_ONE] = []() { return std::make_unique<LevelOneScene>(); };
+rgp::SceneManager::SceneManager(InputEngine& input, RendererEngine& renderer, TextureEngine& textureEngine) {
+	m_sceneMap[MAIN_MENU] = [this, &input, &renderer]()					{ return std::make_unique<MainMenuScene>(*this, input, renderer); };
+	m_sceneMap[LEVEL_ONE] = [this, &input, &renderer, &textureEngine]() { return std::make_unique<LevelOneScene>(*this, input, renderer, textureEngine); };
 
-	m_currentScene = std::make_unique<MainMenuScene>();
+	changeScene(SceneEnum::MAIN_MENU);
 
 	SDL_Log("Scene manager loaded.");
 }

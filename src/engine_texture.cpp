@@ -5,6 +5,10 @@
 #include "engine_renderer.h"
 #include "asset_texture.h"
 
+rgp::TextureEngine::TextureEngine(RendererEngine& renderer) : m_renderer(renderer) {
+    SDL_Log("Texture engine loaded");
+};
+
 auto rgp::TextureEngine::loadPNG(const std::string &path, const float &initialSize) -> const std::shared_ptr<const TextureAsset> {
     if (auto existing = getTexture(path)) return existing;
 
@@ -16,7 +20,7 @@ auto rgp::TextureEngine::loadPNG(const std::string &path, const float &initialSi
         );
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(
-        RendererEngine::get().getRenderer(), 
+        m_renderer.getRenderer(),
         surface
     );
 

@@ -3,11 +3,12 @@
 #include <string>
 #include "interface_drawable.h"
 #include "entity.h"
+#include "engine_text.h"
 
 namespace rgp {
     class TextEntity : public Entity, public IDrawable {
     public:
-        TextEntity(const std::string& fontPath);
+        TextEntity(const std::string& fontPath, TextEngine& textEngine);
         ~TextEntity() override;
 
         void setText(const std::string& text);

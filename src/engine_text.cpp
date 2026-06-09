@@ -6,11 +6,9 @@
 
 constexpr float DEFAULT_INITIAL_SIZE = 24.0f;
 
-rgp::TextEngine::TextEngine() {
+rgp::TextEngine::TextEngine(RendererEngine& renderer) {
     if (!TTF_Init())
         throwFontError("SDL TTF init error.");
-
-    auto& renderer = rgp::RendererEngine::get();
 
     m_textEngine = TTF_CreateRendererTextEngine(renderer.getRenderer());
 

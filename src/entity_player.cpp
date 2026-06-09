@@ -10,9 +10,16 @@
 constexpr float TEXTURE_SIZE = 100.0f;
 constexpr float MOVE_SPEED = 10.0f;
 
-rgp::PlayerEntity::PlayerEntity(const std::string& texturePath) {
-	m_textureAsset = rgp::TextureEngine::get().loadPNG(texturePath, TEXTURE_SIZE);
-}
+rgp::PlayerEntity::PlayerEntity(
+	const std::string& texturePath,
+	RendererEngine& renderer,
+	TextureEngine& textureEngine,
+	InputEngine& inputEngine
+) :
+	m_renderer(renderer),
+	m_textureEngine(textureEngine),
+	m_input(inputEngine),
+	m_textureAsset(m_textureEngine.loadPNG(texturePath, TEXTURE_SIZE)) {}
 
 void rgp::PlayerEntity::draw() {
 	assert(m_textureAsset->texture && "Texture for player is null");
@@ -24,9 +31,7 @@ void rgp::PlayerEntity::draw() {
 		m_textureAsset->size
 	};
 
-	rgp::RendererEngine::get().draw(
-		1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT, m_textureAsset->texture, &dstRect
-	);
+	m_renderer.draw(1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT, m_textureAsset->texture, &dstRect);
 }
 
 void rgp::PlayerEntity::update() {
@@ -36,13 +41,11 @@ void rgp::PlayerEntity::update() {
 void rgp::PlayerEntity::updatePosition() {
 	Vector2F dir = { 0.0f, 0.0f };
 
-	auto& input = rgp::InputEngine::get();
+	if (m_input.isKeyDown(SDL_SCANCODE_A)) dir.x -= 1.0f;
+	if (m_input.isKeyDown(SDL_SCANCODE_D)) dir.x += 1.0f;
 
-	if (input.isKeyDown(SDL_SCANCODE_A)) dir.x -= 1.0f;
-	if (input.isKeyDown(SDL_SCANCODE_D)) dir.x += 1.0f;
-
-	if (input.isKeyDown(SDL_SCANCODE_W)) dir.y -= 1.0f;
-	if (input.isKeyDown(SDL_SCANCODE_S)) dir.y += 1.0f;
+	if (m_input.isKeyDown(SDL_SCANCODE_W)) dir.y -= 1.0f;
+	if (m_input.isKeyDown(SDL_SCANCODE_S)) dir.y += 1.0f;
 
 	float length = std::sqrt(dir.x * dir.x + dir.y * dir.y);
 

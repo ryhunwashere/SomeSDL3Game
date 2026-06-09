@@ -3,15 +3,16 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
-#include "abstract_singleton.h"
 #include "asset_texture.h"
+#include "engine_renderer.h"
 
 namespace rgp {
-    class TextureEngine : public Singleton<TextureEngine> {
-        friend class Singleton<TextureEngine>;
-
+    class TextureEngine {
     public:
-        auto loadPNG(const std::string& path, const float &initialSize) -> const std::shared_ptr<const TextureAsset>;
+        TextureEngine(RendererEngine& renderer);
+        ~TextureEngine() = default;
+
+        auto loadPNG(const std::string& path, const float& size) -> const std::shared_ptr<const TextureAsset>;
         auto getTexture(const std::string& path) -> std::shared_ptr<const TextureAsset>;
 
         void clearExpiredEntries() {
@@ -21,9 +22,7 @@ namespace rgp {
         }
 
     private:
-        TextureEngine()  = default;
-        ~TextureEngine() = default;
-
+        RendererEngine& m_renderer;
         std::unordered_map<std::string, std::weak_ptr<const TextureAsset>> m_textureMap;
     };
 };

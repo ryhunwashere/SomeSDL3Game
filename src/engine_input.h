@@ -1,13 +1,13 @@
 #pragma once
 #include <unordered_map>
 #include <SDL3/SDL_scancode.h>
-#include "abstract_singleton.h"
 
 namespace rgp {
-    class InputEngine : public Singleton<InputEngine> {
-        friend class Singleton<InputEngine>;
-
+    class InputEngine {
     public:
+        InputEngine() = default;
+        ~InputEngine() = default;
+
         void keepTrackOfPreviousState();
         void updateKeyDownState(SDL_Scancode scancode, bool isDown);
 
@@ -15,9 +15,6 @@ namespace rgp {
         [[nodiscard]] auto isKeyJustPressed(SDL_Scancode scancode) const -> bool;
 
     private:
-        InputEngine() = default;
-        ~InputEngine() = default;
-
         std::unordered_map<SDL_Scancode, bool> m_currentKeys;
         std::unordered_map<SDL_Scancode, bool> m_previousKeys;
     };

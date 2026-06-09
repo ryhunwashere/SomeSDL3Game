@@ -1,16 +1,20 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 
 #include <stdexcept>
+#include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include "manager_game.h"
+#include <memory>
+#include "game.h"
 
 #ifdef NDEBUG
     #include "util_logger.h"
 #endif
 
+std::unique_ptr<rgp::Game> game;
+
 auto SDL_AppInit([[maybe_unused]] void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) -> SDL_AppResult {
     try {
-        rgp::GameManager::get();
+        game = std::make_unique<rgp::Game>();
         return SDL_APP_CONTINUE;
 
     } catch (const std::runtime_error& err) {
@@ -24,7 +28,7 @@ auto SDL_AppEvent([[maybe_unused]] void* appstate, SDL_Event* event) -> SDL_AppR
         if (event->type == SDL_EVENT_QUIT || (event->type == SDL_EVENT_KEY_DOWN && event->key.key == SDLK_ESCAPE))
             return SDL_APP_SUCCESS;
 
-        rgp::GameManager::get().handleEvent(event);
+        game->handleEvent(event);
         return SDL_APP_CONTINUE;
 
     } catch (const std::runtime_error& err) {
@@ -35,8 +39,8 @@ auto SDL_AppEvent([[maybe_unused]] void* appstate, SDL_Event* event) -> SDL_AppR
 
 auto SDL_AppIterate([[maybe_unused]] void* appstate) -> SDL_AppResult {
     try {
-        rgp::GameManager::get().update();
-        rgp::GameManager::get().draw();
+        game->update();
+        game->draw();
 
         return SDL_APP_CONTINUE;
 

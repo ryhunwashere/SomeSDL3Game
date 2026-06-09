@@ -1,12 +1,11 @@
 #include <stdexcept>
 #include <string>
 #include "entity_text.h"
-#include "engine_text.h"
 
-rgp::TextEntity::TextEntity(const std::string& fontPath) {
-    m_font = rgp::TextEngine::get().copyFont(fontPath);
-    m_text = TTF_CreateText(rgp::TextEngine::get().getTextEngine(), m_font, "", 1);
-
+rgp::TextEntity::TextEntity(const std::string& fontPath, TextEngine& textEngine) : 
+    m_font(textEngine.copyFont(fontPath)),
+    m_text(TTF_CreateText(textEngine.getTextEngine(), m_font, "", 1))
+{
     if (!m_text)
         throw std::runtime_error(
             std::string("Text entity creation failed: ") + SDL_GetError()

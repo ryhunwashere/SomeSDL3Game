@@ -4,9 +4,16 @@
 #include "engine_input.h"
 #include "engine_renderer.h"
 
-rgp::LevelOneScene::LevelOneScene() {
-	m_player = std::make_unique<rgp::PlayerEntity>("player1_sprite.png");
-
+rgp::LevelOneScene::LevelOneScene(SceneManager& sceneManager, InputEngine& inputEngine, RendererEngine& renderer, TextureEngine& textureEngine) :
+	Scene(sceneManager, inputEngine, renderer), 
+	m_sceneManager(sceneManager),
+	m_player(std::make_unique<rgp::PlayerEntity>(
+		"player1_sprite.png",
+		renderer,
+		textureEngine,
+		inputEngine
+	))
+{
 	SDL_Log("Level 1 scene loaded.");
 }
 
@@ -17,11 +24,11 @@ rgp::LevelOneScene::~LevelOneScene() {
 void rgp::LevelOneScene::update() {
 	m_player->update();
 
-	if (rgp::InputEngine::get().isKeyJustPressed(SDL_SCANCODE_P))
-		rgp::SceneManager::get().changeScene(SceneManager::MAIN_MENU);
+	if (m_inputEngine.isKeyJustPressed(SDL_SCANCODE_P))
+		m_sceneManager.changeScene(SceneManager::MAIN_MENU);
 }
 
 void rgp::LevelOneScene::draw() {
-	rgp::RendererEngine::get().draw(0.0, 0.0, 0.0, SDL_ALPHA_OPAQUE);
+	m_renderer.draw(0.0, 0.0, 0.0, SDL_ALPHA_OPAQUE);
 	m_player->draw();
 }
