@@ -11,7 +11,7 @@ rgp::SceneManager::SceneManager(InputEngine& input, RendererEngine& renderer, Te
 	m_sceneMap[MAIN_MENU] = [this, &input, &renderer]()					{ return std::make_unique<MainMenuScene>(*this, input, renderer); };
 	m_sceneMap[LEVEL_ONE] = [this, &input, &renderer, &textureEngine]() { return std::make_unique<LevelOneScene>(*this, input, renderer, textureEngine); };
 
-	changeScene(SceneEnum::MAIN_MENU);
+	changeScene(SceneEnum::LEVEL_ONE);
 
 	SDL_Log("Scene manager loaded.");
 }
