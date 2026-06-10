@@ -1,17 +1,21 @@
 #include <SDL3/SDL.h>
 #include <memory>
-#include <stdexcept>
 #include <string>
 #include <cassert>
 #include "manager_scene.h"
 #include "scene_mainmenu.h"
 #include "scene_level1.h"
 
-rgp::SceneManager::SceneManager(InputEngine& input, RendererEngine& renderer, TextureEngine& textureEngine) {
-	m_sceneMap[MAIN_MENU] = [this, &input, &renderer]()					{ return std::make_unique<MainMenuScene>(*this, input, renderer); };
-	m_sceneMap[LEVEL_ONE] = [this, &input, &renderer, &textureEngine]() { return std::make_unique<LevelOneScene>(*this, input, renderer, textureEngine); };
+rgp::SceneManager::SceneManager(InputEngine& inputEngine, RendererEngine& renderer, TextureEngine& textureEngine) {
+	m_sceneMap[MAIN_MENU] = [this, &inputEngine, &renderer] {
+		return std::make_unique<MainMenuScene>(*this, inputEngine, renderer);
+	};
 
-	changeScene(SceneEnum::LEVEL_ONE);
+	m_sceneMap[LEVEL_ONE] = [this, &inputEngine, &renderer, &textureEngine] {
+		return std::make_unique<LevelOneScene>(*this, inputEngine, renderer, textureEngine);
+	};
+
+	changeScene(LEVEL_ONE);
 
 	SDL_Log("Scene manager loaded.");
 }
@@ -20,8 +24,8 @@ rgp::SceneManager::~SceneManager() {
 	SDL_Log("Scene manager unloaded.");
 }
 
-void rgp::SceneManager::changeScene(SceneEnum targetScene) {
-	auto it = m_sceneMap.find(targetScene);
+void rgp::SceneManager::changeScene(const SceneEnum targetScene) {
+	const auto it = m_sceneMap.find(targetScene);
 
 	assert(it != m_sceneMap.end());
 	assert(it->second);
@@ -29,12 +33,12 @@ void rgp::SceneManager::changeScene(SceneEnum targetScene) {
 	m_currentScene = it->second();
 }
 
-void rgp::SceneManager::updateCurrentScene() {
-	if (m_currentScene.get())
-		m_currentScene.get()->update();
+void rgp::SceneManager::updateCurrentScene() const {
+	if (m_currentScene)
+		m_currentScene->update();
 }
 
-void rgp::SceneManager::drawCurrentScene() {
-	if (m_currentScene.get())
-		m_currentScene.get()->draw();
+void rgp::SceneManager::drawCurrentScene() const {
+	if (m_currentScene)
+		m_currentScene->draw();
 }

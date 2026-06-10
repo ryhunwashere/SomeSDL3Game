@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-#include <memory>
 #include "interface_drawable.h"
 #include "interface_updatable.h"
 
@@ -14,7 +12,7 @@ namespace rgp {
         Scene(SceneManager& sceneManager, InputEngine& inputEngine, RendererEngine& renderer)
             : m_sceneManager(sceneManager), m_inputEngine(inputEngine), m_renderer(renderer) {}
 
-        virtual ~Scene() = default;
+        ~Scene() override = default;
 
     protected:
         SceneManager& m_sceneManager;

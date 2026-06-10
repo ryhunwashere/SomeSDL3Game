@@ -18,4 +18,4 @@ namespace rgp {
         std::unordered_map<SDL_Scancode, bool> m_currentKeys;
         std::unordered_map<SDL_Scancode, bool> m_previousKeys;
     };
-};
+}

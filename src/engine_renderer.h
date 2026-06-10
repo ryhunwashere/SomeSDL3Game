@@ -7,10 +7,10 @@ namespace rgp {
         RendererEngine();
         ~RendererEngine();
 
-        void draw(float red, float green, float blue, float alpha);
-        void draw(float red, float green, float blue, float alpha, SDL_Texture* texture, const SDL_FRect* dstrect);
-        void present();
-        void clear();
+        void draw(float red, float green, float blue, float alpha) const;
+        void draw(float red, float green, float blue, float alpha, SDL_Texture* texture, const SDL_FRect* dstrect) const;
+        void present() const;
+        void clear() const;
         [[nodiscard]] auto getRenderer() const -> SDL_Renderer*;
 
     private:

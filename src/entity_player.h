@@ -32,4 +32,4 @@ namespace rgp {
         std::shared_ptr<const TextureAsset> m_textureAsset;
         void updatePosition();
     };
-};
+}

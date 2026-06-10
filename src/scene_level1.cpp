@@ -7,7 +7,7 @@
 rgp::LevelOneScene::LevelOneScene(SceneManager& sceneManager, InputEngine& inputEngine, RendererEngine& renderer, TextureEngine& textureEngine) :
 	Scene(sceneManager, inputEngine, renderer), 
 	m_sceneManager(sceneManager),
-	m_player(std::make_unique<rgp::PlayerEntity>(
+	m_player(std::make_unique<PlayerEntity>(
 		"player1_sprite.png",
 		renderer,
 		textureEngine,

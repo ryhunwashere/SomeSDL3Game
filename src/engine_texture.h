@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL3/SDL.h>
 #include <unordered_map>
 #include <string>
 #include <memory>
@@ -9,10 +8,10 @@
 namespace rgp {
     class TextureEngine {
     public:
-        TextureEngine(RendererEngine& renderer);
+        explicit TextureEngine(RendererEngine& renderer);
         ~TextureEngine() = default;
 
-        auto loadPNG(const std::string& path, const float& size) -> const std::shared_ptr<const TextureAsset>;
+        auto loadPNG(const std::string& path, float size) -> std::shared_ptr<const TextureAsset>;
         auto getTexture(const std::string& path) -> std::shared_ptr<const TextureAsset>;
 
         void clearExpiredEntries() {
@@ -25,4 +24,4 @@ namespace rgp {
         RendererEngine& m_renderer;
         std::unordered_map<std::string, std::weak_ptr<const TextureAsset>> m_textureMap;
     };
-};
+}

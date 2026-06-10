@@ -12,4 +12,4 @@ namespace rgp {
             return static_cast<const double>(SDL_GetTicks());
         }
     };
-};
+}

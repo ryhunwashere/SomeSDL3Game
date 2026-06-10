@@ -1,9 +1,5 @@
 #pragma once
-#include <memory>
-#include <array>
 #include "scene.h"
-#include "entity_text.h"
-#include "manager_scene.h"
 
 namespace rgp {
 	class MainMenuScene : public Scene {
@@ -19,4 +15,4 @@ namespace rgp {
 		const double m_initTime;
 		double m_now = 0.0;
 	};
-};
+}

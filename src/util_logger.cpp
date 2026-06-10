@@ -16,14 +16,11 @@ void rgp::Util::logMessage(const std::string& message) {
         return;
     }
 
-    std::time_t now = std::time(nullptr);
+    const std::time_t now = std::time(nullptr);
 
     std::tm timeInfo;
-#if defined(_MSC_VER)
+
     localtime_s(&timeInfo, &now);
-#else
-    localtime_r(&now, &timeInfo);
-#endif
 
     std::array<char, 20> timestamp{};
     std::strftime(timestamp.data(), timestamp.size(), "%Y-%m-%d %H:%M:%S", &timeInfo);

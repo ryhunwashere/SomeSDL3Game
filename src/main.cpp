@@ -50,7 +50,7 @@ auto SDL_AppIterate([[maybe_unused]] void* appstate) -> SDL_AppResult {
     }
 }
 
-void SDL_AppQuit([[maybe_unused]] void* appstate, SDL_AppResult result) {
+void SDL_AppQuit([[maybe_unused]] void* appstate, const SDL_AppResult result) {
     if (result != SDL_APP_SUCCESS) {
 #ifdef NDEBUG
         rgp::Util::logMessage(SDL_GetError());

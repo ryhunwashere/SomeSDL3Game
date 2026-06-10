@@ -4,7 +4,6 @@
 
 #include "engine_renderer.h"
 #include "engine_texture.h"
-#include "engine_text.h"
 #include "engine_input.h"
 
 #include "manager_scene.h"
@@ -18,14 +17,13 @@ namespace rgp {
 
         void update() override;
         void draw() override;
-        void handleEvent(SDL_Event* event);
+        void handleEvent(const SDL_Event* event);
 
     private:
         RendererEngine m_renderer;
         TextureEngine m_textureEngine;
-        TextEngine m_textEngine;
         InputEngine m_inputEngine;
 
         SceneManager m_sceneManager;
     };
-};
+}

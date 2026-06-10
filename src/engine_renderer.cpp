@@ -4,9 +4,9 @@
 
 constexpr int WINDOW_WIDTH      = 800;
 constexpr int WINDOW_HEIGHT     = 600;
-const char* WINDOW_TITLE        = "This is a window";
-const char* NULL_RENDERER_ERROR = "Renderer is null";
-const char* NULL_WINDOW_ERROR   = "Window is null";
+auto WINDOW_TITLE               = "This is a window";
+auto NULL_RENDERER_ERROR        = "Renderer is null";
+auto NULL_WINDOW_ERROR          = "Window is null";
 
 rgp::RendererEngine::RendererEngine() {
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
@@ -22,7 +22,7 @@ rgp::RendererEngine::RendererEngine() {
 
     SDL_Log("Window initialized.");
 
-    SDL_PropertiesID props = SDL_CreateProperties();
+    const SDL_PropertiesID props = SDL_CreateProperties();
     SDL_SetPointerProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, m_window);
     m_renderer = SDL_CreateRendererWithProperties(props);
     SDL_DestroyProperties(props);
@@ -68,7 +68,7 @@ auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
     return m_renderer;
 }
 
-void rgp::RendererEngine::draw(float red, float green, float blue, float alpha) {
+void rgp::RendererEngine::draw(const float red, const float green, const float blue, const float alpha) const {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
@@ -78,12 +78,19 @@ void rgp::RendererEngine::draw(float red, float green, float blue, float alpha) 
         );
 }
 
-void rgp::RendererEngine::draw(float r, float g, float b, float a, SDL_Texture* texture, const SDL_FRect* dstrect) {
+void rgp::RendererEngine::draw(
+    const float red,
+    const float green,
+    const float blue,
+    const float alpha,
+    SDL_Texture* texture,
+    const SDL_FRect* dstrect) const
+{
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
-    if (!SDL_SetTextureColorModFloat(texture, r, g, b) ||
-        !SDL_SetTextureAlphaModFloat(texture, a)) {
+    if (!SDL_SetTextureColorModFloat(texture, red, green, blue) ||
+        !SDL_SetTextureAlphaModFloat(texture, alpha)) {
         throw std::runtime_error(
             std::string("Set texture mod error: ") + SDL_GetError()
         );
@@ -95,7 +102,7 @@ void rgp::RendererEngine::draw(float r, float g, float b, float a, SDL_Texture* 
         );
 }
 
-void rgp::RendererEngine::present() {
+void rgp::RendererEngine::present() const {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
@@ -105,7 +112,7 @@ void rgp::RendererEngine::present() {
         );
 }
 
-void rgp::RendererEngine::clear() {
+void rgp::RendererEngine::clear() const {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 

@@ -1,7 +1,9 @@
 #include <string>
-#include <stdexcept>
 #include <cassert>
 #include "entity_player.h"
+
+#include <complex>
+
 #include "engine_texture.h"
 #include "engine_renderer.h"
 #include "engine_input.h"
@@ -24,7 +26,7 @@ rgp::PlayerEntity::PlayerEntity(
 void rgp::PlayerEntity::draw() {
 	assert(m_textureAsset->texture && "Texture for player is null");
 
-	SDL_FRect dstRect{ 
+	const SDL_FRect dstRect{
 		getX(),
 		getY(),
 		m_textureAsset->size,
@@ -47,9 +49,7 @@ void rgp::PlayerEntity::updatePosition() {
 	if (m_input.isKeyDown(SDL_SCANCODE_W)) dir.y -= 1.0f;
 	if (m_input.isKeyDown(SDL_SCANCODE_S)) dir.y += 1.0f;
 
-	float length = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-
-	if (length > 1.0f) dir /= length;
+	if (const float length = std::sqrt(dir.x * dir.x + dir.y * dir.y); length > 1.0f) dir /= length;
 
 	movePosition(dir * MOVE_SPEED);
 }
