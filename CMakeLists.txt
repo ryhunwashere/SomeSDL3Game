@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(SDL3Tutorial LANGUAGES CXX C)
 
-# ============================================================
-# C++ / C standards
-# ============================================================
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -11,18 +8,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-# ============================================================
-# SDL3 / SDL3_ttf paths
-# Mirrors the hard-coded paths in the .vcxproj.
-# Override these on the command line if your layout differs:
-#   cmake -DSDL3_ROOT=C:/MyLibs/SDL3-3.4.8 ...
-# ============================================================
 set(SDL3_ROOT     "C:/DevGame/vclib/SDL3-3.4.8"     CACHE PATH "Root of SDL3 installation")
 set(SDL3_TTF_ROOT "C:/DevGame/vclib/SDL3_ttf-3.2.0" CACHE PATH "Root of SDL3_ttf installation")
 
-# ============================================================
-# Source files
-# ============================================================
 set(SOURCES
         src/engine_input.cpp
         src/engine_texture.cpp
@@ -37,34 +25,28 @@ set(SOURCES
 )
 
 set(HEADERS
-        src/entity.h
-        src/entity_player.h
-        src/interface_drawable.h
-        src/interface_eventhandlable.h
-        src/interface_updatable.h
-        src/game.h
-        src/engine_input.h
-        src/engine_renderer.h
-        src/manager_scene.h
-        src/engine_texture.h
-        src/scene.h
-        src/scene_mainmenu.h
-        src/scene_level1.h
-        src/asset_texture.h
-        src/type_vector2f.h
-        src/util_logger.h
+        include/entity.h
+        include/entity_player.h
+        include/interface_drawable.h
+        include/interface_eventhandlable.h
+        include/interface_updatable.h
+        include/game.h
+        include/engine_input.h
+        include/engine_renderer.h
+        include/manager_scene.h
+        include/engine_texture.h
+        include/scene.h
+        include/scene_mainmenu.h
+        include/scene_level1.h
+        include/asset_texture.h
+        include/type_vector2f.h
+        include/util_logger.h
 )
 
-# ============================================================
-# Executable
-# ============================================================
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
-# ============================================================
-# Include directories
-# ============================================================
 target_include_directories(${PROJECT_NAME} PRIVATE
-        "${CMAKE_SOURCE_DIR}/src"
+        "${CMAKE_SOURCE_DIR}/include"
 )
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE
@@ -72,9 +54,6 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE
         "${SDL3_TTF_ROOT}/include"
 )
 
-# ============================================================
-# Link libraries
-# ============================================================
 target_link_directories(${PROJECT_NAME} PRIVATE
         "${SDL3_ROOT}/lib/x64"
         "${SDL3_TTF_ROOT}/lib/x64"
@@ -85,9 +64,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         SDL3_ttf.lib
 )
 
-# ============================================================
-# Compiler options (mirroring Debug|x64 and Release|x64 settings)
-# ============================================================
 target_compile_definitions(${PROJECT_NAME} PRIVATE
         $<$<CONFIG:Debug>:_DEBUG;_CONSOLE>
         $<$<CONFIG:Release>:NDEBUG;_CONSOLE>
@@ -125,18 +101,13 @@ if(MSVC)
             >
     )
 
-    # Link-time code generation for Release (mirrors LinkTimeCodeGeneration=UseLinkTimeCodeGeneration)
     target_link_options(${PROJECT_NAME} PRIVATE
             $<$<CONFIG:Release>:/LTCG>
             /MANIFEST                   # Enable manifest
     )
 endif()
 
-# ============================================================
-# Post-build: copy DLLs and assets next to the executable
-# Mirrors the PostBuildEvent xcopy commands in the .vcxproj
-# ============================================================
-set(ASSET_SOURCE_DIR "${CMAKE_SOURCE_DIR}")   # same as $(SolutionDir)
+set(ASSET_SOURCE_DIR "${CMAKE_SOURCE_DIR}")
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -158,10 +129,6 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMENT "Copying SDL3 DLLs and game assets to output directory"
 )
 
-# ============================================================
-# Segment heap manifest (EnableSegmentHeap=true)
-# Inject the application manifest with heapType="segmentHeap"
-# ============================================================
 if(MSVC)
     set(MANIFEST_CONTENT
             "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>

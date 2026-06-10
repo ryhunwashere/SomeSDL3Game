@@ -26,37 +26,25 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d79e61c5-19e7-4180-901a-80939b6a26bd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/SDL3Tutorial.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/SDL3Tutorial.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDL3Tutorial.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/SDL3Tutorial.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/asset_font.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/asset_texture.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/asset_texture.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine_input.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine_input.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine_input.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine_input.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine_renderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine_renderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine_renderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine_renderer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine_text.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine_text.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine_texture.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine_texture.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine_texture.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine_texture.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity_player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity_player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity_player.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity_player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity_text.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity_text.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/manager_scene.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager_scene.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/manager_scene.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager_scene.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene_level1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene_level1.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene_level1.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene_level1.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene_mainmenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene_mainmenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene_mainmenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene_mainmenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/type_vector2f.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/type_vector2f.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util_logger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/util_logger.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util_logger.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/util_logger.h" afterDir="false" />
+    <list default="true" id="d79e61c5-19e7-4180-901a-80939b6a26bd" name="Changes" comment="major refactor to move to use cmake (it's so fast on god)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/asset_texture.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/asset_texture.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine_input.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/engine_input.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine_renderer.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/engine_renderer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine_texture.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/engine_texture.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/entity.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity_player.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/entity_player.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/game.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface_drawable.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/interface_drawable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface_eventhandlable.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/interface_eventhandlable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interface_updatable.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/interface_updatable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/manager_scene.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/manager_scene.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scene.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/scene.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scene_level1.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/scene_level1.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scene_mainmenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/scene_mainmenu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/type_vector2f.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/type_vector2f.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util_logger.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/util_logger.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,6 +126,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\DevGame\SDL3Tutorial\include" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="SDL3Tutorial" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SDL3Tutorial" TARGET_NAME="SDL3Tutorial" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SDL3Tutorial" RUN_TARGET_NAME="SDL3Tutorial">
       <method v="2">
@@ -158,8 +151,17 @@
       <option name="presentableId" value="Default" />
       <updated>1781099258673</updated>
       <workItem from="1781099263458" duration="203000" />
-      <workItem from="1781099919553" duration="3628000" />
+      <workItem from="1781099919553" duration="4283000" />
     </task>
+    <task id="LOCAL-00001" summary="major refactor to move to use cmake (it's so fast on god)">
+      <option name="closed" value="true" />
+      <created>1781103658003</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1781103658003</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,5 +172,9 @@
     <isAutomaticFoundErrors value="true" />
     <isAutomaticReloadCMake value="true" />
     <isAutomaticBootstrapAfterUpdate value="false" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="major refactor to move to use cmake (it's so fast on god)" />
+    <option name="LAST_COMMIT_MESSAGE" value="major refactor to move to use cmake (it's so fast on god)" />
   </component>
 </project>
