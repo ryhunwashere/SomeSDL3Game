@@ -5,9 +5,9 @@
 #include "interface/interface_drawable.h"
 #include "interface/interface_updatable.h"
 #include "asset/asset_texture.h"
-#include "engine_texture.h"
-#include "engine_renderer.h"
-#include "engine_input.h"
+#include "../engine/engine_texture.h"
+#include "../engine/engine_renderer.h"
+#include "../engine/engine_input.h"
 
 namespace rgp {
     class PlayerEntity : public Entity, public IDrawable, public IUpdatable {

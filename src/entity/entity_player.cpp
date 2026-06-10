@@ -1,6 +1,6 @@
 #include <string>
 #include <cassert>
-#include "engine/entity_player.h"
+#include "../../include/entity/entity_player.h"
 
 #include <complex>
 

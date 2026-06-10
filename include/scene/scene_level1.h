@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include "scene.h"
-#include "engine/entity_player.h"
+#include "entity/entity_player.h"
 #include "engine/engine_texture.h"
 
 namespace rgp {

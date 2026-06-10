@@ -26,7 +26,7 @@ set(SOURCES
 
 set(HEADERS
         include/entity/entity.h
-        include/engine/entity_player.h
+        include/entity/entity_player.h
         include/interface/interface_drawable.h
         include/interface/interface_eventhandlable.h
         include/interface/interface_updatable.h
