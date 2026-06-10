@@ -3,12 +3,13 @@
 #include "manager/manager_scene.h"
 #include "engine/engine_input.h"
 #include "engine/engine_renderer.h"
+#include "constant/constant_asset_path.h"
 
 rgp::LevelOneScene::LevelOneScene(SceneManager& sceneManager, InputEngine& inputEngine, RendererEngine& renderer, TextureEngine& textureEngine) :
 	Scene(sceneManager, inputEngine, renderer), 
 	m_sceneManager(sceneManager),
 	m_player(std::make_unique<PlayerEntity>(
-		"player1_sprite.png",
+		rgp::Constant::PLAYER_ONE_SPRITE_PATH,
 		renderer,
 		textureEngine,
 		inputEngine

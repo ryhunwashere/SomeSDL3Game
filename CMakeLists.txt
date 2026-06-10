@@ -41,6 +41,7 @@ set(HEADERS
         include/asset/asset_texture.h
         include/type/type_vector2f.h
         include/util/util_logger.h
+        include/constant/constant_asset_path.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
@@ -107,7 +108,7 @@ if(MSVC)
     )
 endif()
 
-set(ASSET_SOURCE_DIR "${CMAKE_SOURCE_DIR}")
+set(ASSET_SOURCE_DIR "${CMAKE_SOURCE_DIR}/asset")
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -120,11 +121,11 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ASSET_SOURCE_DIR}/ZenMaruGothic-Medium.ttf"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/ZenMaruGothic-Medium.ttf"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/ZenMaruGothic-Medium.ttf"
 
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ASSET_SOURCE_DIR}/player1_sprite.png"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/player1_sprite.png"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/player1_sprite.png"
 
         COMMENT "Copying SDL3 DLLs and game assets to output directory"
 )
