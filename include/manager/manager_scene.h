@@ -2,8 +2,8 @@
 #include <unordered_map>
 #include <memory>
 #include <functional>
-#include "scene.h"
-#include "engine_texture.h"
+#include "scene/scene.h"
+#include "engine/engine_texture.h"
 
 namespace rgp {
     class InputEngine;

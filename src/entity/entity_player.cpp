@@ -1,13 +1,13 @@
 #include <string>
 #include <cassert>
-#include "entity_player.h"
+#include "engine/entity_player.h"
 
 #include <complex>
 
-#include "engine_texture.h"
-#include "engine_renderer.h"
-#include "engine_input.h"
-#include "type_vector2f.h"
+#include "engine/engine_texture.h"
+#include "engine/engine_renderer.h"
+#include "engine/engine_input.h"
+#include "type/type_vector2f.h"
 
 constexpr float TEXTURE_SIZE = 100.0f;
 constexpr float MOVE_SPEED = 10.0f;

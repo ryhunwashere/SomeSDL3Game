@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include "type_vector2f.h"
+#include "type/type_vector2f.h"
 
 namespace rgp {
     class Entity {

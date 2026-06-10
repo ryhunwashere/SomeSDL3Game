@@ -4,7 +4,7 @@
 #include <ctime>
 #include <array>
 #include <SDL3/SDL.h>
-#include "util_logger.h"
+#include "util/util_logger.h"
 
 const auto FILE_NAME = std::string("error_log.txt");
 

@@ -1,6 +1,6 @@
 #include <SDL3/SDL.h>
 #include <stdexcept>
-#include "engine_renderer.h"
+#include "engine/engine_renderer.h"
 
 constexpr int WINDOW_WIDTH      = 800;
 constexpr int WINDOW_HEIGHT     = 600;

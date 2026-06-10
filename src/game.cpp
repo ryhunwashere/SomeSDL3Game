@@ -1,7 +1,7 @@
 #include <SDL3/SDL.h>
 
 #include "game.h"
-#include "manager_scene.h"
+#include "manager/manager_scene.h"
 
 rgp::Game::Game() :
     m_textureEngine(m_renderer),

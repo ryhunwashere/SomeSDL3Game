@@ -1,8 +1,8 @@
 #include <SDL3/SDL.h>
 #include <stdexcept>
 #include <memory>
-#include "engine_texture.h"
-#include "engine_renderer.h"
+#include "engine/engine_texture.h"
+#include "engine/engine_renderer.h"
 
 rgp::TextureEngine::TextureEngine(RendererEngine& renderer) : m_renderer(renderer) {
     SDL_Log("Texture engine loaded");

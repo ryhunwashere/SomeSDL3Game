@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 #include "scene.h"
-#include "entity_player.h"
-#include "engine_texture.h"
+#include "engine/entity_player.h"
+#include "engine/engine_texture.h"
 
 namespace rgp {
 	class LevelOneScene : public Scene {

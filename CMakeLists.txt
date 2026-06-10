@@ -12,35 +12,35 @@ set(SDL3_ROOT     "C:/DevGame/vclib/SDL3-3.4.8"     CACHE PATH "Root of SDL3 ins
 set(SDL3_TTF_ROOT "C:/DevGame/vclib/SDL3_ttf-3.2.0" CACHE PATH "Root of SDL3_ttf installation")
 
 set(SOURCES
-        src/engine_input.cpp
-        src/engine_texture.cpp
-        src/entity_player.cpp
+        src/engine/engine_input.cpp
+        src/engine/engine_texture.cpp
+        src/entity/entity_player.cpp
         src/game.cpp
         src/main.cpp
-        src/engine_renderer.cpp
-        src/manager_scene.cpp
-        src/scene_mainmenu.cpp
-        src/scene_level1.cpp
-        src/util_logger.cpp
+        src/engine/engine_renderer.cpp
+        src/manager/manager_scene.cpp
+        src/scene/scene_mainmenu.cpp
+        src/scene/scene_level1.cpp
+        src/util/util_logger.cpp
 )
 
 set(HEADERS
-        include/entity.h
-        include/entity_player.h
-        include/interface_drawable.h
-        include/interface_eventhandlable.h
-        include/interface_updatable.h
+        include/entity/entity.h
+        include/engine/entity_player.h
+        include/interface/interface_drawable.h
+        include/interface/interface_eventhandlable.h
+        include/interface/interface_updatable.h
         include/game.h
-        include/engine_input.h
-        include/engine_renderer.h
-        include/manager_scene.h
-        include/engine_texture.h
-        include/scene.h
-        include/scene_mainmenu.h
-        include/scene_level1.h
-        include/asset_texture.h
-        include/type_vector2f.h
-        include/util_logger.h
+        include/engine/engine_input.h
+        include/engine/engine_renderer.h
+        include/manager/manager_scene.h
+        include/engine/engine_texture.h
+        include/scene/scene.h
+        include/scene/scene_mainmenu.h
+        include/scene/scene_level1.h
+        include/asset/asset_texture.h
+        include/type/type_vector2f.h
+        include/util/util_logger.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "entity.h"
-#include "interface_drawable.h"
-#include "interface_updatable.h"
-#include "asset_texture.h"
+#include "entity/entity.h"
+#include "interface/interface_drawable.h"
+#include "interface/interface_updatable.h"
+#include "asset/asset_texture.h"
 #include "engine_texture.h"
 #include "engine_renderer.h"
 #include "engine_input.h"

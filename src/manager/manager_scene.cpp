@@ -2,9 +2,9 @@
 #include <memory>
 #include <string>
 #include <cassert>
-#include "manager_scene.h"
-#include "scene_mainmenu.h"
-#include "scene_level1.h"
+#include "manager/manager_scene.h"
+#include "scene/scene_mainmenu.h"
+#include "scene/scene_level1.h"
 
 rgp::SceneManager::SceneManager(InputEngine& inputEngine, RendererEngine& renderer, TextureEngine& textureEngine) {
 	m_sceneMap[MAIN_MENU] = [this, &inputEngine, &renderer] {

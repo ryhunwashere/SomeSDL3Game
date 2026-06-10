@@ -1,9 +1,9 @@
 #include <SDL3/SDL.h>
 #include <numbers>
-#include "scene_mainmenu.h"
-#include "engine_input.h"
-#include "manager_scene.h"
-#include "util_logger.h"
+#include "scene/scene_mainmenu.h"
+#include "engine/engine_input.h"
+#include "manager/manager_scene.h"
+#include "util/util_logger.h"
 
 rgp::MainMenuScene::MainMenuScene(SceneManager& sceneManager, InputEngine& inputEngine, RendererEngine& renderer) : 
     Scene(sceneManager, inputEngine, renderer),

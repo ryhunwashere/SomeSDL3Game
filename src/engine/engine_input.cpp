@@ -1,5 +1,5 @@
 #include <SDL3/SDL.h>
-#include "engine_input.h"
+#include "engine/engine_input.h"
 
 void rgp::InputEngine::keepTrackOfPreviousState() {
     m_previousKeys = m_currentKeys;

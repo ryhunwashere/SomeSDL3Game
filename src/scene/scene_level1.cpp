@@ -1,8 +1,8 @@
 #include <SDL3/SDL.h>
-#include "scene_level1.h"
-#include "manager_scene.h"
-#include "engine_input.h"
-#include "engine_renderer.h"
+#include "scene/scene_level1.h"
+#include "manager/manager_scene.h"
+#include "engine/engine_input.h"
+#include "engine/engine_renderer.h"
 
 rgp::LevelOneScene::LevelOneScene(SceneManager& sceneManager, InputEngine& inputEngine, RendererEngine& renderer, TextureEngine& textureEngine) :
 	Scene(sceneManager, inputEngine, renderer), 

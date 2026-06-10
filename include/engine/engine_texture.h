@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
-#include "asset_texture.h"
+#include "asset/asset_texture.h"
 #include "engine_renderer.h"
 
 namespace rgp {

@@ -1,6 +1,6 @@
 #pragma once
-#include "interface_drawable.h"
-#include "interface_updatable.h"
+#include "interface/interface_drawable.h"
+#include "interface/interface_updatable.h"
 
 namespace rgp {
     class SceneManager;
