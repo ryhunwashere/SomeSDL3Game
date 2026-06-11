@@ -26,12 +26,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d79e61c5-19e7-4180-901a-80939b6a26bd" name="Changes" comment="refactor to use constant variables for sprite path">
+    <list default="true" id="d79e61c5-19e7-4180-901a-80939b6a26bd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/engine/entity_player.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/entity/entity_player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/scene/scene_level1.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/scene/scene_level1.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/entity_player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/entity_player.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/constant/constant_asset_path.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/constant/constant.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scene/scene_level1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/scene_level1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +67,7 @@
     <option name="directoryName" value="MddfgeEj" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -82,6 +81,7 @@
 }</component>
   <component name="ProjectId" id="3EwozjW3U74Krk53NSsnBnfUyEL" />
   <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
@@ -109,26 +109,26 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.appearance&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\DevGame\SDL3Tutorial\src\factory" />
+      <recent name="C:\DevGame\SDL3Tutorial\include\factory" />
+      <recent name="C:\DevGame\SDL3Tutorial\include\engine" />
       <recent name="C:\DevGame\SDL3Tutorial\include\entity" />
       <recent name="C:\DevGame\SDL3Tutorial\asset" />
-      <recent name="C:\DevGame\SDL3Tutorial\src\util" />
-      <recent name="C:\DevGame\SDL3Tutorial\src\scene" />
-      <recent name="C:\DevGame\SDL3Tutorial\src\manager" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="SDL3Tutorial" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SDL3Tutorial" TARGET_NAME="SDL3Tutorial" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SDL3Tutorial" RUN_TARGET_NAME="SDL3Tutorial">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="SDL3Tutorial" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SDL3Tutorial" TARGET_NAME="SDL3Tutorial" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SDL3Tutorial" RUN_TARGET_NAME="SDL3Tutorial">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -142,7 +142,10 @@
       <option name="presentableId" value="Default" />
       <updated>1781099258673</updated>
       <workItem from="1781099263458" duration="203000" />
-      <workItem from="1781099919553" duration="7745000" />
+      <workItem from="1781099919553" duration="9732000" />
+      <workItem from="1781133999998" duration="896000" />
+      <workItem from="1781180211750" duration="13452000" />
+      <workItem from="1781220779552" duration="449000" />
     </task>
     <task id="LOCAL-00001" summary="major refactor to move to use cmake (it's so fast on god)">
       <option name="closed" value="true" />
@@ -176,7 +179,15 @@
       <option name="project" value="LOCAL" />
       <updated>1781106336177</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="move entity_player.h to entity header folder">
+      <option name="closed" value="true" />
+      <created>1781108334703</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1781108334703</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,6 +204,11 @@
     <MESSAGE value="separate src and include" />
     <MESSAGE value="move files to each its own group" />
     <MESSAGE value="refactor to use constant variables for sprite path" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor to use constant variables for sprite path" />
+    <MESSAGE value="move entity_player.h to entity header folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="move entity_player.h to entity header folder" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
