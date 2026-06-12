@@ -12,10 +12,8 @@ namespace rgp {
         Font& operator=(const Font&) = delete;
 
         [[nodiscard]] auto getFontPtr() const -> TTF_Font* { return m_fontPtr; }
-        [[nodiscard]] auto getFontSize() const -> float { return m_fontSize; }
 
     private:
         TTF_Font* m_fontPtr;
-        float m_fontSize;
     };
 }

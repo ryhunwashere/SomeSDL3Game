@@ -15,12 +15,15 @@ rgp::TextEntity::TextEntity(
 {
     if (!m_textPtr)
         throw std::runtime_error("Failed to create Text Entity: " + std::string(SDL_GetError()));
+
+    SDL_Log("Text Entity created. Text: %s", initialText.c_str());
 }
 
 rgp::TextEntity::~TextEntity() {
     if (m_textPtr) {
         TTF_DestroyText(m_textPtr);
         m_textPtr = nullptr;
+        SDL_Log("Text Entity destroyed.");
     }
 }
 

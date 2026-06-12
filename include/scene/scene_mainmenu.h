@@ -1,17 +1,17 @@
 #pragma once
+#include "game_context.h"
 #include "scene.h"
 
 namespace rgp {
 	class MainMenuScene : public Scene {
 	public:
-		MainMenuScene(SceneManager& sceneManager, InputEngine& inputEngine, RendererEngine& renderer);
+		explicit MainMenuScene(GameContext& ctx);
 		~MainMenuScene() override;
 
-		void update() override;
+		auto update() -> SceneType override;
 		void draw() override;
 
 	private:
-		SceneManager& m_sceneManager;
 		const double m_initTime;
 		double m_now = 0.0;
 	};

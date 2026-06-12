@@ -37,6 +37,7 @@ set(SOURCES
 
 set(HEADERS
         include/game.h
+        include/game_context.h
 
         include/engine/engine_input.h
         include/engine/engine_renderer.h
@@ -70,6 +71,7 @@ set(HEADERS
 
         include/factory/factory_font.h
         include/factory/factory_text.h
+        include/enum/enum_scenetype.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

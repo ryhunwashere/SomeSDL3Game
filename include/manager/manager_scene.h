@@ -2,26 +2,24 @@
 #include <unordered_map>
 #include <memory>
 #include <functional>
+
+#include "game_context.h"
+#include "enum/enum_scenetype.h"
 #include "scene/scene.h"
-#include "engine/engine_texture.h"
 
 namespace rgp {
-    class InputEngine;
-    class RendererEngine;
-
     class SceneManager {
     public:
-        SceneManager(InputEngine& inputEngine, RendererEngine& renderer, TextureEngine& textureEngine);
+        explicit SceneManager(GameContext& ctx);
         ~SceneManager();
 
-        enum SceneEnum { MAIN_MENU, LEVEL_ONE };
-
-        void changeScene(SceneEnum targetScene);    
-        void updateCurrentScene() const;
+        void changeScene(SceneType targetScene);
+        void updateCurrentScene();
         void drawCurrentScene() const;
 
     private:
+        GameContext& m_ctx;
         std::unique_ptr<Scene> m_currentScene;
-        std::unordered_map<SceneEnum, std::function<std::unique_ptr<Scene>()>> m_sceneMap;
+        std::unordered_map<SceneType, std::function<std::unique_ptr<Scene>()>> m_sceneMap;
     };
 }

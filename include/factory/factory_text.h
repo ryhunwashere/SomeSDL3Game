@@ -15,6 +15,10 @@ namespace rgp {
             return std::make_unique<TextEntity>(m_engine, m_factory, fontType, text);
         }
 
+        [[nodiscard]] auto create(FontType fontType) const -> std::unique_ptr<TextEntity> {
+            return std::make_unique<TextEntity>(m_engine, m_factory, fontType, "");
+        }
+
     private:
         const TextEngine& m_engine;
         const FontFactory& m_factory;

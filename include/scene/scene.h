@@ -1,22 +1,17 @@
 #pragma once
-#include "interface/interface_drawable.h"
-#include "interface/interface_updatable.h"
+
+#include "enum/enum_scenetype.h"
 
 namespace rgp {
-    class SceneManager;
-    class InputEngine;
-    class RendererEngine;
-
-    class Scene : public IDrawable, public IUpdatable {
+    class Scene {
     public:
-        Scene(SceneManager& sceneManager, InputEngine& inputEngine, RendererEngine& renderer)
-            : m_sceneManager(sceneManager), m_inputEngine(inputEngine), m_renderer(renderer) {}
+        explicit Scene(GameContext& ctx) : m_ctx(ctx) {}
+        virtual ~Scene() = default;
 
-        ~Scene() override = default;
+        virtual auto update() -> SceneType = 0;
+        virtual void draw() = 0;
 
     protected:
-        SceneManager& m_sceneManager;
-        InputEngine& m_inputEngine;
-        RendererEngine& m_renderer;
+        GameContext& m_ctx;
     };
 }

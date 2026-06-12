@@ -1,26 +1,23 @@
 #pragma once
 #include <memory>
+
+#include "game_context.h"
 #include "scene.h"
 #include "entity/entity_player.h"
-#include "engine/engine_texture.h"
+#include "entity/entity_text.h"
+#include "enum/enum_scenetype.h"
 
 namespace rgp {
 	class LevelOneScene : public Scene {
 	public:
-		LevelOneScene(
-			SceneManager& sceneManager,
-			InputEngine& inputEngine,
-			RendererEngine& renderer,
-			TextureEngine&
-			textureEngine);
-
+		explicit LevelOneScene(GameContext& ctx);
 		~LevelOneScene() override;
 
-		void update() override;
+		auto update() -> SceneType override;
 		void draw() override;
 
 	private:
-		SceneManager& m_sceneManager;
 		std::unique_ptr<PlayerEntity> m_player;
+		std::unique_ptr<TextEntity> m_text;
 	};
 }

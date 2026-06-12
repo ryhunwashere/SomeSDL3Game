@@ -5,7 +5,17 @@
 
 rgp::Game::Game() :
     m_textureEngine(m_renderer),
-    m_sceneManager(m_inputEngine, m_renderer, m_textureEngine)
+    m_textEngine(m_renderer),
+    m_textFactory(m_textEngine, m_fontFactory),
+    m_ctx{
+        .renderer       = m_renderer,
+        .textureEngine  = m_textureEngine,
+        .textEngine     = m_textEngine,
+        .inputEngine    = m_inputEngine,
+        .fontFactory    = m_fontFactory,
+        .textFactory    = m_textFactory,
+    },
+    m_sceneManager(m_ctx)
 {
     SDL_Log("Game manager and subsystems initialized.");
 }
