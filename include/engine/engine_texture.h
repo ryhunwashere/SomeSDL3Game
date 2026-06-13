@@ -8,7 +8,7 @@
 namespace rgp {
     class TextureEngine {
     public:
-        explicit TextureEngine(RendererEngine& renderer);
+        explicit TextureEngine(const RendererEngine& renderer);
         ~TextureEngine() = default;
 
         auto loadPNG(const std::string& path, float size) -> std::shared_ptr<const TextureAsset>;
@@ -21,7 +21,7 @@ namespace rgp {
         }
 
     private:
-        RendererEngine& m_renderer;
+        const RendererEngine& m_renderer;
         std::unordered_map<std::string, std::weak_ptr<const TextureAsset>> m_textureMap;
     };
 }

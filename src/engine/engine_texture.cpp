@@ -4,7 +4,7 @@
 #include "engine/engine_texture.h"
 #include "engine/engine_renderer.h"
 
-rgp::TextureEngine::TextureEngine(RendererEngine& renderer) : m_renderer(renderer) {
+rgp::TextureEngine::TextureEngine(const RendererEngine& renderer) : m_renderer(renderer) {
     SDL_Log("Texture engine loaded");
 }
 

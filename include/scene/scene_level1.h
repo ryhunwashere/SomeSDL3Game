@@ -10,7 +10,7 @@
 namespace rgp {
 	class LevelOneScene : public Scene {
 	public:
-		explicit LevelOneScene(GameContext& ctx);
+		explicit LevelOneScene(const GameContext& ctx);
 		~LevelOneScene() override;
 
 		auto update() -> SceneType override;

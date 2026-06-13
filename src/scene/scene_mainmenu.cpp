@@ -5,7 +5,7 @@
 #include "manager/manager_scene.h"
 #include "util/util_logger.h"
 
-rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
+rgp::MainMenuScene::MainMenuScene(const GameContext& ctx) : Scene(ctx),
     m_initTime(static_cast<float>(Util::getElapsedGameTime()))
 {
 	SDL_Log("Main menu scene loaded.");
@@ -29,5 +29,5 @@ void rgp::MainMenuScene::draw() {
     const auto green = 0.5f + 0.5f * SDL_sinf(m_now + SDL_PI_F * 2 / 3);
     const auto blue = 0.5f + 0.5f * SDL_sinf(m_now + SDL_PI_F * 4 / 3);
 
-    m_ctx.renderer.draw(red, green, blue, SDL_ALPHA_OPAQUE);
+    m_ctx.rendererEngine.draw(red, green, blue, SDL_ALPHA_OPAQUE);
 }

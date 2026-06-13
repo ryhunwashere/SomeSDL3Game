@@ -10,7 +10,7 @@
 namespace rgp {
     class SceneManager {
     public:
-        explicit SceneManager(GameContext& ctx);
+        explicit SceneManager(const GameContext& ctx);
         ~SceneManager();
 
         void changeScene(SceneType targetScene);
@@ -18,7 +18,7 @@ namespace rgp {
         void drawCurrentScene() const;
 
     private:
-        GameContext& m_ctx;
+        const GameContext& m_ctx;
         std::unique_ptr<Scene> m_currentScene;
         std::unordered_map<SceneType, std::function<std::unique_ptr<Scene>()>> m_sceneMap;
     };

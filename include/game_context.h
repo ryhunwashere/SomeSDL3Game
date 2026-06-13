@@ -9,7 +9,7 @@ namespace rgp {
     class TextFactory;
 
     struct GameContext {
-        RendererEngine& renderer;
+        RendererEngine& rendererEngine;
         TextureEngine& textureEngine;
         TextEngine& textEngine;
         InputEngine& inputEngine;

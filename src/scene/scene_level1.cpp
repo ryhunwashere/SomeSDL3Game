@@ -4,10 +4,10 @@
 #include "constant/constant.h"
 #include "factory/factory_text.h"
 
-rgp::LevelOneScene::LevelOneScene(GameContext& ctx) : Scene(ctx),
+rgp::LevelOneScene::LevelOneScene(const GameContext& ctx) : Scene(ctx),
 	m_player(std::make_unique<PlayerEntity>(
 		constant::PLAYER_ONE_SPRITE_PATH,
-		m_ctx.renderer,
+		m_ctx.rendererEngine,
 		m_ctx.textureEngine,
 		m_ctx.inputEngine
 	)),
@@ -31,7 +31,7 @@ auto rgp::LevelOneScene::update() -> SceneType {
 }
 
 void rgp::LevelOneScene::draw() {
-	m_ctx.renderer.draw(0.0, 0.0, 0.0, SDL_ALPHA_OPAQUE);
+	m_ctx.rendererEngine.draw(0.0, 0.0, 0.0, SDL_ALPHA_OPAQUE);
 	m_player->draw();
 	m_text->draw();
 }

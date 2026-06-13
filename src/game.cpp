@@ -8,7 +8,7 @@ rgp::Game::Game() :
     m_textEngine(m_renderer),
     m_textFactory(m_textEngine, m_fontFactory),
     m_ctx{
-        .renderer       = m_renderer,
+        .rendererEngine = m_renderer,
         .textureEngine  = m_textureEngine,
         .textEngine     = m_textEngine,
         .inputEngine    = m_inputEngine,
