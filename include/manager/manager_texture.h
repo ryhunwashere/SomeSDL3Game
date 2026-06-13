@@ -1,21 +1,22 @@
 #pragma once
 #include <unordered_map>
-#include <string>
+#include <array>
 #include <memory>
 #include "asset/asset_texture.h"
 #include "engine/engine_renderer.h"
+#include "enum/enum_texture_type.h"
 
 namespace rgp {
     class TextureManager {
     public:
-        explicit TextureManager(const RendererEngine& renderer);
+        explicit TextureManager(RendererEngine& renderer);
         ~TextureManager();
 
-        auto loadPNG(const std::string& path, float size) -> std::shared_ptr<const Texture>;
-        auto getTexture(const std::string& path) -> std::shared_ptr<const Texture>;
+        auto getTexture(TextureType type) -> std::shared_ptr<Texture>;
 
     private:
-        const RendererEngine& m_renderer;
-        std::unordered_map<std::string, std::weak_ptr<const Texture>> m_textureMap;
+        RendererEngine& m_renderer;
+        const std::array<const char*, static_cast<size_t>(TextureType::Count)> m_texturePaths;
+        std::unordered_map<TextureType, std::weak_ptr<Texture>> m_textureMap;
     };
 }

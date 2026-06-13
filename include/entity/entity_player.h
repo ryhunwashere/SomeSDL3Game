@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <memory>
 #include "entity/entity.h"
 #include "interface/interface_drawable.h"
@@ -13,10 +12,10 @@ namespace rgp {
     class PlayerEntity : public Entity, public IDrawable, public IUpdatable {
     public:
         PlayerEntity(
-            const std::string& texturePath, 
-            const RendererEngine& renderer,
+            RendererEngine& renderer,
+            InputManager& input,
             TextureManager& textureManager,
-            const InputManager& input
+            TextureType textureType
         );
 
         ~PlayerEntity() override = default;
@@ -26,10 +25,9 @@ namespace rgp {
 
     private:
         const RendererEngine& m_renderer;
-        TextureManager& m_textureManager;
         const InputManager& m_input;
+        std::shared_ptr<Texture> m_texture;
 
-        std::shared_ptr<const Texture> m_textureAsset;
         void updatePosition();
     };
 }

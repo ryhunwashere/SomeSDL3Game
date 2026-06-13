@@ -1,5 +1,4 @@
 #include <string>
-#include <cassert>
 #include <complex>
 
 #include "entity/entity_player.h"
@@ -12,27 +11,24 @@ constexpr float TEXTURE_SIZE = 100.0f;
 constexpr float MOVE_SPEED = 10.0f;
 
 rgp::PlayerEntity::PlayerEntity(
-	const std::string& texturePath,
-	const RendererEngine& renderer,
+	RendererEngine& renderer,
+	InputManager& input,
 	TextureManager& textureManager,
-	const InputManager& input
-) :
+	const TextureType textureType)
+:
 	m_renderer(renderer),
-	m_textureManager(textureManager),
 	m_input(input),
-	m_textureAsset(m_textureManager.loadPNG(texturePath, TEXTURE_SIZE)) {}
+	m_texture(textureManager.getTexture(textureType)) {}
 
 void rgp::PlayerEntity::draw() {
-	assert(m_textureAsset->texture && "Texture for player is null");
-
 	const SDL_FRect dstRect{
 		getX(),
 		getY(),
-		m_textureAsset->size,
-		m_textureAsset->size
+		static_cast<float>(m_texture->getTexturePtr()->w),
+		static_cast<float>(m_texture->getTexturePtr()->h)
 	};
 
-	m_renderer.draw(1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT, m_textureAsset->texture, &dstRect);
+	m_renderer.draw(1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT, m_texture->getTexturePtr(), &dstRect);
 }
 
 void rgp::PlayerEntity::update() {

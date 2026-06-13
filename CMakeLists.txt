@@ -31,6 +31,7 @@ set(SOURCES
         src/util/util_logger.cpp
 
         src/asset/asset_font.cpp
+        src/asset/asset_texture.cpp
 
         src/factory/factory_font.cpp
 )
@@ -72,7 +73,7 @@ set(HEADERS
         include/factory/factory_font.h
         include/factory/factory_text.h
         include/enum/enum_scenetype.h
-        include/factory/factory_texture.h
+        include/enum/enum_texture_type.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

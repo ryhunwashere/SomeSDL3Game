@@ -29,9 +29,10 @@ void rgp::SceneManager::changeScene(const SceneType targetScene) {
 	assert(targetScene != SceneType::Continue && "'Continue' is not a valid scene");
 
 	const auto it = m_sceneMap.find(targetScene);
-
 	assert(it != m_sceneMap.end());
 	assert(it->second);
+
+	m_currentScene.reset();
 
 	m_currentScene = it->second();
 }

@@ -1,17 +1,15 @@
 #include <SDL3/SDL.h>
 #include "scene/scene_level_one.h"
 #include "manager/manager_scene.h"
-#include "constant/constant.h"
 #include "factory/factory_text.h"
 
 rgp::LevelOneScene::LevelOneScene(GameContext& ctx) : Scene(ctx),
 	m_player(std::make_unique<PlayerEntity>(
-		constant::PLAYER_ONE_SPRITE_PATH,
-		m_ctx.getRendererEngine(),
-		m_ctx.getTextureManager(),
-		m_ctx.getInputManager()
-	)),
-	m_text(m_ctx.getTextFactory().create("test doang", FontType::ZenMaruMedium32))
+		ctx.getRendererEngine(),
+		ctx.getInputManager(),
+		ctx.getTextureManager(),
+		TextureType::PlayerOneSprite)),
+	m_text(ctx.getTextFactory().create("test ajah", FontType::ZenMaruMedium32))
 {
 	m_text->setPosition({5.0f, 5.0f});
 	SDL_Log("Level 1 scene loaded.");
