@@ -6,10 +6,9 @@ rgp::TextEntity::TextEntity(
     const FontType fontType,
     const std::string& initialText)
 :
-    m_fontPtr(factory.getFont(fontType)),
     m_textPtr(TTF_CreateText(
         engine.getEnginePtr(),
-        m_fontPtr->getFontPtr(),
+        factory.getFont(fontType)->getFontPtr(),
         initialText.c_str(),
         initialText.length()))
 {

@@ -8,6 +8,10 @@ rgp::TextureEngine::TextureEngine(const RendererEngine& renderer) : m_renderer(r
     SDL_Log("Texture engine loaded");
 }
 
+rgp::TextureEngine::~TextureEngine() {
+    std::erase_if(m_textureMap, [](const auto& item) { return item.second.expired(); } );
+}
+
 auto rgp::TextureEngine::loadPNG(const std::string &path, const float size) -> std::shared_ptr<const TextureAsset> {
     if (auto existing = getTexture(path)) return existing;
 

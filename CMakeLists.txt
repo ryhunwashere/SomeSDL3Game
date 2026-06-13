@@ -72,6 +72,7 @@ set(HEADERS
         include/factory/factory_font.h
         include/factory/factory_text.h
         include/enum/enum_scenetype.h
+        include/factory/factory_texture.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

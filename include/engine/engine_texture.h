@@ -9,16 +9,10 @@ namespace rgp {
     class TextureEngine {
     public:
         explicit TextureEngine(const RendererEngine& renderer);
-        ~TextureEngine() = default;
+        ~TextureEngine();
 
         auto loadPNG(const std::string& path, float size) -> std::shared_ptr<const TextureAsset>;
         auto getTexture(const std::string& path) -> std::shared_ptr<const TextureAsset>;
-
-        void clearExpiredEntries() {
-            std::erase_if(
-                m_textureMap, [](const auto& item) { return item.second.expired(); }
-            );
-        }
 
     private:
         const RendererEngine& m_renderer;
