@@ -4,14 +4,14 @@
 #include "constant/constant.h"
 #include "factory/factory_text.h"
 
-rgp::LevelOneScene::LevelOneScene(const GameContext& ctx) : Scene(ctx),
+rgp::LevelOneScene::LevelOneScene(GameContext& ctx) : Scene(ctx),
 	m_player(std::make_unique<PlayerEntity>(
 		constant::PLAYER_ONE_SPRITE_PATH,
-		m_ctx.rendererEngine,
-		m_ctx.textureEngine,
-		m_ctx.inputEngine
+		m_ctx.getRendererEngine(),
+		m_ctx.getTextureEngine(),
+		m_ctx.getInputEngine()
 	)),
-	m_text(m_ctx.textFactory.create("test doang", FontType::ZenMaruMedium32))
+	m_text(m_ctx.getTextFactory().create("test doang", FontType::ZenMaruMedium32))
 {
 	m_text->setPosition({5.0f, 5.0f});
 	SDL_Log("Level 1 scene loaded.");
@@ -24,14 +24,14 @@ rgp::LevelOneScene::~LevelOneScene() {
 auto rgp::LevelOneScene::update() -> SceneType {
 	m_player->update();
 
-	if (m_ctx.inputEngine.isKeyJustPressed(SDL_SCANCODE_P))
+	if (m_ctx.getInputEngine().isKeyJustPressed(SDL_SCANCODE_P))
 		return SceneType::MainMenu;
 
 	return SceneType::Continue;
 }
 
 void rgp::LevelOneScene::draw() {
-	m_ctx.rendererEngine.draw(0.0, 0.0, 0.0, SDL_ALPHA_OPAQUE);
+	m_ctx.getRendererEngine().draw(0.0, 0.0, 0.0, SDL_ALPHA_OPAQUE);
 	m_player->draw();
 	m_text->draw();
 }

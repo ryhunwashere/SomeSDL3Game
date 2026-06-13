@@ -5,7 +5,7 @@
 namespace rgp {
 	class MainMenuScene : public Scene {
 	public:
-		explicit MainMenuScene(const GameContext& ctx);
+		explicit MainMenuScene(GameContext& ctx);
 		~MainMenuScene() override;
 
 		auto update() -> SceneType override;

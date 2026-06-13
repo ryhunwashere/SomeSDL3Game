@@ -1,6 +1,6 @@
 #include <string>
 #include <cassert>
-#include "../../include/entity/entity_player.h"
+#include "entity/entity_player.h"
 
 #include <complex>
 
@@ -14,9 +14,9 @@ constexpr float MOVE_SPEED = 10.0f;
 
 rgp::PlayerEntity::PlayerEntity(
 	const std::string& texturePath,
-	RendererEngine& renderer,
+	const RendererEngine& renderer,
 	TextureEngine& textureEngine,
-	InputEngine& inputEngine
+	const InputEngine& inputEngine
 ) :
 	m_renderer(renderer),
 	m_textureEngine(textureEngine),

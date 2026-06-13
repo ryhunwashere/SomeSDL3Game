@@ -3,20 +3,7 @@
 #include "game.h"
 #include "manager/manager_scene.h"
 
-rgp::Game::Game() :
-    m_textureEngine(m_renderer),
-    m_textEngine(m_renderer),
-    m_textFactory(m_textEngine, m_fontFactory),
-    m_ctx{
-        .rendererEngine = m_renderer,
-        .textureEngine  = m_textureEngine,
-        .textEngine     = m_textEngine,
-        .inputEngine    = m_inputEngine,
-        .fontFactory    = m_fontFactory,
-        .textFactory    = m_textFactory,
-    },
-    m_sceneManager(m_ctx)
-{
+rgp::Game::Game() : m_sceneManager(m_ctx) {
     SDL_Log("Game manager and subsystems initialized.");
 }
 
@@ -27,20 +14,20 @@ rgp::Game::~Game() {
 
 void rgp::Game::handleEvent(const SDL_Event* event) {
     if (event->type == SDL_EVENT_KEY_DOWN) 
-        m_inputEngine.updateKeyDownState(event->key.scancode, true);
+        m_ctx.getInputEngine().updateKeyDownState(event->key.scancode, true);
     else if (event->type == SDL_EVENT_KEY_UP) 
-        m_inputEngine.updateKeyDownState(event->key.scancode, false);
+        m_ctx.getInputEngine().updateKeyDownState(event->key.scancode, false);
 }
 
 void rgp::Game::update() {
     m_sceneManager.updateCurrentScene();
-    m_inputEngine.keepTrackOfPreviousState();
+    m_ctx.getInputEngine().keepTrackOfPreviousState();
 }
 
 void rgp::Game::draw() {
-    m_renderer.clear();
+    m_ctx.getRendererEngine().clear();
 
     m_sceneManager.drawCurrentScene();
 
-    m_renderer.present();
+    m_ctx.getRendererEngine().present();
 }

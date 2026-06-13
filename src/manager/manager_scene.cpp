@@ -7,7 +7,7 @@
 #include "scene/scene_level1.h"
 #include "enum/enum_scenetype.h"
 
-rgp::SceneManager::SceneManager(const GameContext& ctx) : m_ctx(ctx) {
+rgp::SceneManager::SceneManager(GameContext& ctx) : m_ctx(ctx) {
 	m_sceneMap[SceneType::MainMenu] = [this] {
 		return std::make_unique<MainMenuScene>(m_ctx);
 	};
