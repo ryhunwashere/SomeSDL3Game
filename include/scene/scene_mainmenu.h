@@ -12,7 +12,7 @@ namespace rgp {
 		void draw() override;
 
 	private:
-		const double m_initTime;
-		double m_now = 0.0;
+		const float m_initTime;
+		float m_now = 0.0f;
 	};
 }
