@@ -3,8 +3,8 @@
 #include <SDL3/SDL.h>
 #include <memory>
 #include <cassert>
-#include "scene/scene_mainmenu.h"
-#include "scene/scene_level1.h"
+#include "scene/scene_main_menu.h"
+#include "scene/scene_level_one.h"
 #include "enum/enum_scenetype.h"
 
 rgp::SceneManager::SceneManager(GameContext& ctx) : m_ctx(ctx) {

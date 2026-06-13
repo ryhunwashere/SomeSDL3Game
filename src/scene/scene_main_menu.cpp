@@ -1,5 +1,5 @@
 #include <SDL3/SDL.h>
-#include "scene/scene_mainmenu.h"
+#include "scene/scene_main_menu.h"
 #include "manager/manager_scene.h"
 #include "util/util_logger.h"
 

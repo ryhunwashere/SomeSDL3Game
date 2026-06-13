@@ -25,8 +25,8 @@ set(SOURCES
 
         src/manager/manager_scene.cpp
 
-        src/scene/scene_mainmenu.cpp
-        src/scene/scene_level1.cpp
+        src/scene/scene_main_menu.cpp
+        src/scene/scene_level_one.cpp
 
         src/util/util_logger.cpp
 
@@ -51,11 +51,11 @@ set(HEADERS
         include/manager/manager_scene.h
 
         include/scene/scene.h
-        include/scene/scene_mainmenu.h
-        include/scene/scene_level1.h
+        include/scene/scene_main_menu.h
+        include/scene/scene_level_one.h
 
         include/interface/interface_drawable.h
-        include/interface/interface_eventhandlable.h
+        include/interface/interface_event_handlable.h
         include/interface/interface_updatable.h
 
         include/asset/asset_texture.h
