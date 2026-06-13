@@ -1,12 +1,11 @@
 #include <string>
 #include <cassert>
-#include "entity/entity_player.h"
-
 #include <complex>
 
-#include "engine/engine_texture.h"
+#include "entity/entity_player.h"
 #include "engine/engine_renderer.h"
-#include "engine/engine_input.h"
+#include "manager/manager_texture.h"
+#include "manager/manager_input.h"
 #include "type/type_vector2f.h"
 
 constexpr float TEXTURE_SIZE = 100.0f;
@@ -15,13 +14,13 @@ constexpr float MOVE_SPEED = 10.0f;
 rgp::PlayerEntity::PlayerEntity(
 	const std::string& texturePath,
 	const RendererEngine& renderer,
-	TextureEngine& textureEngine,
-	const InputEngine& inputEngine
+	TextureManager& textureManager,
+	const InputManager& input
 ) :
 	m_renderer(renderer),
-	m_textureEngine(textureEngine),
-	m_input(inputEngine),
-	m_textureAsset(m_textureEngine.loadPNG(texturePath, TEXTURE_SIZE)) {}
+	m_textureManager(textureManager),
+	m_input(input),
+	m_textureAsset(m_textureManager.loadPNG(texturePath, TEXTURE_SIZE)) {}
 
 void rgp::PlayerEntity::draw() {
 	assert(m_textureAsset->texture && "Texture for player is null");

@@ -8,8 +8,8 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) : Scene(ctx),
 	m_player(std::make_unique<PlayerEntity>(
 		constant::PLAYER_ONE_SPRITE_PATH,
 		m_ctx.getRendererEngine(),
-		m_ctx.getTextureEngine(),
-		m_ctx.getInputEngine()
+		m_ctx.getTextureManager(),
+		m_ctx.getInputManager()
 	)),
 	m_text(m_ctx.getTextFactory().create("test doang", FontType::ZenMaruMedium32))
 {
@@ -24,7 +24,7 @@ rgp::LevelOneScene::~LevelOneScene() {
 auto rgp::LevelOneScene::update() -> SceneType {
 	m_player->update();
 
-	if (m_ctx.getInputEngine().isKeyJustPressed(SDL_SCANCODE_P))
+	if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_P))
 		return SceneType::MainMenu;
 
 	return SceneType::Continue;

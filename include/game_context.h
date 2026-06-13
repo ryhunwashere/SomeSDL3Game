@@ -1,8 +1,8 @@
 #pragma once
-#include "engine/engine_input.h"
+#include "manager/manager_input.h"
 #include "engine/engine_renderer.h"
 #include "engine/engine_text.h"
-#include "engine/engine_texture.h"
+#include "manager/manager_texture.h"
 #include "factory/factory_font.h"
 #include "factory/factory_text.h"
 
@@ -10,24 +10,24 @@ namespace rgp {
     class GameContext {
     public:
         GameContext() :
-            m_textureEngine(m_rendererEngine),
             m_textEngine(m_rendererEngine),
-            m_textFactory(m_textEngine, m_fontFactory) {}
+            m_textFactory(m_textEngine, m_fontFactory),
+            m_textureManager(m_rendererEngine) {}
 
         [[nodiscard]] auto getRendererEngine()  -> RendererEngine&  { return m_rendererEngine; }
-        [[nodiscard]] auto getTextureEngine()   -> TextureEngine&   { return m_textureEngine; }
         [[nodiscard]] auto getTextEngine()      -> TextEngine&      { return m_textEngine; }
-        [[nodiscard]] auto getInputEngine()     -> InputEngine&     { return m_inputEngine; }
         [[nodiscard]] auto getFontFactory()     -> FontFactory&     { return m_fontFactory; }
         [[nodiscard]] auto getTextFactory()     -> TextFactory&     { return m_textFactory; }
+        [[nodiscard]] auto getTextureManager()  -> TextureManager&  { return m_textureManager; }
+        [[nodiscard]] auto getInputManager()    -> InputManager&    { return m_inputManager; }
 
     private:
         RendererEngine  m_rendererEngine;
-        TextureEngine   m_textureEngine;
         TextEngine      m_textEngine;
-        InputEngine     m_inputEngine;
         FontFactory     m_fontFactory;
         TextFactory     m_textFactory;
+        TextureManager  m_textureManager;
+        InputManager    m_inputManager;
     };
 }
 

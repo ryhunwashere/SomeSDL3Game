@@ -1,18 +1,18 @@
 #include <SDL3/SDL.h>
 #include <stdexcept>
 #include <memory>
-#include "engine/engine_texture.h"
+#include "manager/manager_texture.h"
 #include "engine/engine_renderer.h"
 
-rgp::TextureEngine::TextureEngine(const RendererEngine& renderer) : m_renderer(renderer) {
-    SDL_Log("Texture engine loaded");
+rgp::TextureManager::TextureManager(const RendererEngine& renderer) : m_renderer(renderer) {
+    SDL_Log("Texture manager loaded");
 }
 
-rgp::TextureEngine::~TextureEngine() {
+rgp::TextureManager::~TextureManager() {
     std::erase_if(m_textureMap, [](const auto& item) { return item.second.expired(); } );
 }
 
-auto rgp::TextureEngine::loadPNG(const std::string &path, const float size) -> std::shared_ptr<const Texture> {
+auto rgp::TextureManager::loadPNG(const std::string &path, const float size) -> std::shared_ptr<const Texture> {
     if (auto existing = getTexture(path)) return existing;
 
     SDL_Surface* surface = SDL_LoadPNG(path.c_str());
@@ -42,7 +42,7 @@ auto rgp::TextureEngine::loadPNG(const std::string &path, const float size) -> s
 }
 
 
-auto rgp::TextureEngine::getTexture(const std::string& path) -> std::shared_ptr<const Texture>{
+auto rgp::TextureManager::getTexture(const std::string& path) -> std::shared_ptr<const Texture>{
     if (const auto it = m_textureMap.find(path); it != m_textureMap.end()) {
         if (auto sharedAsset = it->second.lock()) return sharedAsset;
         m_textureMap.erase(it);

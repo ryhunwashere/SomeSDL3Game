@@ -3,13 +3,13 @@
 #include <string>
 #include <memory>
 #include "asset/asset_texture.h"
-#include "engine_renderer.h"
+#include "engine/engine_renderer.h"
 
 namespace rgp {
-    class TextureEngine {
+    class TextureManager {
     public:
-        explicit TextureEngine(const RendererEngine& renderer);
-        ~TextureEngine();
+        explicit TextureManager(const RendererEngine& renderer);
+        ~TextureManager();
 
         auto loadPNG(const std::string& path, float size) -> std::shared_ptr<const Texture>;
         auto getTexture(const std::string& path) -> std::shared_ptr<const Texture>;

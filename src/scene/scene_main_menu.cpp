@@ -16,7 +16,7 @@ rgp::MainMenuScene::~MainMenuScene() {
 auto rgp::MainMenuScene::update() -> SceneType {
     m_now = static_cast<float>(Util::getElapsedGameTime()) / 1000 - m_initTime;
 
-    if (m_ctx.getInputEngine().isKeyJustPressed(SDL_SCANCODE_P))
+    if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_P))
         return SceneType::LevelOne;
 
     return SceneType::Continue;

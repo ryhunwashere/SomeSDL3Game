@@ -14,14 +14,14 @@ rgp::Game::~Game() {
 
 void rgp::Game::handleEvent(const SDL_Event* event) {
     if (event->type == SDL_EVENT_KEY_DOWN) 
-        m_ctx.getInputEngine().updateKeyDownState(event->key.scancode, true);
+        m_ctx.getInputManager().updateKeyDownState(event->key.scancode, true);
     else if (event->type == SDL_EVENT_KEY_UP) 
-        m_ctx.getInputEngine().updateKeyDownState(event->key.scancode, false);
+        m_ctx.getInputManager().updateKeyDownState(event->key.scancode, false);
 }
 
 void rgp::Game::update() {
     m_sceneManager.updateCurrentScene();
-    m_ctx.getInputEngine().keepTrackOfPreviousState();
+    m_ctx.getInputManager().keepTrackOfPreviousState();
 }
 
 void rgp::Game::draw() {

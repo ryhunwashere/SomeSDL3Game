@@ -3,10 +3,10 @@
 #include <SDL3/SDL_scancode.h>
 
 namespace rgp {
-    class InputEngine {
+    class InputManager {
     public:
-        InputEngine() = default;
-        ~InputEngine() = default;
+        InputManager() = default;
+        ~InputManager() = default;
 
         void keepTrackOfPreviousState();
         void updateKeyDownState(SDL_Scancode scancode, bool isDown);

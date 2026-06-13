@@ -15,14 +15,14 @@ set(SOURCES
         src/main.cpp
         src/game.cpp
 
-        src/engine/engine_input.cpp
-        src/engine/engine_texture.cpp
         src/engine/engine_renderer.cpp
         src/engine/engine_text.cpp
 
         src/entity/entity_player.cpp
         src/entity/entity_text.cpp
 
+        src/manager/manager_input.cpp
+        src/manager/manager_texture.cpp
         src/manager/manager_scene.cpp
 
         src/scene/scene_main_menu.cpp
@@ -39,15 +39,15 @@ set(HEADERS
         include/game.h
         include/game_context.h
 
-        include/engine/engine_input.h
         include/engine/engine_renderer.h
-        include/engine/engine_texture.h
         include/engine/engine_text.h
 
         include/entity/entity.h
         include/entity/entity_player.h
         include/entity/entity_text.h
 
+        include/manager/manager_input.h
+        include/manager/manager_texture.h
         include/manager/manager_scene.h
 
         include/scene/scene.h

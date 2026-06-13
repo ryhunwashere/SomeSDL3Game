@@ -5,9 +5,9 @@
 #include "interface/interface_drawable.h"
 #include "interface/interface_updatable.h"
 #include "asset/asset_texture.h"
-#include "engine/engine_texture.h"
+#include "manager/manager_texture.h"
 #include "engine/engine_renderer.h"
-#include "engine/engine_input.h"
+#include "manager/manager_input.h"
 
 namespace rgp {
     class PlayerEntity : public Entity, public IDrawable, public IUpdatable {
@@ -15,8 +15,8 @@ namespace rgp {
         PlayerEntity(
             const std::string& texturePath, 
             const RendererEngine& renderer,
-            TextureEngine& textureEngine,
-            const InputEngine& inputEngine
+            TextureManager& textureManager,
+            const InputManager& input
         );
 
         ~PlayerEntity() override = default;
@@ -26,8 +26,8 @@ namespace rgp {
 
     private:
         const RendererEngine& m_renderer;
-        TextureEngine& m_textureEngine;
-        const InputEngine& m_input;
+        TextureManager& m_textureManager;
+        const InputManager& m_input;
 
         std::shared_ptr<const Texture> m_textureAsset;
         void updatePosition();
