@@ -11,11 +11,11 @@ namespace rgp {
         explicit TextureEngine(const RendererEngine& renderer);
         ~TextureEngine();
 
-        auto loadPNG(const std::string& path, float size) -> std::shared_ptr<const TextureAsset>;
-        auto getTexture(const std::string& path) -> std::shared_ptr<const TextureAsset>;
+        auto loadPNG(const std::string& path, float size) -> std::shared_ptr<const Texture>;
+        auto getTexture(const std::string& path) -> std::shared_ptr<const Texture>;
 
     private:
         const RendererEngine& m_renderer;
-        std::unordered_map<std::string, std::weak_ptr<const TextureAsset>> m_textureMap;
+        std::unordered_map<std::string, std::weak_ptr<const Texture>> m_textureMap;
     };
 }

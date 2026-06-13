@@ -29,7 +29,7 @@ namespace rgp {
         TextureEngine& m_textureEngine;
         const InputEngine& m_input;
 
-        std::shared_ptr<const TextureAsset> m_textureAsset;
+        std::shared_ptr<const Texture> m_textureAsset;
         void updatePosition();
     };
 }

@@ -12,7 +12,7 @@ rgp::TextureEngine::~TextureEngine() {
     std::erase_if(m_textureMap, [](const auto& item) { return item.second.expired(); } );
 }
 
-auto rgp::TextureEngine::loadPNG(const std::string &path, const float size) -> std::shared_ptr<const TextureAsset> {
+auto rgp::TextureEngine::loadPNG(const std::string &path, const float size) -> std::shared_ptr<const Texture> {
     if (auto existing = getTexture(path)) return existing;
 
     SDL_Surface* surface = SDL_LoadPNG(path.c_str());
@@ -34,7 +34,7 @@ auto rgp::TextureEngine::loadPNG(const std::string &path, const float size) -> s
             std::string("PNG texture creation error: ") + SDL_GetError()
         );
 
-    auto textureAsset = std::make_shared<TextureAsset>(texture, path, size);
+    auto textureAsset = std::make_shared<Texture>(texture, path, size);
 
     m_textureMap[path] = textureAsset;
 
@@ -42,7 +42,7 @@ auto rgp::TextureEngine::loadPNG(const std::string &path, const float size) -> s
 }
 
 
-auto rgp::TextureEngine::getTexture(const std::string& path) -> std::shared_ptr<const TextureAsset>{
+auto rgp::TextureEngine::getTexture(const std::string& path) -> std::shared_ptr<const Texture>{
     if (const auto it = m_textureMap.find(path); it != m_textureMap.end()) {
         if (auto sharedAsset = it->second.lock()) return sharedAsset;
         m_textureMap.erase(it);
