@@ -5,6 +5,7 @@
 #include "interface/interface_drawable.h"
 #include "interface/interface_updatable.h"
 #include "asset/asset_texture.h"
+#include "entity_track.h"
 
 namespace rgp {
     class PlayerEntity final : public Entity, public IDrawable, public IUpdatable {
@@ -19,9 +20,9 @@ namespace rgp {
         const RendererEngine& m_renderer;
         const InputManager& m_input;
         Texture* m_texturePtr;
-        Audio* m_shootAudioPtr;
+        std::unique_ptr<TrackEntity> m_shootTrack;
 
-        const Uint64 s_cooldown = 5;
+        static constexpr Uint64 s_cooldown = 100;
         Uint64 m_nextShootTime;
 
         void updatePosition();

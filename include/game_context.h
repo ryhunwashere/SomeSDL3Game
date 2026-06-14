@@ -25,12 +25,12 @@ namespace rgp {
 
     private:
         RendererEngine  m_rendererEngine;
-        AudioManager    m_audioManager;
         TextEngine      m_textEngine;
         FontFactory     m_fontFactory;
         TextFactory     m_textFactory;
         TextureManager  m_textureManager;
         InputManager    m_inputManager;
+        AudioManager    m_audioManager;
     };
 }
 

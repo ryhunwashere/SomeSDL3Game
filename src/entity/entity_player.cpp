@@ -12,7 +12,9 @@ rgp::PlayerEntity::PlayerEntity(GameContext& ctx, const TextureType textureType,
 	m_renderer(ctx.getRendererEngine()),
 	m_input(ctx.getInputManager()),
 	m_texturePtr(ctx.getTextureManager().getTexture(textureType)),
-	m_shootAudioPtr(ctx.getAudioManager().getAudio(audioType)) {}
+	m_shootTrack(std::make_unique<TrackEntity>(ctx.getAudioManager(), audioType, false)),
+	m_nextShootTime(Util::getElapsedGameTime())
+{}
 
 void rgp::PlayerEntity::draw() {
 	const SDL_FRect dstRect{
@@ -47,7 +49,7 @@ void rgp::PlayerEntity::updatePosition() {
 void rgp::PlayerEntity::updateShooting() {
 	if (const Uint64 currentTime = Util::getElapsedGameTime();
 		currentTime >= m_nextShootTime && m_input.isKeyDown(SDL_SCANCODE_L)) {
-		m_shootAudioPtr->play();
-		m_nextShootTime += currentTime + s_cooldown;
+		m_shootTrack->play();
+		m_nextShootTime = currentTime + s_cooldown;
 	}
 }

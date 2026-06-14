@@ -8,8 +8,7 @@ rgp::Game::Game() : m_sceneManager(m_ctx) {
 }
 
 rgp::Game::~Game() {
-    SDL_Quit();
-    SDL_Log("Game manager and subsystems unloaded.");
+    SDL_Log("Unloading game...");
 }
 
 void rgp::Game::handleEvent(const SDL_Event* event) {

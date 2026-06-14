@@ -15,7 +15,7 @@ rgp::TextureManager::TextureManager(RendererEngine& renderer) :
     }()) {}
 
 auto rgp::TextureManager::getTexture(TextureType type) -> Texture* {
-    const size_t index = static_cast<size_t>(type);
+    const auto index = static_cast<size_t>(type);
 
     if (m_textureCache[index]) {
         SDL_Log("Loading texture from cache: %zu", index);
@@ -28,7 +28,7 @@ auto rgp::TextureManager::getTexture(TextureType type) -> Texture* {
 }
 
 void rgp::TextureManager::unloadTexture(TextureType type) {
-    if (const size_t index = static_cast<size_t>(type); m_textureCache[index]) {
+    if (const auto index = static_cast<size_t>(type); m_textureCache[index]) {
         SDL_Log("Unloading texture: %d", static_cast<int>(type));
         m_textureCache[index].reset();
     }
