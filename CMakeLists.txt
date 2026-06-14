@@ -8,8 +8,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-set(SDL3_ROOT     "C:/DevGame/vclib/SDL3-3.4.8"     CACHE PATH "Root of SDL3 installation")
-set(SDL3_TTF_ROOT "C:/DevGame/vclib/SDL3_ttf-3.2.0" CACHE PATH "Root of SDL3_ttf installation")
+set(SDL3_ROOT       "C:/DevGame/vclib/SDL3-3.4.8"       CACHE PATH "Root of SDL3 installation")
+set(SDL3_TTF_ROOT   "C:/DevGame/vclib/SDL3_ttf-3.2.0"   CACHE PATH "Root of SDL3_ttf installation")
+set(SDL3_MIXER_ROOT "C:/DevGame/vclib/SDL3_mixer-3.2.4" CACHE PATH "Root of SDL3_mixer installation")
 
 set(SOURCES
         src/main.cpp
@@ -20,9 +21,11 @@ set(SOURCES
 
         src/entity/entity_player.cpp
         src/entity/entity_text.cpp
+        src/entity/entity_track.cpp
 
         src/manager/manager_input.cpp
         src/manager/manager_texture.cpp
+        src/manager/manager_audio.cpp
         src/manager/manager_scene.cpp
 
         src/scene/scene_main_menu.cpp
@@ -32,6 +35,7 @@ set(SOURCES
 
         src/asset/asset_font.cpp
         src/asset/asset_texture.cpp
+        src/asset/asset_audio.cpp
 
         src/factory/factory_font.cpp
 )
@@ -42,10 +46,12 @@ set(HEADERS
 
         include/engine/engine_renderer.h
         include/engine/engine_text.h
+        include/manager/manager_audio.h
 
         include/entity/entity.h
         include/entity/entity_player.h
         include/entity/entity_text.h
+        include/entity/entity_track.h
 
         include/manager/manager_input.h
         include/manager/manager_texture.h
@@ -61,6 +67,7 @@ set(HEADERS
 
         include/asset/asset_texture.h
         include/asset/asset_font.h
+        include/asset/asset_audio.h
 
         include/type/type_vector2f.h
         include/type/type_color.h
@@ -76,6 +83,7 @@ set(HEADERS
 
         include/enum/enum_scenetype.h
         include/enum/enum_texture_type.h
+        include/enum/enum_audio_type.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
@@ -87,16 +95,19 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE
         "${SDL3_ROOT}/include"
         "${SDL3_TTF_ROOT}/include"
+        "${SDL3_MIXER_ROOT}/include"
 )
 
 target_link_directories(${PROJECT_NAME} PRIVATE
         "${SDL3_ROOT}/lib/x64"
         "${SDL3_TTF_ROOT}/lib/x64"
+        "${SDL3_MIXER_ROOT}/lib/x64"
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         SDL3.lib
         SDL3_ttf.lib
+        SDL3_mixer.lib
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
@@ -154,12 +165,20 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/SDL3.dll"
 
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${SDL3_MIXER_ROOT}/lib/x64/SDL3_mixer.dll"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/SDL3_mixer.dll"
+
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ASSET_SOURCE_DIR}/ZenMaruGothic-Medium.ttf"
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/ZenMaruGothic-Medium.ttf"
 
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ASSET_SOURCE_DIR}/player1_sprite.png"
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/player1_sprite.png"
+
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${ASSET_SOURCE_DIR}/player_shoot.wav"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/player_shoot.wav"
 
         COMMENT "Copying SDL3 DLLs and game assets to output directory"
 )
