@@ -11,7 +11,7 @@
 #include "enum/enum_scenetype.h"
 
 rgp::SceneManager::SceneManager(GameContext& ctx) : m_ctx(ctx),
-	m_fpsText(ctx.getTextFactory().create("FPS: ", FontType::ZenMaruMedium32))
+	m_fpsText(ctx.getTextFactory().create(FontType::ZenMaruMedium32, "FPS: "))
 {
 	m_sceneMap[SceneType::MainMenu] = [this] {
 		return std::make_unique<MainMenuScene>(m_ctx);
