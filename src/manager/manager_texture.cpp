@@ -14,22 +14,22 @@ rgp::TextureManager::TextureManager(RendererEngine& renderer) :
         return arr;
     }()) {}
 
-rgp::TextureManager::~TextureManager() {
-    m_textureMap.clear();
-}
+auto rgp::TextureManager::getTexture(TextureType type) -> Texture* {
+    const size_t index = static_cast<size_t>(type);
 
-auto rgp::TextureManager::getTexture(TextureType type) -> std::shared_ptr<Texture> {
-    if (const auto it = m_textureMap.find(type); it != m_textureMap.end()) {
-        if (const auto sharedTex = it->second.lock()) {
-            SDL_Log("Loading texture from cache...");
-            return sharedTex;
-        }
+    if (m_textureCache[index]) {
+        SDL_Log("Loading texture from cache: %zu", index);
+        return m_textureCache[index].get();
     }
 
-    SDL_Log("Loading texture: %d", static_cast<int>(type));
+    SDL_Log("Loading and caching texture: %zu", index);
+    m_textureCache[index] = std::make_unique<Texture>(m_renderer, m_texturePaths[index]);
+    return m_textureCache[index].get();
+}
 
-    auto newTexture = std::make_shared<Texture>(m_renderer, m_texturePaths[static_cast<size_t>(type)]);
-    m_textureMap[type] = newTexture;
-
-    return newTexture;
+void rgp::TextureManager::unloadTexture(TextureType type) {
+    if (const size_t index = static_cast<size_t>(type); m_textureCache[index]) {
+        SDL_Log("Unloading texture: %d", static_cast<int>(type));
+        m_textureCache[index].reset();
+    }
 }

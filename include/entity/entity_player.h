@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 
 #include "game_context.h"
 #include "entity/entity.h"
@@ -11,7 +10,6 @@ namespace rgp {
     class PlayerEntity final : public Entity, public IDrawable, public IUpdatable {
     public:
         PlayerEntity(GameContext& ctx, TextureType textureType);
-
         ~PlayerEntity() override = default;
 
         void draw() override;
@@ -20,7 +18,7 @@ namespace rgp {
     private:
         const RendererEngine& m_renderer;
         const InputManager& m_input;
-        std::shared_ptr<Texture> m_texture;
+        Texture* m_texturePtr;
 
         void updatePosition();
     };

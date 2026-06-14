@@ -10,17 +10,17 @@ constexpr float MOVE_SPEED = 10.0f;
 rgp::PlayerEntity::PlayerEntity(GameContext& ctx, const TextureType textureType) :
 	m_renderer(ctx.getRendererEngine()),
 	m_input(ctx.getInputManager()),
-	m_texture(ctx.getTextureManager().getTexture(textureType)) {}
+	m_texturePtr(ctx.getTextureManager().getTexture(textureType)) {}
 
 void rgp::PlayerEntity::draw() {
 	const SDL_FRect dstRect{
 		getX(),
 		getY(),
-		static_cast<float>(m_texture->getTexturePtr()->w),
-		static_cast<float>(m_texture->getTexturePtr()->h)
+		static_cast<float>(m_texturePtr->getTexturePtr()->w),
+		static_cast<float>(m_texturePtr->getTexturePtr()->h)
 	};
 
-	m_renderer.draw(1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT, m_texture->getTexturePtr(), &dstRect);
+	m_renderer.draw(1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT, m_texturePtr->getTexturePtr(), &dstRect);
 }
 
 void rgp::PlayerEntity::update() {
