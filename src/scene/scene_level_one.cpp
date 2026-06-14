@@ -7,7 +7,7 @@
 
 rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	Scene(ctx),
-	m_player(std::make_unique<PlayerEntity>(ctx, TextureType::PlayerOneSprite))
+	m_player(std::make_unique<PlayerEntity>(ctx, TextureType::PlayerOneSprite, AudioType::PlayerShoot))
 {
 	SDL_Log("Level 1 scene loaded.");
 }

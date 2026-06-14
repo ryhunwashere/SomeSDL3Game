@@ -9,7 +9,7 @@
 namespace rgp {
     class PlayerEntity final : public Entity, public IDrawable, public IUpdatable {
     public:
-        PlayerEntity(GameContext& ctx, TextureType textureType);
+        PlayerEntity(GameContext& ctx, TextureType textureType, AudioType audioType);
         ~PlayerEntity() override = default;
 
         void draw() override;
@@ -19,7 +19,12 @@ namespace rgp {
         const RendererEngine& m_renderer;
         const InputManager& m_input;
         Texture* m_texturePtr;
+        Audio* m_shootAudioPtr;
+
+        const Uint64 s_cooldown = 5;
+        Uint64 m_nextShootTime;
 
         void updatePosition();
+        void updateShooting();
     };
 }

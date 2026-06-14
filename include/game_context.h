@@ -1,4 +1,5 @@
 #pragma once
+#include "manager/manager_audio.h"
 #include "manager/manager_input.h"
 #include "engine/engine_renderer.h"
 #include "engine/engine_text.h"
@@ -18,11 +19,13 @@ namespace rgp {
         [[nodiscard]] auto getTextEngine()      -> TextEngine&      { return m_textEngine; }
         [[nodiscard]] auto getFontFactory()     -> FontFactory&     { return m_fontFactory; }
         [[nodiscard]] auto getTextFactory()     -> TextFactory&     { return m_textFactory; }
+        [[nodiscard]] auto getAudioManager()    -> AudioManager&    { return m_audioManager; }
         [[nodiscard]] auto getTextureManager()  -> TextureManager&  { return m_textureManager; }
         [[nodiscard]] auto getInputManager()    -> InputManager&    { return m_inputManager; }
 
     private:
         RendererEngine  m_rendererEngine;
+        AudioManager    m_audioManager;
         TextEngine      m_textEngine;
         FontFactory     m_fontFactory;
         TextFactory     m_textFactory;

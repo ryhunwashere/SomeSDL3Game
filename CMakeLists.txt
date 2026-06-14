@@ -23,6 +23,7 @@ set(SOURCES
 
         src/manager/manager_input.cpp
         src/manager/manager_texture.cpp
+        src/manager/manager_audio.cpp
         src/manager/manager_scene.cpp
 
         src/scene/scene_main_menu.cpp
@@ -32,6 +33,7 @@ set(SOURCES
 
         src/asset/asset_font.cpp
         src/asset/asset_texture.cpp
+        src/asset/asset_audio.cpp
 
         src/factory/factory_font.cpp
 )
@@ -42,6 +44,7 @@ set(HEADERS
 
         include/engine/engine_renderer.h
         include/engine/engine_text.h
+        include/manager/manager_audio.h
 
         include/entity/entity.h
         include/entity/entity_player.h
@@ -61,6 +64,7 @@ set(HEADERS
 
         include/asset/asset_texture.h
         include/asset/asset_font.h
+        include/asset/asset_audio.h
 
         include/type/type_vector2f.h
         include/type/type_color.h
@@ -76,6 +80,7 @@ set(HEADERS
 
         include/enum/enum_scenetype.h
         include/enum/enum_texture_type.h
+        include/enum/enum_audio_type.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
@@ -160,6 +165,10 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ASSET_SOURCE_DIR}/player1_sprite.png"
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/player1_sprite.png"
+
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${ASSET_SOURCE_DIR}/player_shoot.wav"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/player_shoot.wav"
 
         COMMENT "Copying SDL3 DLLs and game assets to output directory"
 )

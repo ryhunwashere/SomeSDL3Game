@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <string>
 #include "asset/asset_texture.h"
 
 rgp::Texture::Texture(RendererEngine& renderer, const std::string& texturePath) :
