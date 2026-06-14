@@ -7,6 +7,7 @@
 #include "enum/enum_fonttype.h"
 #include "interface/interface_drawable.h"
 #include "factory/factory_font.h"
+#include "type/type_color.h"
 
 namespace rgp {
     class TextEntity final : public Entity, public IDrawable {
@@ -37,6 +38,7 @@ namespace rgp {
 
         void draw() override;
         void setText(const std::string& text) const;
+        void setColor(const Color& color) const;
 
     private:
         TTF_Text* m_textPtr;

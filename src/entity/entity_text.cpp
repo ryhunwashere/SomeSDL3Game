@@ -28,10 +28,15 @@ rgp::TextEntity::~TextEntity() {
 
 void rgp::TextEntity::draw() {
     if (!TTF_DrawRendererText(m_textPtr, getX(), getY()))
-        throw std::runtime_error("Failed to draw Text Entity: " + std::string(SDL_GetError()));
+        throw std::runtime_error("Failed to draw text Entity: " + std::string(SDL_GetError()));
 }
 
 void rgp::TextEntity::setText(const std::string& text) const {
     if (!TTF_SetTextString(m_textPtr, text.c_str(), text.length()))
-        throw std::runtime_error("Failed to set Text Entity: " + std::string(SDL_GetError()));
+        throw std::runtime_error("Failed to set text Entity: " + std::string(SDL_GetError()));
+}
+
+void rgp::TextEntity::setColor(const Color& color) const {
+    if (!TTF_SetTextColor(m_textPtr, color.r, color.g, color.b, color.a))
+        throw std::runtime_error("Failed to set text color: " + std::string(SDL_GetError()));
 }

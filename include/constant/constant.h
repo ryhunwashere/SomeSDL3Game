@@ -1,6 +1,14 @@
 #pragma once
+#include "type/type_color.h"
 
 namespace rgp::constant {
-    constexpr auto PLAYER_ONE_SPRITE_PATH           = "asset/player1_sprite.png";
-    constexpr auto ZEN_MARU_GOTHIC_MEDIUM_TTF_PATH  = "asset/ZenMaruGothic-Medium.ttf";
+    namespace path {
+        constexpr auto PLAYER_ONE_SPRITE_PATH           = "asset/player1_sprite.png";
+        constexpr auto ZEN_MARU_GOTHIC_MEDIUM_TTF_PATH  = "asset/ZenMaruGothic-Medium.ttf";
+    }
+
+    namespace color {
+        constexpr Color BLACK_OPAQUE = {0, 0, 0, 255};
+        constexpr Color WHITE_OPAQUE = {255, 255, 255, 255};
+    }
 }

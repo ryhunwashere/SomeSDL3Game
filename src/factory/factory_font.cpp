@@ -4,7 +4,7 @@
 #include "constant/constant.h"
 
 rgp::FontFactory::FontFactory() : m_fontArray([] {
-    constexpr auto ZEN_MARU_GOTHIC_MEDIUM = constant::ZEN_MARU_GOTHIC_MEDIUM_TTF_PATH;
+    constexpr auto ZEN_MARU_GOTHIC_MEDIUM = constant::path::ZEN_MARU_GOTHIC_MEDIUM_TTF_PATH;
 
     std::array<std::unique_ptr<Font>, static_cast<size_t>(FontType::Count)> arr{};
 

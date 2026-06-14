@@ -63,6 +63,7 @@ set(HEADERS
         include/asset/asset_font.h
 
         include/type/type_vector2f.h
+        include/type/type_color.h
 
         include/util/util_logger.h
 
@@ -72,6 +73,7 @@ set(HEADERS
 
         include/factory/factory_font.h
         include/factory/factory_text.h
+
         include/enum/enum_scenetype.h
         include/enum/enum_texture_type.h
 )

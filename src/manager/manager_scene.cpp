@@ -5,6 +5,7 @@
 #include <cassert>
 #include <format>
 
+#include "constant/constant.h"
 #include "scene/scene_main_menu.h"
 #include "scene/scene_level_one.h"
 #include "enum/enum_scenetype.h"
@@ -19,6 +20,8 @@ rgp::SceneManager::SceneManager(GameContext& ctx) : m_ctx(ctx),
 	m_sceneMap[SceneType::LevelOne] = [this] {
 		return std::make_unique<LevelOneScene>(m_ctx);
 	};
+
+	m_fpsText->setColor({ 85.0f, 255.0f, 28.0f, 255.0f });
 
 	changeScene(SceneType::MainMenu);
 
