@@ -7,9 +7,7 @@ namespace rgp {
     public:
         static void logMessage(const std::string& message);
 
-        /* Get total elapsed time in double since the first tick. */
-        [[nodiscard]] static auto getElapsedGameTime() -> double {
-            return static_cast<const double>(SDL_GetTicks());
-        }
+        /* Get total elapsed time in milliseconds (Uint64) since the first tick. */
+        [[nodiscard]] static auto getElapsedGameTime() -> Uint64 { return SDL_GetTicks(); }
     };
 }

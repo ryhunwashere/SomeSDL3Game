@@ -9,7 +9,7 @@
 #include "factory/factory_font.h"
 
 namespace rgp {
-    class TextEntity : public Entity, public IDrawable {
+    class TextEntity final : public Entity, public IDrawable {
     public:
         TextEntity(
             const TextEngine& engine,

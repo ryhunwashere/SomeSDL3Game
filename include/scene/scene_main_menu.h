@@ -3,7 +3,7 @@
 #include "scene.h"
 
 namespace rgp {
-	class MainMenuScene : public Scene {
+	class MainMenuScene final : public Scene {
 	public:
 		explicit MainMenuScene(GameContext& ctx);
 		~MainMenuScene() override;

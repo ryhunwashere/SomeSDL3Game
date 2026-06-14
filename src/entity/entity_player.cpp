@@ -2,23 +2,15 @@
 #include <complex>
 
 #include "entity/entity_player.h"
-#include "engine/engine_renderer.h"
-#include "manager/manager_texture.h"
-#include "manager/manager_input.h"
 #include "type/type_vector2f.h"
 
 constexpr float TEXTURE_SIZE = 100.0f;
 constexpr float MOVE_SPEED = 10.0f;
 
-rgp::PlayerEntity::PlayerEntity(
-	RendererEngine& renderer,
-	InputManager& input,
-	TextureManager& textureManager,
-	const TextureType textureType)
-:
-	m_renderer(renderer),
-	m_input(input),
-	m_texture(textureManager.getTexture(textureType)) {}
+rgp::PlayerEntity::PlayerEntity(GameContext& ctx, const TextureType textureType) :
+	m_renderer(ctx.getRendererEngine()),
+	m_input(ctx.getInputManager()),
+	m_texture(ctx.getTextureManager().getTexture(textureType)) {}
 
 void rgp::PlayerEntity::draw() {
 	const SDL_FRect dstRect{

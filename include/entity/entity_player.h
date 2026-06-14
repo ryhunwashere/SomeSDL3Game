@@ -1,22 +1,16 @@
 #pragma once
 #include <memory>
+
+#include "game_context.h"
 #include "entity/entity.h"
 #include "interface/interface_drawable.h"
 #include "interface/interface_updatable.h"
 #include "asset/asset_texture.h"
-#include "manager/manager_texture.h"
-#include "engine/engine_renderer.h"
-#include "manager/manager_input.h"
 
 namespace rgp {
-    class PlayerEntity : public Entity, public IDrawable, public IUpdatable {
+    class PlayerEntity final : public Entity, public IDrawable, public IUpdatable {
     public:
-        PlayerEntity(
-            RendererEngine& renderer,
-            InputManager& input,
-            TextureManager& textureManager,
-            TextureType textureType
-        );
+        PlayerEntity(GameContext& ctx, TextureType textureType);
 
         ~PlayerEntity() override = default;
 

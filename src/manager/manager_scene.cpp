@@ -3,11 +3,15 @@
 #include <SDL3/SDL.h>
 #include <memory>
 #include <cassert>
+#include <format>
+
 #include "scene/scene_main_menu.h"
 #include "scene/scene_level_one.h"
 #include "enum/enum_scenetype.h"
 
-rgp::SceneManager::SceneManager(GameContext& ctx) : m_ctx(ctx) {
+rgp::SceneManager::SceneManager(GameContext& ctx) : m_ctx(ctx),
+	m_fpsText(ctx.getTextFactory().create("FPS: ", FontType::ZenMaruMedium32))
+{
 	m_sceneMap[SceneType::MainMenu] = [this] {
 		return std::make_unique<MainMenuScene>(m_ctx);
 	};
@@ -38,6 +42,8 @@ void rgp::SceneManager::changeScene(const SceneType targetScene) {
 }
 
 void rgp::SceneManager::updateCurrentScene() {
+	updateFpsText();
+
 	if (!m_currentScene) return;
 
 	switch (m_currentScene->update()) {
@@ -51,4 +57,22 @@ void rgp::SceneManager::updateCurrentScene() {
 
 void rgp::SceneManager::drawCurrentScene() const {
 	if (m_currentScene) m_currentScene->draw();
+	m_fpsText->draw();
+}
+
+void rgp::SceneManager::updateFpsText() {
+	const auto currentTime = SDL_GetPerformanceCounter();
+	const auto frameTicks = currentTime - m_lastTime;
+	m_lastTime = currentTime;
+
+	// prevent division by zero if delta is somehow 0
+	if (const auto deltaTime = static_cast<float>(frameTicks) / static_cast<float>(m_frequency); deltaTime > 0.0f) {
+		const auto rawFps = 1.0f / deltaTime;
+
+		m_smoothedFps = (s_alpha * rawFps) + ((1.0f - s_alpha) * m_smoothedFps);
+
+		const auto displayFps = static_cast<int>(m_smoothedFps);
+
+		m_fpsText->setText("FPS: " + std::format("{}", displayFps));
+	}
 }
