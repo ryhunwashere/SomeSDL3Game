@@ -66,12 +66,12 @@ void rgp::SceneManager::updateFpsText() {
 	m_lastTime = currentTime;
 
 	// prevent division by zero if delta is somehow 0
-	if (const auto deltaTime = static_cast<float>(frameTicks) / static_cast<float>(m_frequency); deltaTime > 0.0f) {
-		const auto rawFps = 1.0f / deltaTime;
+	if (const float deltaTime = static_cast<float>(frameTicks) / static_cast<float>(m_frequency); deltaTime > 0.0f) {
+		const float rawFps = 1.0f / deltaTime;
 
-		m_smoothedFps = (s_alpha * rawFps) + ((1.0f - s_alpha) * m_smoothedFps);
+		m_smoothedFps = s_alpha * rawFps + (1.0f - s_alpha) * m_smoothedFps;
 
-		const auto displayFps = static_cast<int>(m_smoothedFps);
+		const int displayFps = static_cast<int>(m_smoothedFps);
 
 		m_fpsText->setText("FPS: " + std::format("{}", displayFps));
 	}
