@@ -15,5 +15,6 @@ namespace rgp {
 	private:
 		float m_now = 0.0f;
 		std::unique_ptr<TrackEntity> m_menuMusic;
+		std::unique_ptr<TextEntity> m_musicStatusText;
 	};
 }
