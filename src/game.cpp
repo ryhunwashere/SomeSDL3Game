@@ -19,6 +19,7 @@ void rgp::Game::handleEvent(const SDL_Event* event) {
 }
 
 void rgp::Game::update() {
+    m_ctx.getTimeManager().updateDeltaTime();
     m_sceneManager.updateCurrentScene();
     m_ctx.getInputManager().keepTrackOfPreviousState();
 }

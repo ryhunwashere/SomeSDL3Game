@@ -1,6 +1,7 @@
 #include "entity/entity_track.h"
 #include "asset/asset_audio.h"
 #include "manager/manager_audio.h"
+#include <cassert>
 
 rgp::TrackEntity::TrackEntity(AudioManager& audioManager, const AudioType type, const bool isLooping) :
     m_trackPtr(MIX_CreateTrack(audioManager.getMixer())) {
@@ -40,7 +41,22 @@ void rgp::TrackEntity::pause() const {
 
 void rgp::TrackEntity::stop(const Sint64 fadeOutFrames) const {
     if (!MIX_StopTrack(m_trackPtr, fadeOutFrames))
-        throw std::runtime_error("Failed to pause track: " + std::string(SDL_GetError()));
+        throw std::runtime_error("Failed to stop track: " + std::string(SDL_GetError()));
+}
+
+void rgp::TrackEntity::resume() const {
+    if (!MIX_ResumeTrack(m_trackPtr))
+        throw std::runtime_error("Failed to resume track: " + std::string(SDL_GetError()));
+}
+
+auto rgp::TrackEntity::isPaused() const -> bool {
+    assert(m_trackPtr && "Track pointer is null!");
+    return MIX_TrackPaused(m_trackPtr);
+}
+
+auto rgp::TrackEntity::isPlaying() const -> bool {
+    assert(m_trackPtr && "Track pointer is null!");
+    return MIX_TrackPlaying(m_trackPtr);
 }
 
 void rgp::TrackEntity::setLooping(const bool looping) const {

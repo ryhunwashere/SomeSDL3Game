@@ -2,8 +2,6 @@
 #include <unordered_map>
 #include <memory>
 #include <functional>
-#include <SDL3/SDL.h>
-
 #include "game_context.h"
 #include "enum/enum_scenetype.h"
 #include "scene/scene.h"
@@ -28,8 +26,6 @@ namespace rgp {
         std::unique_ptr<TextEntity> m_fpsText;
         static constexpr float s_alpha  = 0.01f;
         float m_smoothedFps             = 60.0f;
-        Uint64 m_lastTime               = SDL_GetPerformanceCounter();
-        Uint64 m_frequency              = SDL_GetPerformanceFrequency();
 
         void updateFpsText();
     };

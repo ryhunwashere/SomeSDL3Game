@@ -6,7 +6,7 @@
 #include "game.h"
 
 #ifdef NDEBUG
-    #include "util_logger.h"
+    #include "util/util_logger.h"
 #endif
 
 auto SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) -> SDL_AppResult {

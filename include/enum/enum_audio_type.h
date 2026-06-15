@@ -1,5 +1,5 @@
 #pragma once
 
 namespace rgp {
-    enum class AudioType { PlayerShoot, Count };
+    enum class AudioType { PlayerShoot, MenuMusic, Count };
 }

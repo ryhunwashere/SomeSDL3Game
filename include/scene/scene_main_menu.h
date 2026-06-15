@@ -1,6 +1,7 @@
 #pragma once
 #include "game_context.h"
 #include "scene.h"
+#include "entity/entity_track.h"
 
 namespace rgp {
 	class MainMenuScene final : public Scene {
@@ -12,7 +13,7 @@ namespace rgp {
 		void draw() override;
 
 	private:
-		const float m_initTime;
 		float m_now = 0.0f;
+		std::unique_ptr<TrackEntity> m_menuMusic;
 	};
 }

@@ -3,7 +3,7 @@
 
 #include "entity/entity_player.h"
 #include "type/type_vector2f.h"
-#include "util/util_logger.h"
+#include "manager/manager_time.h"
 
 constexpr float TEXTURE_SIZE = 100.0f;
 constexpr float MOVE_SPEED = 10.0f;
@@ -13,7 +13,7 @@ rgp::PlayerEntity::PlayerEntity(GameContext& ctx, const TextureType textureType,
 	m_input(ctx.getInputManager()),
 	m_texturePtr(ctx.getTextureManager().getTexture(textureType)),
 	m_shootTrack(std::make_unique<TrackEntity>(ctx.getAudioManager(), audioType, false)),
-	m_nextShootTime(Util::getElapsedGameTime())
+	m_nextShootTime(SDL_GetTicks())
 {}
 
 void rgp::PlayerEntity::draw() {
@@ -47,7 +47,7 @@ void rgp::PlayerEntity::updatePosition() {
 }
 
 void rgp::PlayerEntity::updateShooting() {
-	if (const Uint64 currentTime = Util::getElapsedGameTime();
+	if (const uint64_t currentTime = SDL_GetTicks();
 		currentTime >= m_nextShootTime && m_input.isKeyDown(SDL_SCANCODE_L)) {
 		m_shootTrack->play();
 		m_nextShootTime = currentTime + s_cooldown;

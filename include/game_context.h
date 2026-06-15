@@ -6,6 +6,7 @@
 #include "manager/manager_texture.h"
 #include "factory/factory_font.h"
 #include "factory/factory_text.h"
+#include "manager/manager_time.h"
 
 namespace rgp {
     class GameContext {
@@ -22,6 +23,7 @@ namespace rgp {
         [[nodiscard]] auto getAudioManager()    -> AudioManager&    { return m_audioManager; }
         [[nodiscard]] auto getTextureManager()  -> TextureManager&  { return m_textureManager; }
         [[nodiscard]] auto getInputManager()    -> InputManager&    { return m_inputManager; }
+        [[nodiscard]] auto getTimeManager()     -> TimeManager&     { return m_timeManager; }
 
     private:
         RendererEngine  m_rendererEngine;
@@ -31,6 +33,7 @@ namespace rgp {
         TextureManager  m_textureManager;
         InputManager    m_inputManager;
         AudioManager    m_audioManager;
+        TimeManager     m_timeManager;
     };
 }
 

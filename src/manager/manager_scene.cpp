@@ -45,7 +45,7 @@ void rgp::SceneManager::changeScene(const SceneType targetScene) {
 }
 
 void rgp::SceneManager::updateCurrentScene() {
-	updateFpsText();
+	m_fpsText->setText("FPS: " + std::to_string(m_ctx.getTimeManager().getCurrentFps()));
 
 	if (!m_currentScene) return;
 
@@ -61,21 +61,4 @@ void rgp::SceneManager::updateCurrentScene() {
 void rgp::SceneManager::drawCurrentScene() const {
 	if (m_currentScene) m_currentScene->draw();
 	m_fpsText->draw();
-}
-
-void rgp::SceneManager::updateFpsText() {
-	const auto currentTime = SDL_GetPerformanceCounter();
-	const auto frameTicks = currentTime - m_lastTime;
-	m_lastTime = currentTime;
-
-	// prevent division by zero if delta is somehow 0
-	if (const float deltaTime = static_cast<float>(frameTicks) / static_cast<float>(m_frequency); deltaTime > 0.0f) {
-		const float rawFps = 1.0f / deltaTime;
-
-		m_smoothedFps = s_alpha * rawFps + (1.0f - s_alpha) * m_smoothedFps;
-
-		const int displayFps = static_cast<int>(m_smoothedFps);
-
-		m_fpsText->setText("FPS: " + std::format("{}", displayFps));
-	}
 }

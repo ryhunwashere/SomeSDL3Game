@@ -27,11 +27,10 @@ set(SOURCES
         src/manager/manager_texture.cpp
         src/manager/manager_audio.cpp
         src/manager/manager_scene.cpp
+        src/manager/manager_time.cpp
 
         src/scene/scene_main_menu.cpp
         src/scene/scene_level_one.cpp
-
-        src/util/util_logger.cpp
 
         src/asset/asset_font.cpp
         src/asset/asset_texture.cpp
@@ -56,6 +55,7 @@ set(HEADERS
         include/manager/manager_input.h
         include/manager/manager_texture.h
         include/manager/manager_scene.h
+        include/manager/manager_time.h
 
         include/scene/scene.h
         include/scene/scene_main_menu.h
@@ -179,6 +179,10 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${ASSET_SOURCE_DIR}/player_shoot.wav"
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/player_shoot.wav"
+
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${ASSET_SOURCE_DIR}/menu_music.mp3"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/menu_music.mp3"
 
         COMMENT "Copying SDL3 DLLs and game assets to output directory"
 )

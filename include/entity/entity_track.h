@@ -15,6 +15,10 @@ namespace rgp {
         void play() const;
         void pause() const;
         void stop(Sint64 fadeOutFrames = 0) const;
+        void resume() const;
+
+        auto isPlaying() const -> bool;
+        auto isPaused() const -> bool;
 
         void setLooping(bool looping) const;
 

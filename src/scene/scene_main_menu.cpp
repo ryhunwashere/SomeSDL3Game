@@ -1,11 +1,9 @@
 #include <SDL3/SDL.h>
 #include "scene/scene_main_menu.h"
 #include "manager/manager_scene.h"
-#include "util/util_logger.h"
 
-rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
-    m_initTime(static_cast<float>(Util::getElapsedGameTime()))
-{
+rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx), m_menuMusic(std::make_unique<TrackEntity>(m_ctx.getAudioManager(), AudioType::MenuMusic, true)) {
+    m_menuMusic->play();
 	SDL_Log("Main menu scene loaded.");
 }
 
@@ -14,18 +12,28 @@ rgp::MainMenuScene::~MainMenuScene() {
 }
 
 auto rgp::MainMenuScene::update() -> SceneType {
-    m_now = static_cast<float>(Util::getElapsedGameTime()) / 1000 - m_initTime;
+    m_now += m_ctx.getTimeManager().getDeltaTime();
 
-    if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_P))
+    const auto& input = m_ctx.getInputManager();
+
+    if (input.isKeyJustPressed(SDL_SCANCODE_P))
         return SceneType::LevelOne;
+
+    if (input.isKeyJustPressed(SDL_SCANCODE_BACKSPACE)) {
+        if (m_menuMusic->isPaused())
+            m_menuMusic->resume();
+        else if (m_menuMusic->isPlaying())
+            m_menuMusic->pause();
+    }
 
     return SceneType::Continue;
 }
 
 void rgp::MainMenuScene::draw() {
-    const auto red = 0.5f + 0.5f * SDL_sinf(m_now);
-    const auto green = 0.5f + 0.5f * SDL_sinf(m_now + SDL_PI_F * 2 / 3);
-    const auto blue = 0.5f + 0.5f * SDL_sinf(m_now + SDL_PI_F * 4 / 3);
+    const auto interval = m_now * 2.0f;
+    const auto red      = 0.5f + 0.5f * SDL_sinf(interval);
+    const auto green    = 0.5f + 0.5f * SDL_sinf(interval + SDL_PI_F * 2.0f / 3.0f);
+    const auto blue     = 0.5f + 0.5f * SDL_sinf(interval + SDL_PI_F * 4.0f / 3.0f);
 
-    m_ctx.getRendererEngine().draw(red, green, blue, SDL_ALPHA_OPAQUE);
+    m_ctx.getRendererEngine().draw(red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);
 }
