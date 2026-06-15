@@ -11,10 +11,11 @@
 
 auto SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) -> SDL_AppResult {
     try {
-        *appstate = new rgp::Game();
+        auto game = std::make_unique<rgp::Game>();
+        *appstate = game.release();
         return SDL_APP_CONTINUE;
-    } catch (...) {
-        SDL_Log("[ERROR] Init error: %s", SDL_GetError());
+    } catch (const std::runtime_error& err) {
+        SDL_Log("[ERROR] Init error: %s", err.what());
         return SDL_APP_FAILURE;
     }
 }
@@ -47,13 +48,12 @@ auto SDL_AppIterate(void* appstate) -> SDL_AppResult {
 }
 
 void SDL_AppQuit(void* appstate, const SDL_AppResult result) {
-    SDL_Log("Quitting game...");
-
     if (appstate) {
-        const auto* game = static_cast<rgp::Game*>(appstate);
-        delete game;
+        auto game = std::unique_ptr<rgp::Game>(static_cast<rgp::Game*>(appstate));
+        game.reset();
     }
 
+    SDL_Log("Quitting game...");
     SDL_Quit();
 
     if (result != SDL_APP_SUCCESS) {
