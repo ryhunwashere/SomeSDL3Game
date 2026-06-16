@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 #include <stdexcept>
 #include "engine/engine_renderer.h"
+#include <cassert>
 
 constexpr int WINDOW_WIDTH      = 800;
 constexpr int WINDOW_HEIGHT     = 600;
@@ -62,25 +63,32 @@ rgp::RendererEngine::~RendererEngine() {
 }
 
 auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
-    if (!m_renderer)
-        throw std::runtime_error(NULL_RENDERER_ERROR);
-
+    assert(m_renderer && NULL_RENDERER_ERROR);
     return m_renderer;
 }
 
 void rgp::RendererEngine::draw(const ColorF& colorF) const {
-    if (!m_renderer)
-        throw std::runtime_error(NULL_RENDERER_ERROR);
+    assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_SetRenderDrawColorFloat(m_renderer, colorF.r, colorF.g, colorF.b, colorF.a))
-        throw std::runtime_error(
-            std::string("Set draw color error: ") + SDL_GetError()
-        );
+        throw std::runtime_error(std::string(SDL_GetError()));
+
+    if (!SDL_RenderFillRect(m_renderer, nullptr))
+        throw std::runtime_error(std::string(SDL_GetError()));
+}
+
+void rgp::RendererEngine::draw(const ColorF& colorF, const SDL_FRect* dstrect) const {
+    assert(m_renderer && NULL_RENDERER_ERROR);
+
+    if (!SDL_SetRenderDrawColorFloat(m_renderer, colorF.r, colorF.g, colorF.b, colorF.a))
+        throw std::runtime_error(std::string(SDL_GetError()));
+
+    if (!SDL_RenderFillRect(m_renderer, dstrect))
+        throw std::runtime_error(std::string(SDL_GetError()));
 }
 
 void rgp::RendererEngine::draw(const ColorF& colorF, SDL_Texture* texture, const SDL_FRect* dstrect) const {
-    if (!m_renderer)
-        throw std::runtime_error(NULL_RENDERER_ERROR);
+    assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_SetTextureColorModFloat(texture, colorF.r, colorF.g, colorF.b) ||
         !SDL_SetTextureAlphaModFloat(texture, colorF.a)) {
@@ -96,8 +104,7 @@ void rgp::RendererEngine::draw(const ColorF& colorF, SDL_Texture* texture, const
 }
 
 void rgp::RendererEngine::present() const {
-    if (!m_renderer)
-        throw std::runtime_error(NULL_RENDERER_ERROR);
+    assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_RenderPresent(m_renderer))
         throw std::runtime_error(
@@ -106,8 +113,7 @@ void rgp::RendererEngine::present() const {
 }
 
 void rgp::RendererEngine::clear() const {
-    if (!m_renderer)
-        throw std::runtime_error(NULL_RENDERER_ERROR);
+    assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_RenderClear(m_renderer))
         throw std::runtime_error(

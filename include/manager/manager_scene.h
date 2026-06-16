@@ -26,7 +26,5 @@ namespace rgp {
         std::unique_ptr<TextEntity> m_fpsText;
         static constexpr float s_alpha  = 0.01f;
         float m_smoothedFps             = 60.0f;
-
-        void updateFpsText();
     };
 }

@@ -10,7 +10,9 @@ namespace rgp {
         ~RendererEngine();
 
         void draw(const ColorF& colorF) const;
+        void draw(const ColorF& colorF, const SDL_FRect* dstrect) const;
         void draw(const ColorF& colorF, SDL_Texture* texture, const SDL_FRect* dstrect) const;
+
         void present() const;
         void clear() const;
         [[nodiscard]] auto getRenderer() const -> SDL_Renderer*;

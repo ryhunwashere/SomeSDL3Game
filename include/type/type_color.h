@@ -47,5 +47,19 @@ namespace rgp {
             b = std::clamp(color.b, MIN_VAL, MAX_VAL);
             a = std::clamp(color.a, MIN_VAL, MAX_VAL);
         }
+
+        [[nodiscard]] constexpr bool operator==(const ColorF& other) const {
+            constexpr float epsilon = 0.001f;
+
+            auto closeEnough = [](const float a, const float b) -> bool {
+                const float diff = a - b;
+                return (diff < 0 ? -diff : diff) < epsilon;
+            };
+
+            return closeEnough(r, other.r) &&
+                   closeEnough(g, other.g) &&
+                   closeEnough(b, other.b) &&
+                   closeEnough(a, other.a);
+        }
     };
 }

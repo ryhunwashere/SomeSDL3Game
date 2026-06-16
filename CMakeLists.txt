@@ -50,6 +50,7 @@ set(HEADERS
         include/entity/entity.h
         include/entity/entity_player.h
         include/entity/entity_text.h
+        include/entity/entity_button.h
 
         include/manager/manager_input.h
         include/manager/manager_texture.h

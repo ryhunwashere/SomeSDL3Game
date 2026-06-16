@@ -2,6 +2,7 @@
 #include "game_context.h"
 #include "scene.h"
 #include "asset/asset_track.h"
+#include "entity/entity_button.h"
 
 namespace rgp {
 	class MainMenuScene final : public Scene {
@@ -16,5 +17,6 @@ namespace rgp {
 		float m_now = 0.0f;
 		std::unique_ptr<Track> m_menuMusic;
 		std::unique_ptr<TextEntity> m_musicStatusText;
+		std::unique_ptr<ButtonEntity> m_button;
 	};
 }

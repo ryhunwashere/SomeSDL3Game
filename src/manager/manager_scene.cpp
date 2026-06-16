@@ -33,7 +33,7 @@ rgp::SceneManager::~SceneManager() {
 }
 
 void rgp::SceneManager::changeScene(const SceneType targetScene) {
-	assert(targetScene != SceneType::Continue && "'Continue' is not a valid scene");
+	if (targetScene == SceneType::Continue) return;
 
 	const auto it = m_sceneMap.find(targetScene);
 	assert(it != m_sceneMap.end());
@@ -49,13 +49,8 @@ void rgp::SceneManager::updateCurrentScene() {
 
 	if (!m_currentScene) return;
 
-	switch (m_currentScene->update()) {
-		case SceneType::MainMenu:
-			return changeScene(SceneType::MainMenu);
-		case SceneType::LevelOne:
-			return changeScene(SceneType::LevelOne);
-		default: break;
-	}
+	const SceneType targetScene = m_currentScene->update();
+	changeScene(targetScene);
 }
 
 void rgp::SceneManager::drawCurrentScene() const {
