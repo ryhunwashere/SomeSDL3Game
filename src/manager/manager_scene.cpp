@@ -21,7 +21,7 @@ rgp::SceneManager::SceneManager(GameContext& ctx) : m_ctx(ctx),
 		return std::make_unique<LevelOneScene>(m_ctx);
 	};
 
-	m_fpsText->setColor({ 85.0f, 255.0f, 28.0f, 255.0f });
+	m_fpsText->setColor(constant::color::WHITE_OPAQUE);
 
 	changeScene(SceneType::MainMenu);
 
@@ -45,7 +45,7 @@ void rgp::SceneManager::changeScene(const SceneType targetScene) {
 }
 
 void rgp::SceneManager::updateCurrentScene() {
-	m_fpsText->setText("FPS: " + std::to_string(m_ctx.getTimeManager().getCurrentFps()));
+	m_fpsText->setText("FPS: " + std::to_string(static_cast<uint64_t>(m_ctx.getTimeManager().getCurrentFps())));
 
 	if (!m_currentScene) return;
 
