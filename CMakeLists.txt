@@ -21,7 +21,6 @@ set(SOURCES
 
         src/entity/entity_player.cpp
         src/entity/entity_text.cpp
-        src/entity/entity_track.cpp
 
         src/manager/manager_input.cpp
         src/manager/manager_texture.cpp
@@ -35,6 +34,7 @@ set(SOURCES
         src/asset/asset_font.cpp
         src/asset/asset_texture.cpp
         src/asset/asset_audio.cpp
+        src/asset/asset_track.cpp
 
         src/factory/factory_font.cpp
 )
@@ -50,7 +50,6 @@ set(HEADERS
         include/entity/entity.h
         include/entity/entity_player.h
         include/entity/entity_text.h
-        include/entity/entity_track.h
 
         include/manager/manager_input.h
         include/manager/manager_texture.h
@@ -68,6 +67,7 @@ set(HEADERS
         include/asset/asset_texture.h
         include/asset/asset_font.h
         include/asset/asset_audio.h
+        include/asset/asset_track.h
 
         include/type/type_vector2f.h
         include/type/type_color.h

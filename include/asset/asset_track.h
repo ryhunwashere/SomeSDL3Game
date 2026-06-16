@@ -4,13 +4,13 @@
 #include "manager/manager_audio.h"
 
 namespace rgp {
-    class TrackEntity {
+    class Track {
     public:
-        explicit TrackEntity(AudioManager& audioManager, AudioType type, bool isLooping);
-        ~TrackEntity();
+        explicit Track(AudioManager& audioManager, AudioType type, bool isLooping);
+        ~Track();
 
-        TrackEntity(const TrackEntity&) = delete;
-        TrackEntity& operator=(const TrackEntity&) = delete;
+        Track(const Track&) = delete;
+        Track& operator=(const Track&) = delete;
 
         void play() const;
         void pause() const;

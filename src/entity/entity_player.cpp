@@ -14,7 +14,7 @@ rgp::PlayerEntity::PlayerEntity(GameContext& ctx, const TextureType textureType,
 	m_renderer(ctx.getRendererEngine()),
 	m_input(ctx.getInputManager()),
 	m_texturePtr(ctx.getTextureManager().getTexture(textureType)),
-	m_shootTrack(std::make_unique<TrackEntity>(ctx.getAudioManager(), audioType, false)),
+	m_shootTrack(std::make_unique<Track>(ctx.getAudioManager(), audioType, false)),
 	m_nextShootTime(SDL_GetTicks())
 {}
 

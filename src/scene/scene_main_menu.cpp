@@ -5,7 +5,7 @@
 #include "manager/manager_scene.h"
 
 rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
-    m_menuMusic(std::make_unique<TrackEntity>(m_ctx.getAudioManager(), AudioType::MenuMusic, true)),
+    m_menuMusic(std::make_unique<Track>(m_ctx.getAudioManager(), AudioType::MenuMusic, true)),
     m_musicStatusText(ctx.getTextFactory().create(FontType::ZenMaruMedium24, ""))
 {
     m_menuMusic->play();
