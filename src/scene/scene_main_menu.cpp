@@ -10,7 +10,7 @@ rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
 {
     m_menuMusic->play();
 
-    m_musicStatusText->setColor(constant::color::BLACK_OPAQUE);
+    m_musicStatusText->setColor(constant::color::WHITE_OPAQUE);
     m_musicStatusText->setPosition({ 5.0f, 300.0f });
     m_musicStatusText->setText("Music is playing");
 
@@ -49,7 +49,7 @@ void rgp::MainMenuScene::draw() {
     const auto green    = 0.5f + 0.5f * SDL_sinf(interval + SDL_PI_F * 2.0f / 3.0f);
     const auto blue     = 0.5f + 0.5f * SDL_sinf(interval + SDL_PI_F * 4.0f / 3.0f);
 
-    m_ctx.getRendererEngine().draw(red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);
+    m_ctx.getRendererEngine().draw({ red, green, blue, SDL_ALPHA_OPAQUE_FLOAT });
 
     m_musicStatusText->draw();
 }

@@ -68,29 +68,22 @@ auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
     return m_renderer;
 }
 
-void rgp::RendererEngine::draw(const float red, const float green, const float blue, const float alpha) const {
+void rgp::RendererEngine::draw(const ColorF& colorF) const {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
-    if (!SDL_SetRenderDrawColorFloat(m_renderer, red, green, blue, alpha))
+    if (!SDL_SetRenderDrawColorFloat(m_renderer, colorF.r, colorF.g, colorF.b, colorF.a))
         throw std::runtime_error(
             std::string("Set draw color error: ") + SDL_GetError()
         );
 }
 
-void rgp::RendererEngine::draw(
-    const float red,
-    const float green,
-    const float blue,
-    const float alpha,
-    SDL_Texture* texture,
-    const SDL_FRect* dstrect) const
-{
+void rgp::RendererEngine::draw(const ColorF& colorF, SDL_Texture* texture, const SDL_FRect* dstrect) const {
     if (!m_renderer)
         throw std::runtime_error(NULL_RENDERER_ERROR);
 
-    if (!SDL_SetTextureColorModFloat(texture, red, green, blue) ||
-        !SDL_SetTextureAlphaModFloat(texture, alpha)) {
+    if (!SDL_SetTextureColorModFloat(texture, colorF.r, colorF.g, colorF.b) ||
+        !SDL_SetTextureAlphaModFloat(texture, colorF.a)) {
         throw std::runtime_error(
             std::string("Set texture mod error: ") + SDL_GetError()
         );

@@ -1,7 +1,7 @@
-#include <string>
-#include <format>
 #include <SDL3/SDL.h>
 #include "scene/scene_level_one.h"
+
+#include "constant/constant.h"
 #include "manager/manager_scene.h"
 #include "factory/factory_text.h"
 
@@ -28,6 +28,6 @@ auto rgp::LevelOneScene::update() -> SceneType {
 }
 
 void rgp::LevelOneScene::draw() {
-	m_ctx.getRendererEngine().draw(0.0, 0.0, 0.0, SDL_ALPHA_OPAQUE);
+	m_ctx.getRendererEngine().draw(constant::color::BLACK_OPAQUE_F);
 	m_player->draw();
 }

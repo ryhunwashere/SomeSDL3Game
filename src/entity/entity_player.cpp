@@ -2,6 +2,8 @@
 #include <complex>
 
 #include "entity/entity_player.h"
+
+#include "constant/constant.h"
 #include "type/type_vector2f.h"
 #include "manager/manager_time.h"
 
@@ -24,7 +26,7 @@ void rgp::PlayerEntity::draw() {
 		static_cast<float>(m_texturePtr->getTexturePtr()->h)
 	};
 
-	m_renderer.draw(1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT, m_texturePtr->getTexturePtr(), &dstRect);
+	m_renderer.draw(constant::color::OPAQUE_F, m_texturePtr->getTexturePtr(), &dstRect);
 }
 
 void rgp::PlayerEntity::update() {

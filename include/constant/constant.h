@@ -10,7 +10,12 @@ namespace rgp::constant {
     }
 
     namespace color {
-        constexpr Color BLACK_OPAQUE = {0, 0, 0, 255};
-        constexpr Color WHITE_OPAQUE = {255, 255, 255, 255};
+        constexpr Color OPAQUE          = {1, 1, 1, 255};
+        constexpr Color BLACK_OPAQUE    = {0, 0, 0, 255};
+        constexpr Color WHITE_OPAQUE    = {255, 255, 255, 255};
+
+        constexpr ColorF OPAQUE_F       = {1.0f, 1.0f, 1.0f, 255.0f};
+        constexpr ColorF BLACK_OPAQUE_F = {0.0f, 0.0f, 0.0f, 255.0f};
+        constexpr ColorF WHITE_OPAQUE_F = {255.0f, 255.0f, 255.0f, 255.0f};
     }
 }

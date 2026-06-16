@@ -25,4 +25,27 @@ namespace rgp {
             a = std::clamp(color.a, MIN_VAL, MAX_VAL);
         }
     };
+
+    struct ColorF : SDL_FColor {
+        static constexpr float MIN_VAL = 0.0f;
+        static constexpr float MAX_VAL = 255.0f;
+
+        constexpr ColorF() : SDL_FColor{.r = MIN_VAL, .g = MIN_VAL, .b = MIN_VAL, .a = MAX_VAL} {}
+
+        template <typename T>
+        requires std::convertible_to<T, float>
+        constexpr ColorF(const T _r, const T _g, const T _b, const T _a) : SDL_FColor() {
+            r = std::clamp(static_cast<float>(_r), MIN_VAL, MAX_VAL);
+            g = std::clamp(static_cast<float>(_g), MIN_VAL, MAX_VAL);
+            b = std::clamp(static_cast<float>(_b), MIN_VAL, MAX_VAL);
+            a = std::clamp(static_cast<float>(_a), MIN_VAL, MAX_VAL);
+        }
+
+        constexpr explicit ColorF(const SDL_FColor& color) : SDL_FColor() {
+            r = std::clamp(color.r, MIN_VAL, MAX_VAL);
+            g = std::clamp(color.g, MIN_VAL, MAX_VAL);
+            b = std::clamp(color.b, MIN_VAL, MAX_VAL);
+            a = std::clamp(color.a, MIN_VAL, MAX_VAL);
+        }
+    };
 }
