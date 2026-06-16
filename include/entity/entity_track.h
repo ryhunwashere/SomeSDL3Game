@@ -17,8 +17,8 @@ namespace rgp {
         void stop(Sint64 fadeOutFrames = 0) const;
         void resume() const;
 
-        auto isPlaying() const -> bool;
-        auto isPaused() const -> bool;
+        [[nodiscard]] auto isPlaying() const -> bool;
+        [[nodiscard]] auto isPaused() const -> bool;
 
         void setLooping(bool looping) const;
 
