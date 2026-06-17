@@ -26,7 +26,7 @@ void rgp::PlayerEntity::draw() {
 		static_cast<float>(m_texturePtr->getTexturePtr()->h)
 	};
 
-	m_renderer.draw(constant::color::OPAQUE_F, m_texturePtr->getTexturePtr(), &dstRect);
+	m_renderer.drawTexture(constant::color::OPAQUE_F, &dstRect, m_texturePtr->getTexturePtr());
 }
 
 void rgp::PlayerEntity::update() {

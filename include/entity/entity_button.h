@@ -35,7 +35,7 @@ namespace rgp {
                 .h = getHeight()
             };
 
-            m_renderer.draw(m_color, &destRect);
+            m_renderer.drawRect(m_color, &destRect);
         }
 
         void setColor(const ColorF& colorF) { m_color = colorF; }

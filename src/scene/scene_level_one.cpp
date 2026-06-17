@@ -28,6 +28,6 @@ auto rgp::LevelOneScene::update() -> SceneType {
 }
 
 void rgp::LevelOneScene::draw() {
-	m_ctx.getRendererEngine().draw(constant::color::BLACK_OPAQUE_F);
+	m_ctx.getRendererEngine().drawScreen(constant::color::BLACK_OPAQUE_F);
 	m_player->draw();
 }

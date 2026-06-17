@@ -67,17 +67,11 @@ auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
     return m_renderer;
 }
 
-void rgp::RendererEngine::draw(const ColorF& colorF) const {
-    assert(m_renderer && NULL_RENDERER_ERROR);
-
-    if (!SDL_SetRenderDrawColorFloat(m_renderer, colorF.r, colorF.g, colorF.b, colorF.a))
-        throw std::runtime_error(std::string(SDL_GetError()));
-
-    if (!SDL_RenderFillRect(m_renderer, nullptr))
-        throw std::runtime_error(std::string(SDL_GetError()));
+void rgp::RendererEngine::drawScreen(const ColorF& colorF) const {
+    drawRect(colorF, nullptr);
 }
 
-void rgp::RendererEngine::draw(const ColorF& colorF, const SDL_FRect* dstrect) const {
+void rgp::RendererEngine::drawRect(const ColorF& colorF, const SDL_FRect* dstrect) const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_SetRenderDrawColorFloat(m_renderer, colorF.r, colorF.g, colorF.b, colorF.a))
@@ -87,7 +81,7 @@ void rgp::RendererEngine::draw(const ColorF& colorF, const SDL_FRect* dstrect) c
         throw std::runtime_error(std::string(SDL_GetError()));
 }
 
-void rgp::RendererEngine::draw(const ColorF& colorF, SDL_Texture* texture, const SDL_FRect* dstrect) const {
+void rgp::RendererEngine::drawTexture(const ColorF& colorF, const SDL_FRect* dstrect, SDL_Texture* texture) const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_SetTextureColorModFloat(texture, colorF.r, colorF.g, colorF.b) ||
