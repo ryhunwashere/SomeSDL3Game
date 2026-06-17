@@ -8,17 +8,17 @@
 rgp::Track::Track(AudioManager& audioManager, const AudioType type, const bool isLooping) :
     m_trackPtr(MIX_CreateTrack(audioManager.getMixer())) {
     if (!m_trackPtr)
-        throw SDLException("Track creation failure: " );
+        throw SDLException("Track creation failure");
 
     if (!MIX_SetTrackAudio(m_trackPtr, audioManager.getAudio(type)->getAudioPtr()))
-        throw SDLException("Set track audio failure: " );
+        throw SDLException("Set track audio failure");
 
     m_trackProps = SDL_CreateProperties();
     if (m_trackProps == 0)
-        throw SDLException("Props creation for track creation failure: " );
+        throw SDLException("Props creation for track creation failure");
 
     if (!SDL_SetNumberProperty(m_trackProps, MIX_PROP_PLAY_LOOPS_NUMBER, isLooping ? -1 : 0))
-        throw SDLException("Props setting for track failed: " );
+        throw SDLException("Props setting for track failed");
 }
 
 rgp::Track::~Track() {

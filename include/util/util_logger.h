@@ -8,7 +8,7 @@
 namespace rgp::util::logging {
     constexpr auto FILE_NAME = "error_log.txt";
 
-    static void logMessage(const std::string& message) {
+    static void logMessage(const std::string_view message) {
         std::ofstream logFile(FILE_NAME, std::ios::app);
 
         if (!logFile.is_open()) {

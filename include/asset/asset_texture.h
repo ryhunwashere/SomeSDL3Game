@@ -6,7 +6,7 @@
 namespace rgp {
     class Texture {
     public:
-        Texture(RendererEngine& renderer, const std::string& texturePath);
+        Texture(RendererEngine& renderer, std::string_view texturePath);
         ~Texture();
 
         [[nodiscard]] auto getTexturePtr() const -> SDL_Texture* { return m_texturePtr; }

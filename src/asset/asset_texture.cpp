@@ -3,9 +3,9 @@
 
 #include "except_sdl.h"
 
-rgp::Texture::Texture(RendererEngine& renderer, const std::string& texturePath) :
+rgp::Texture::Texture(RendererEngine& renderer, std::string_view texturePath) :
     m_texturePtr([&renderer, &texturePath]() -> SDL_Texture* {
-        SDL_Surface* surface = SDL_LoadPNG(texturePath.c_str());
+        SDL_Surface* surface = SDL_LoadPNG(texturePath.data());
         if (!surface)
             throw SDLException("Texture surface creation error");
 

@@ -11,7 +11,7 @@ namespace rgp {
         explicit TextFactory(const TextEngine& engine, const FontFactory& factory) : m_engine(engine), m_factory(factory) {}
         ~TextFactory() = default;
 
-        [[nodiscard]] auto create(FontType fontType, const std::string& text = "") const -> std::unique_ptr<TextEntity> {
+        [[nodiscard]] auto create(FontType fontType, const std::string_view text) const -> std::unique_ptr<TextEntity> {
             return std::make_unique<TextEntity>(m_engine, m_factory, fontType, text);
         }
 

@@ -5,18 +5,18 @@ rgp::TextEntity::TextEntity(
     const TextEngine& engine,
     const FontFactory& factory,
     const FontType fontType,
-    const std::string& initialText)
+    const std::string_view initialText)
 :
     m_textPtr(TTF_CreateText(
         engine.getEnginePtr(),
         factory.getFont(fontType)->getFontPtr(),
-        initialText.c_str(),
+        initialText.data(),
         initialText.length()))
 {
     if (!m_textPtr)
         throw SDLException("Failed to create Text Entity");
 
-    SDL_Log("Text Entity created. Text: %s", initialText.c_str());
+    SDL_Log("Text Entity created. Text: %s", initialText.data());
 }
 
 rgp::TextEntity::~TextEntity() {
@@ -32,8 +32,8 @@ void rgp::TextEntity::draw() {
         throw SDLException("Failed to draw text Entity");
 }
 
-void rgp::TextEntity::setText(const std::string& text) const {
-    if (!TTF_SetTextString(m_textPtr, text.c_str(), text.length()))
+void rgp::TextEntity::setText(const std::string_view text) const {
+    if (!TTF_SetTextString(m_textPtr, text.data(), text.length()))
         throw SDLException("Failed to set text Entity");
 }
 

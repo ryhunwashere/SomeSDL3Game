@@ -16,7 +16,7 @@ namespace rgp {
             const TextEngine& engine,
             const FontFactory& factory,
             FontType fontType,
-            const std::string& initialText);
+            std::string_view initialText);
 
         ~TextEntity() override;
 
@@ -37,7 +37,7 @@ namespace rgp {
         }
 
         void draw() override;
-        void setText(const std::string& text) const;
+        void setText(std::string_view text) const;
         void setColor(const Color& color) const;
 
     private:

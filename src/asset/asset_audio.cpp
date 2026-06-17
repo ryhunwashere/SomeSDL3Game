@@ -5,12 +5,12 @@
 
 #include "except_sdl.h"
 
-rgp::Audio::Audio(MIX_Mixer* mixer, const std::string& audioPath) {
-    m_audioPtr = MIX_LoadAudio(mixer, audioPath.c_str(), false);
+rgp::Audio::Audio(MIX_Mixer* mixer, const std::string_view audioPath) {
+    m_audioPtr = MIX_LoadAudio(mixer, audioPath.data(), false);
     if (!m_audioPtr)
         throw SDLException("Audio loading failure");
 
-    SDL_Log("Audio loaded: %s", audioPath.c_str());
+    SDL_Log("Audio loaded: %s", audioPath.data());
 }
 
 rgp::Audio::~Audio() {

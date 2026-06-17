@@ -5,7 +5,7 @@
 namespace rgp {
     class Audio {
     public:
-        explicit Audio(MIX_Mixer* mixer, const std::string& audioPath);
+        explicit Audio(MIX_Mixer* mixer, std::string_view audioPath);
         ~Audio();
 
         [[nodiscard]] auto getAudioPtr() const -> MIX_Audio* { return m_audioPtr; }
