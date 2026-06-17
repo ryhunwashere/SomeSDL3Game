@@ -1,5 +1,5 @@
 #include <SDL3/SDL.h>
-#include <stdexcept>
+#include "except_sdl.h"
 #include "engine/engine_renderer.h"
 #include <cassert>
 
@@ -11,15 +11,11 @@ auto NULL_WINDOW_ERROR          = "Window is null";
 
 rgp::RendererEngine::RendererEngine() {
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
-        throw std::runtime_error(
-            std::string("SDL video initialization failure: ") + SDL_GetError()
-        );
+        throw SDLException("SDL video initialization failure");
 
     m_window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
     if (!m_window)
-        throw std::runtime_error(
-            std::string("Window initialization failed: ") + SDL_GetError()
-        );
+        throw SDLException("Window initialization failed");
 
     SDL_Log("Window initialized.");
 
@@ -30,20 +26,14 @@ rgp::RendererEngine::RendererEngine() {
 
     if (!m_renderer) {
         SDL_DestroyWindow(m_window);
-        throw std::runtime_error(
-            std::string("Renderer initialization failed: ") + SDL_GetError()
-        );
+        throw SDLException("Renderer initialization failed");
     }
 
     if (!SDL_SetRenderVSync(m_renderer, 1))
-        throw std::runtime_error(
-            std::string("VSync setting failed: ") + SDL_GetError()
-        );
+        throw SDLException("VSync setting failed");
 
     if (!SDL_SetRenderLogicalPresentation(m_renderer, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX))
-        throw std::runtime_error(
-            std::string("Set renderer failed: ") + SDL_GetError()
-        );
+        throw SDLException("Set renderer failed");
 
     SDL_Log("Renderer initialized.");
 }
@@ -75,10 +65,10 @@ void rgp::RendererEngine::drawRect(const ColorF& colorF, const SDL_FRect* dstrec
     assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_SetRenderDrawColorFloat(m_renderer, colorF.r, colorF.g, colorF.b, colorF.a))
-        throw std::runtime_error(std::string(SDL_GetError()));
+        throw SDLException("Set render draw color error");
 
     if (!SDL_RenderFillRect(m_renderer, dstrect))
-        throw std::runtime_error(std::string(SDL_GetError()));
+        throw SDLException("Render fill rect error");
 }
 
 void rgp::RendererEngine::drawTexture(const ColorF& colorF, const SDL_FRect* dstrect, SDL_Texture* texture) const {
@@ -86,31 +76,23 @@ void rgp::RendererEngine::drawTexture(const ColorF& colorF, const SDL_FRect* dst
 
     if (!SDL_SetTextureColorModFloat(texture, colorF.r, colorF.g, colorF.b) ||
         !SDL_SetTextureAlphaModFloat(texture, colorF.a)) {
-        throw std::runtime_error(
-            std::string("Set texture mod error: ") + SDL_GetError()
-        );
+        throw SDLException("Set texture mod error");
     }
 
     if (!SDL_RenderTexture(m_renderer, texture, nullptr, dstrect))
-        throw std::runtime_error(
-            std::string("Render texture error: ") + SDL_GetError()
-        );
+        throw SDLException("Render texture error");
 }
 
 void rgp::RendererEngine::present() const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_RenderPresent(m_renderer))
-        throw std::runtime_error(
-            std::string("Render present error: ") + SDL_GetError()
-        );
+        throw SDLException("Render present error");
 }
 
 void rgp::RendererEngine::clear() const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
     if (!SDL_RenderClear(m_renderer))
-        throw std::runtime_error(
-            std::string("Render clear error: ") + SDL_GetError()
-        );
+        throw SDLException("Render clear error");
 }

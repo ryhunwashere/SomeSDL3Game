@@ -1,4 +1,5 @@
 #include "entity/entity_text.h"
+#include "except_sdl.h"
 
 rgp::TextEntity::TextEntity(
     const TextEngine& engine,
@@ -13,7 +14,7 @@ rgp::TextEntity::TextEntity(
         initialText.length()))
 {
     if (!m_textPtr)
-        throw std::runtime_error("Failed to create Text Entity: " + std::string(SDL_GetError()));
+        throw SDLException("Failed to create Text Entity");
 
     SDL_Log("Text Entity created. Text: %s", initialText.c_str());
 }
@@ -28,15 +29,15 @@ rgp::TextEntity::~TextEntity() {
 
 void rgp::TextEntity::draw() {
     if (!TTF_DrawRendererText(m_textPtr, getX(), getY()))
-        throw std::runtime_error("Failed to draw text Entity: " + std::string(SDL_GetError()));
+        throw SDLException("Failed to draw text Entity");
 }
 
 void rgp::TextEntity::setText(const std::string& text) const {
     if (!TTF_SetTextString(m_textPtr, text.c_str(), text.length()))
-        throw std::runtime_error("Failed to set text Entity: " + std::string(SDL_GetError()));
+        throw SDLException("Failed to set text Entity");
 }
 
 void rgp::TextEntity::setColor(const Color& color) const {
     if (!TTF_SetTextColor(m_textPtr, color.r, color.g, color.b, color.a))
-        throw std::runtime_error("Failed to set text color: " + std::string(SDL_GetError()));
+        throw SDLException("Failed to set text color");
 }

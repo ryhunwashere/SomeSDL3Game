@@ -1,6 +1,6 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 
-#include <stdexcept>
+#include "except_sdl.h"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include "game.h"
@@ -14,7 +14,7 @@ auto SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] ch
         auto game = std::make_unique<rgp::Game>();
         *appstate = game.release();
         return SDL_APP_CONTINUE;
-    } catch (const std::runtime_error& err) {
+    } catch (const rgp::SDLException& err) {
         SDL_Log("[ERROR] Init error: %s", err.what());
         return SDL_APP_FAILURE;
     }
@@ -29,7 +29,7 @@ auto SDL_AppEvent(void* appstate, SDL_Event* event) -> SDL_AppResult {
         game->handleEvent(event);
         return SDL_APP_CONTINUE;
 
-    } catch (const std::runtime_error& err) {
+    } catch (const rgp::SDLException& err) {
         SDL_SetError("[ERROR] Handle event error: \n\t%s", err.what());
         return SDL_APP_FAILURE;
     }
@@ -41,7 +41,7 @@ auto SDL_AppIterate(void* appstate) -> SDL_AppResult {
         game->update();
         game->draw();
         return SDL_APP_CONTINUE;
-    } catch (const std::runtime_error& err) {
+    } catch (const rgp::SDLException& err) {
         SDL_SetError("[ERROR] Iterate error: \n\t%s", err.what());
         return SDL_APP_FAILURE;
     }
@@ -63,5 +63,6 @@ void SDL_AppQuit(void* appstate, const SDL_AppResult result) {
         SDL_Log("%s", SDL_GetError());
 #endif
     }
+
     SDL_Log("App result: %s", result == SDL_APP_SUCCESS ? "SUCCESS" : "FAILED");
 }

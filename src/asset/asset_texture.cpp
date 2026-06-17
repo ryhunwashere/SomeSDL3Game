@@ -1,17 +1,18 @@
-#include <stdexcept>
 #include <string>
 #include "asset/asset_texture.h"
+
+#include "except_sdl.h"
 
 rgp::Texture::Texture(RendererEngine& renderer, const std::string& texturePath) :
     m_texturePtr([&renderer, &texturePath]() -> SDL_Texture* {
         SDL_Surface* surface = SDL_LoadPNG(texturePath.c_str());
         if (!surface)
-            throw std::runtime_error(std::string("Texture surface creation error: ") + SDL_GetError());
+            throw SDLException("Texture surface creation error");
 
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer.getRenderer(), surface);
         SDL_DestroySurface(surface);
         if (!texture)
-            throw std::runtime_error(std::string("Texture creation error: ") + SDL_GetError());
+            throw SDLException("Texture creation error");
 
         SDL_Log("Texture created");
 

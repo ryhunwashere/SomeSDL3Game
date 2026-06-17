@@ -85,6 +85,8 @@ set(HEADERS
         include/enum/enum_scenetype.h
         include/enum/enum_texture_type.h
         include/enum/enum_audio_type.h
+
+        include/except_sdl.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

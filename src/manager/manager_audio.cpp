@@ -1,6 +1,6 @@
 #include "manager/manager_audio.h"
 
-#include <stdexcept>
+#include "except_sdl.h"
 #include <string>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_log.h>
@@ -12,11 +12,11 @@
 rgp::AudioManager::AudioManager() :
     m_mixer([]() -> MIX_Mixer* {
         if (!MIX_Init())
-            throw std::runtime_error("Failed to init SDL Mixer: " + std::string(SDL_GetError()));
+            throw SDLException("Failed to init SDL Mixer");
 
         MIX_Mixer* mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, nullptr);
         if (!mixer)
-            throw std::runtime_error("Failed to create mixer device: " + std::string(SDL_GetError()));
+            throw SDLException("Failed to create mixer device");
 
         return mixer;
     }()),

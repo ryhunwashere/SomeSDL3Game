@@ -1,14 +1,14 @@
-#include <stdexcept>
 #include "engine/engine_text.h"
+#include "except_sdl.h"
 
 rgp::TextEngine::TextEngine(const RendererEngine& renderer) {
     if (!TTF_Init())
-        throw std::runtime_error("TTF init failed: " + std::string(SDL_GetError()));
+        throw SDLException("TTF init failed");
 
     m_engine = TTF_CreateRendererTextEngine(renderer.getRenderer());
 
     if (!m_engine)
-        throw std::runtime_error("Text engine creation failed: " + std::string(SDL_GetError()));
+        throw SDLException("Text engine creation failed");
 }
 
 rgp::TextEngine::~TextEngine() {

@@ -1,10 +1,11 @@
 #include <SDL3_ttf/SDL_ttf.h>
-#include <stdexcept>
 #include "asset/asset_font.h"
+
+#include "except_sdl.h"
 
 rgp::Font::Font(const std::string& fontPath, const float size) : m_fontPtr(TTF_OpenFont(fontPath.c_str(), size)) {
     if (!m_fontPtr)
-        throw std::runtime_error("Font failed to load: " + std::string(SDL_GetError()));
+        throw SDLException("Font failed to load");
 
     SDL_Log("Font loaded. Path: %s | Size: %f", fontPath.c_str(), size);
 }
