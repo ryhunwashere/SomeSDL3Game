@@ -14,9 +14,13 @@ namespace rgp {
 		void draw() override;
 
 	private:
+		size_t m_selectedMenu = 0;
 		float m_now = 0.0f;
 		std::unique_ptr<Track> m_menuMusic;
 		std::unique_ptr<TextEntity> m_musicStatusText;
-		std::unique_ptr<ButtonEntity> m_button;
+		std::array<std::unique_ptr<ButtonEntity>, 3> m_buttonList;
+
+		void updateSelectedButton();
+		void refreshButtonVisuals() const;
 	};
 }

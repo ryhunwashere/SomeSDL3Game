@@ -18,10 +18,13 @@ void rgp::Game::handleEvent(const SDL_Event* event) {
         m_ctx.getInputManager().updateKeyDownState(event->key.scancode, false);
 }
 
-void rgp::Game::update() {
+auto rgp::Game::update() -> bool {
     m_ctx.getTimeManager().updateDeltaTime();
-    m_sceneManager.updateCurrentScene();
+
+    if (!m_sceneManager.updateCurrentScene()) return false;
+
     m_ctx.getInputManager().keepTrackOfPreviousState();
+    return true;
 }
 
 void rgp::Game::draw() {

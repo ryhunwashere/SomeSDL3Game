@@ -23,8 +23,7 @@ auto SDL_AppInit(void** appstate, [[maybe_unused]] int argc, [[maybe_unused]] ch
 auto SDL_AppEvent(void* appstate, SDL_Event* event) -> SDL_AppResult {
     auto* game = static_cast<rgp::Game*>(appstate);
     try {
-        if (event->type == SDL_EVENT_QUIT || (event->type == SDL_EVENT_KEY_DOWN && event->key.key == SDLK_ESCAPE))
-            return SDL_APP_SUCCESS;
+        if (event->type == SDL_EVENT_QUIT) return SDL_APP_SUCCESS;
 
         game->handleEvent(event);
         return SDL_APP_CONTINUE;
@@ -38,7 +37,8 @@ auto SDL_AppEvent(void* appstate, SDL_Event* event) -> SDL_AppResult {
 auto SDL_AppIterate(void* appstate) -> SDL_AppResult {
     auto* game = static_cast<rgp::Game*>(appstate);
     try {
-        game->update();
+        if (!game->update()) return SDL_APP_SUCCESS;
+
         game->draw();
         return SDL_APP_CONTINUE;
     } catch (const rgp::SDLException& err) {

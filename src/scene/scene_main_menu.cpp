@@ -7,25 +7,33 @@
 rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
     m_menuMusic(std::make_unique<Track>(m_ctx.getAudioManager(), AudioType::MenuMusic, true)),
     m_musicStatusText(ctx.getTextFactory().create(FontType::ZenMaruMedium32Center, "")),
-    m_button(std::make_unique<ButtonEntity>(
-        ctx,
-        SDL_FRect{ .x = 10.0f, .y = 50.0f, .w = 200.0f, .h = 50.0f },
-        constant::color::WHITE_OPAQUE_F,
-        [&ctx](ButtonEntity& btn) -> void {
-            if (const auto& input = ctx.getInputManager(); input.isKeyJustPressed(SDL_SCANCODE_L)) {
-                if (btn.getColor() == constant::color::WHITE_OPAQUE_F) {
-                    btn.setColor(constant::color::BLACK_OPAQUE_F);
-                    btn.getText()->setColor(constant::color::WHITE_OPAQUE);
-                    SDL_Log("Button color is now black");
-                } else {
-                    btn.setColor(constant::color::WHITE_OPAQUE_F);
-                    btn.getText()->setColor(constant::color::BLACK_OPAQUE);
-                    SDL_Log("Button color is now white");
-                }
-            }
-        },
-        "Ini Text"))
+    m_buttonList([&ctx] {
+        std::array<std::unique_ptr<ButtonEntity>, 3> buttons;
+
+        const auto callbackFn = [](ButtonEntity&) -> void {};
+
+        constexpr auto COLOR = constant::color::WHITE_OPAQUE_F;
+
+        for (size_t i = 0; i < buttons.size(); ++i) {
+            const std::array<std::string, 3> labels = { "Play", "Options", "Exit" };
+            constexpr float HEIGHT      = 50.0f;
+            constexpr float BASE_Y      = 50.0f;
+            constexpr float OFFSET_Y    = 100.0f;
+            const auto index = static_cast<float>(i);
+            const auto destRect = SDL_FRect{
+                .x = 10.0f,
+                .y = BASE_Y * index + 20.0f * index + OFFSET_Y,
+                .w = 200.0f,
+                .h = HEIGHT
+            };
+
+            buttons[i] = std::make_unique<ButtonEntity>(ctx, destRect, COLOR, callbackFn, labels[i]);
+        }
+
+        return buttons;
+    }())
 {
+    refreshButtonVisuals();
     m_menuMusic->play();
 
     m_musicStatusText->setColor(constant::color::WHITE_OPAQUE);
@@ -42,12 +50,15 @@ rgp::MainMenuScene::~MainMenuScene() {
 auto rgp::MainMenuScene::update() -> SceneType {
     m_now += m_ctx.getTimeManager().getDeltaTime();
 
-    m_button->update();
+    updateSelectedButton();
+    for (const auto& button : m_buttonList) button->update();
 
     const auto& input = m_ctx.getInputManager();
 
-    if (input.isKeyJustPressed(SDL_SCANCODE_P))
-        return SceneType::LevelOne;
+    if (input.isKeyJustPressed(SDL_SCANCODE_ESCAPE)) {
+        m_selectedMenu = 2;
+        refreshButtonVisuals();
+    }
 
     if (input.isKeyJustPressed(SDL_SCANCODE_BACKSPACE)) {
         if (m_menuMusic->isPaused()) {
@@ -60,7 +71,40 @@ auto rgp::MainMenuScene::update() -> SceneType {
         }
     }
 
+    if (input.isKeyJustPressed(SDL_SCANCODE_RETURN)) {
+        if (m_selectedMenu == 0) return SceneType::LevelOne;
+        if (m_selectedMenu == 2) return SceneType::Exit;
+    }
+
     return SceneType::Continue;
+}
+
+void rgp::MainMenuScene::updateSelectedButton() {
+    const auto& input      = m_ctx.getInputManager();
+    const bool downPressed = input.isKeyJustPressed(SDL_SCANCODE_DOWN);
+    const bool upPressed   = input.isKeyJustPressed(SDL_SCANCODE_UP);
+
+    if (!downPressed && !upPressed) return;
+
+    if (downPressed && m_selectedMenu < m_buttonList.size() - 1) {
+        ++m_selectedMenu;
+    } else if (upPressed && m_selectedMenu > 0) {
+        --m_selectedMenu;
+    }
+
+    refreshButtonVisuals();
+}
+
+void rgp::MainMenuScene::refreshButtonVisuals() const {
+    for (size_t i = 0; i < m_buttonList.size(); ++i) {
+        const bool isSelected = i == m_selectedMenu;
+
+        const auto bgColor   = isSelected ? constant::color::BLACK_OPAQUE_F : constant::color::WHITE_OPAQUE_F;
+        const auto textColor = isSelected ? constant::color::WHITE_OPAQUE   : constant::color::BLACK_OPAQUE;
+
+        m_buttonList[i]->setColor(bgColor);
+        m_buttonList[i]->getText()->setColor(textColor);
+    }
 }
 
 void rgp::MainMenuScene::draw() {
@@ -71,7 +115,7 @@ void rgp::MainMenuScene::draw() {
 
     m_ctx.getRendererEngine().drawScreen({ red, green, blue, SDL_ALPHA_OPAQUE_FLOAT });
 
-    m_button->draw();
+    for (const auto& button : m_buttonList) button->draw();
 
     m_musicStatusText->draw();
 }

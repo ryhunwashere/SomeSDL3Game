@@ -44,13 +44,17 @@ void rgp::SceneManager::changeScene(const SceneType targetScene) {
 	m_currentScene = it->second();
 }
 
-void rgp::SceneManager::updateCurrentScene() {
+auto rgp::SceneManager::updateCurrentScene() -> bool {
 	m_fpsText->setText("FPS: " + std::to_string(static_cast<uint64_t>(m_ctx.getTimeManager().getCurrentFps())));
 
-	if (!m_currentScene) return;
+	if (!m_currentScene) return false;
 
 	const SceneType targetScene = m_currentScene->update();
+
+	if (targetScene == SceneType::Exit) return false;
+
 	changeScene(targetScene);
+	return true;
 }
 
 void rgp::SceneManager::drawCurrentScene() const {
