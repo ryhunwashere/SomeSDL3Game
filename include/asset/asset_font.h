@@ -5,7 +5,7 @@
 namespace rgp {
     class Font {
     public:
-        Font(std::string_view fontPath, float size);
+        Font(std::string_view fontPath, float size, TTF_HorizontalAlignment align);
         ~Font();
 
         Font(const Font&) = delete;

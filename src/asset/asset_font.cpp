@@ -3,9 +3,12 @@
 
 #include "except_sdl.h"
 
-rgp::Font::Font(const std::string_view fontPath, const float size) : m_fontPtr(TTF_OpenFont(fontPath.data(), size)) {
+rgp::Font::Font(const std::string_view fontPath, const float size, const TTF_HorizontalAlignment align)
+    : m_fontPtr(TTF_OpenFont(fontPath.data(), size)) {
     if (!m_fontPtr)
         throw SDLException("Font failed to load");
+
+    TTF_SetFontWrapAlignment(m_fontPtr, align);
 
     SDL_Log("Font loaded. Path: %s | Size: %f", fontPath.data(), size);
 }

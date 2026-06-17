@@ -6,32 +6,25 @@
 
 rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
     m_menuMusic(std::make_unique<Track>(m_ctx.getAudioManager(), AudioType::MenuMusic, true)),
-    m_musicStatusText(ctx.getTextFactory().create(FontType::ZenMaruMedium24, "")),
+    m_musicStatusText(ctx.getTextFactory().create(FontType::ZenMaruMedium32Center, "")),
     m_button(std::make_unique<ButtonEntity>(
         ctx,
-        SDL_FRect{ .x = 10.0f, .y = 50.0f, .w = 50.0f, .h = 50.0f },
+        SDL_FRect{ .x = 10.0f, .y = 50.0f, .w = 200.0f, .h = 50.0f },
         constant::color::WHITE_OPAQUE_F,
         [&ctx](ButtonEntity& btn) -> void {
-            const auto& input = ctx.getInputManager();
-
-            if (input.isKeyJustPressed(SDL_SCANCODE_L)) {
+            if (const auto& input = ctx.getInputManager(); input.isKeyJustPressed(SDL_SCANCODE_L)) {
                 if (btn.getColor() == constant::color::WHITE_OPAQUE_F) {
                     btn.setColor(constant::color::BLACK_OPAQUE_F);
+                    btn.getText()->setColor(constant::color::WHITE_OPAQUE);
                     SDL_Log("Button color is now black");
                 } else {
                     btn.setColor(constant::color::WHITE_OPAQUE_F);
+                    btn.getText()->setColor(constant::color::BLACK_OPAQUE);
                     SDL_Log("Button color is now white");
                 }
             }
-
-            constexpr float WIDTH_INCREMENT_VALUE = 10.0f;
-
-            if (input.isKeyDown(SDL_SCANCODE_RIGHTBRACKET) && btn.getWidth() <= 1000.0f)
-                btn.increaseWidth(WIDTH_INCREMENT_VALUE);
-
-            if (input.isKeyDown(SDL_SCANCODE_LEFTBRACKET) && btn.getWidth() >= 0.0f)
-                btn.increaseWidth(-WIDTH_INCREMENT_VALUE);
-        }))
+        },
+        "Ini Text"))
 {
     m_menuMusic->play();
 

@@ -8,8 +8,12 @@ rgp::FontFactory::FontFactory() : m_fontArray([] {
 
     std::array<std::unique_ptr<Font>, static_cast<size_t>(FontType::Count)> arr{};
 
-    arr[static_cast<size_t>(FontType::ZenMaruMedium24)] = std::make_unique<Font>(ZEN_MARU_GOTHIC_MEDIUM, 24.0f);
-    arr[static_cast<size_t>(FontType::ZenMaruMedium32)] = std::make_unique<Font>(ZEN_MARU_GOTHIC_MEDIUM, 32.0f);
+    arr[static_cast<size_t>(FontType::ZenMaruMedium32Left)] =
+        std::make_unique<Font>(ZEN_MARU_GOTHIC_MEDIUM, 32.0f, TTF_HORIZONTAL_ALIGN_LEFT);
+    arr[static_cast<size_t>(FontType::ZenMaruMedium32Center)] =
+        std::make_unique<Font>(ZEN_MARU_GOTHIC_MEDIUM, 32.0f, TTF_HORIZONTAL_ALIGN_CENTER);
+    arr[static_cast<size_t>(FontType::ZenMaruMedium32Right)] =
+        std::make_unique<Font>(ZEN_MARU_GOTHIC_MEDIUM, 32.0f, TTF_HORIZONTAL_ALIGN_RIGHT);
 
     return arr;
 }()) {}
