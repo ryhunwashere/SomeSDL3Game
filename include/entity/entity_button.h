@@ -15,8 +15,8 @@ namespace rgp {
             GameContext& ctx,
             const SDL_FRect& rect,
             const ColorF& colorF,
-            const std::function<void(ButtonEntity&)>& callback,
-            const std::string_view text)
+            const std::string_view text,
+            const std::function<void(ButtonEntity&)>& callback)
         :   m_renderer(ctx.getRendererEngine()),
             m_color(colorF),
             m_execCalllback(callback),
@@ -31,8 +31,14 @@ namespace rgp {
             GameContext& ctx,
             const SDL_FRect& rect,
             const ColorF& colorF,
-            const std::function<void(ButtonEntity&)>& callback)
-        :   ButtonEntity(ctx, rect, colorF, callback, "") {}
+            const std::string_view text)
+        :   ButtonEntity(ctx, rect, colorF, text, nullptr) {}
+
+        ButtonEntity(
+            GameContext& ctx,
+            const SDL_FRect& rect,
+            const ColorF& colorF)
+        :   ButtonEntity(ctx, rect, colorF, "", nullptr) {}
 
         void update() override {
             if (m_execCalllback)

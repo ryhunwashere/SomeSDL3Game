@@ -16,8 +16,6 @@ rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
     m_buttonList([&ctx] {
         std::array<std::unique_ptr<ButtonEntity>, 3> buttons;
 
-        const auto callbackFn = [](ButtonEntity&) -> void {};
-
         constexpr auto COLOR = constant::color::WHITE_OPAQUE_F;
 
         for (size_t i = 0; i < buttons.size(); ++i) {
@@ -33,7 +31,7 @@ rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
                 .h = HEIGHT
             };
 
-            buttons[i] = std::make_unique<ButtonEntity>(ctx, destRect, COLOR, callbackFn, labels[i]);
+            buttons[i] = std::make_unique<ButtonEntity>(ctx, destRect, COLOR, labels[i]);
         }
 
         return buttons;
