@@ -24,8 +24,8 @@ namespace rgp {
 
         void increaseWidth(const float deltaWidth)          { m_width  += deltaWidth; }
         void increaseHeight(const float deltaHeight)        { m_height += deltaHeight; }
-        void setWidth(const float width)                    { m_width  += width; }
-        void setHeight(const float height)                  { m_height += height; }
+        void setWidth(const float width)                    { m_width  = width; }
+        void setHeight(const float height)                  { m_height = height; }
 
         [[nodiscard]] auto getX()        const -> float     { return m_x; }
         [[nodiscard]] auto getY()        const -> float     { return m_y; }

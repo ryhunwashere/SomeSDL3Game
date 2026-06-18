@@ -18,9 +18,12 @@ namespace rgp {
 		float m_now = 0.0f;
 		std::unique_ptr<Track> m_menuMusic;
 		std::unique_ptr<TextEntity> m_musicStatusText;
+
 		std::array<std::unique_ptr<ButtonEntity>, 3> m_buttonList;
+		std::array<float, 3> m_buttonProgress{0.0f, 0.0f, 0.0f};
 
 		void updateSelectedButton();
-		void refreshButtonVisuals() const;
+		void animateButtonWidths(float dt);
+		void updateButtonColors() const;
 	};
 }

@@ -3,6 +3,12 @@
 
 #include "constant/constant.h"
 #include "manager/manager_scene.h"
+#include "util/util_math.h"
+
+constexpr float MIN_WIDTH = 200.0f;
+constexpr float MAX_WIDTH = 400.0f;
+constexpr float INCREMENT_SPEED = 20.0f;
+constexpr float SPEED_PER_SECOND = INCREMENT_SPEED * 60.0f;
 
 rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
     m_menuMusic(std::make_unique<Track>(m_ctx.getAudioManager(), AudioType::MenuMusic, true)),
@@ -23,7 +29,7 @@ rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
             const auto destRect = SDL_FRect{
                 .x = 10.0f,
                 .y = BASE_Y * index + 20.0f * index + OFFSET_Y,
-                .w = 200.0f,
+                .w = MIN_WIDTH,
                 .h = HEIGHT
             };
 
@@ -33,7 +39,7 @@ rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
         return buttons;
     }())
 {
-    refreshButtonVisuals();
+    updateButtonColors();
     m_menuMusic->play();
 
     m_musicStatusText->setColor(constant::color::WHITE_OPAQUE);
@@ -48,24 +54,27 @@ rgp::MainMenuScene::~MainMenuScene() {
 }
 
 auto rgp::MainMenuScene::update() -> SceneType {
-    m_now += m_ctx.getTimeManager().getDeltaTime();
+    const float dt = m_ctx.getTimeManager().getDeltaTime();
+    m_now += dt;
 
     updateSelectedButton();
+
+    animateButtonWidths(dt);
+
     for (const auto& button : m_buttonList) button->update();
 
     const auto& input = m_ctx.getInputManager();
 
     if (input.isKeyJustPressed(SDL_SCANCODE_ESCAPE)) {
-        m_selectedMenu = 2;
-        refreshButtonVisuals();
+        m_selectedMenu = m_buttonList.size() - 1;
+        updateButtonColors();
     }
 
     if (input.isKeyJustPressed(SDL_SCANCODE_BACKSPACE)) {
         if (m_menuMusic->isPaused()) {
             m_menuMusic->resume();
             m_musicStatusText->setText("Music is playing");
-        }
-        else if (m_menuMusic->isPlaying()) {
+        } else if (m_menuMusic->isPlaying()) {
             m_menuMusic->pause();
             m_musicStatusText->setText("Music is paused");
         }
@@ -73,7 +82,7 @@ auto rgp::MainMenuScene::update() -> SceneType {
 
     if (input.isKeyJustPressed(SDL_SCANCODE_RETURN)) {
         if (m_selectedMenu == 0) return SceneType::LevelOne;
-        if (m_selectedMenu == 2) return SceneType::Exit;
+        if (m_selectedMenu == m_buttonList.size() - 1) return SceneType::Exit;
     }
 
     return SceneType::Continue;
@@ -92,10 +101,32 @@ void rgp::MainMenuScene::updateSelectedButton() {
         --m_selectedMenu;
     }
 
-    refreshButtonVisuals();
+    updateButtonColors();
 }
 
-void rgp::MainMenuScene::refreshButtonVisuals() const {
+void rgp::MainMenuScene::animateButtonWidths(const float dt) {
+    for (size_t i = 0; i < m_buttonList.size(); ++i) {
+        constexpr float ANIMATION_SPEED = 2.0f;
+        if (i == m_selectedMenu) {
+            m_buttonProgress[i] += dt * ANIMATION_SPEED;
+            if (m_buttonProgress[i] > 1.0f) m_buttonProgress[i] = 1.0f;
+        } else {
+            m_buttonProgress[i] -= dt * ANIMATION_SPEED;
+            if (m_buttonProgress[i] < 0.0f) m_buttonProgress[i] = 0.0f;
+        }
+
+        const float curveT = util::math::easeInOutCubed(m_buttonProgress[i]);
+
+        const float targetWidth = MIN_WIDTH + curveT * (MAX_WIDTH - MIN_WIDTH);
+
+        const float currentWidth = m_buttonList[i]->getWidth();
+        const float deltaWidth = targetWidth - currentWidth;
+
+        m_buttonList[i]->increaseWidth(deltaWidth);
+    }
+}
+
+void rgp::MainMenuScene::updateButtonColors() const {
     for (size_t i = 0; i < m_buttonList.size(); ++i) {
         const bool isSelected = i == m_selectedMenu;
 

@@ -45,7 +45,6 @@ set(HEADERS
 
         include/engine/engine_renderer.h
         include/engine/engine_text.h
-        include/manager/manager_audio.h
 
         include/entity/entity.h
         include/entity/entity_player.h
@@ -56,6 +55,7 @@ set(HEADERS
         include/manager/manager_texture.h
         include/manager/manager_scene.h
         include/manager/manager_time.h
+        include/manager/manager_audio.h
 
         include/scene/scene.h
         include/scene/scene_main_menu.h
@@ -74,14 +74,14 @@ set(HEADERS
         include/type/type_color.h
 
         include/util/util_logger.h
+        include/util/util_math.h
 
         include/constant/constant.h
-
-        include/enum/enum_fonttype.h
 
         include/factory/factory_font.h
         include/factory/factory_text.h
 
+        include/enum/enum_fonttype.h
         include/enum/enum_scenetype.h
         include/enum/enum_texture_type.h
         include/enum/enum_audio_type.h
