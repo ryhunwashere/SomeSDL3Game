@@ -27,6 +27,7 @@ set(SOURCES
         src/manager/manager_audio.cpp
         src/manager/manager_scene.cpp
         src/manager/manager_time.cpp
+        src/manager/manager_event.cpp
 
         src/scene/scene_main_menu.cpp
         src/scene/scene_level_one.cpp
@@ -42,6 +43,7 @@ set(SOURCES
 set(HEADERS
         include/game.h
         include/game_context.h
+        include/except_sdl.h
 
         include/engine/engine_renderer.h
         include/engine/engine_text.h
@@ -56,6 +58,7 @@ set(HEADERS
         include/manager/manager_scene.h
         include/manager/manager_time.h
         include/manager/manager_audio.h
+        include/manager/manager_event.h
 
         include/scene/scene.h
         include/scene/scene_main_menu.h
@@ -86,7 +89,8 @@ set(HEADERS
         include/enum/enum_texture_type.h
         include/enum/enum_audio_type.h
 
-        include/except_sdl.h
+        include/event/event.h
+        include/event/event_scene_change.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

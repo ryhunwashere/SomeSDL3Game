@@ -1,7 +1,6 @@
 #include <SDL3/SDL.h>
 
 #include "game.h"
-#include "manager/manager_scene.h"
 
 rgp::Game::Game() : m_sceneManager(m_ctx) {
     SDL_Log("Game manager and subsystems initialized.");
@@ -12,6 +11,8 @@ rgp::Game::~Game() {
 }
 
 void rgp::Game::handleEvent(const SDL_Event* event) {
+    if (m_ctx.getEventManager().processEvent(*event)) return;
+
     if (event->type == SDL_EVENT_KEY_DOWN) 
         m_ctx.getInputManager().updateKeyDownState(event->key.scancode, true);
     else if (event->type == SDL_EVENT_KEY_UP) 

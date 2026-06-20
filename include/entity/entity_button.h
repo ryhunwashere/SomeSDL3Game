@@ -1,25 +1,20 @@
 #pragma once
 
-#include <functional>
-#include "entity.h"
 #include "game_context.h"
+#include "entity/entity.h"
 #include "constant/constant.h"
-#include "interface/interface_drawable.h"
-#include "interface/interface_updatable.h"
 #include "type/type_color.h"
 
 namespace rgp {
-    class ButtonEntity final : public Entity, public IUpdatable, public IDrawable {
+    class ButtonEntity final : public Entity {
     public:
         ButtonEntity(
             GameContext& ctx,
             const SDL_FRect& rect,
             const ColorF& colorF,
-            const std::string_view text,
-            const std::function<void(ButtonEntity&)>& callback)
+            const std::string_view text)
         :   m_renderer(ctx.getRendererEngine()),
             m_color(colorF),
-            m_execCalllback(callback),
             m_text(ctx.getTextFactory().create(FontType::ZenMaruMedium32Left, text))
         {
             setSizeAndPosition(rect);
@@ -27,25 +22,7 @@ namespace rgp {
             m_text->setColor(constant::color::BLACK_OPAQUE);
         }
 
-        ButtonEntity(
-            GameContext& ctx,
-            const SDL_FRect& rect,
-            const ColorF& colorF,
-            const std::string_view text)
-        :   ButtonEntity(ctx, rect, colorF, text, nullptr) {}
-
-        ButtonEntity(
-            GameContext& ctx,
-            const SDL_FRect& rect,
-            const ColorF& colorF)
-        :   ButtonEntity(ctx, rect, colorF, "", nullptr) {}
-
-        void update() override {
-            if (m_execCalllback)
-                m_execCalllback(*this);
-        }
-
-        void draw() override {
+        void draw() const {
             const SDL_FRect destRect{
                 .x = getX(),
                 .y = getY(),
@@ -64,7 +41,6 @@ namespace rgp {
     private:
         RendererEngine& m_renderer;
         ColorF m_color;
-        std::function<void(ButtonEntity&)> m_execCalllback;
         std::unique_ptr<TextEntity> m_text;
     };
 }

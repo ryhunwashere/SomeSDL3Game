@@ -14,7 +14,7 @@ namespace rgp {
         ~SceneManager();
 
         void changeScene(SceneType targetScene);
-        auto updateCurrentScene() -> bool;
+        auto updateCurrentScene() const -> bool;
         void drawCurrentScene() const;
 
     private:

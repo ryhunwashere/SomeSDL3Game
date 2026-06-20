@@ -4,7 +4,6 @@
 #include "game_context.h"
 #include "scene.h"
 #include "entity/entity_player.h"
-#include "enum/enum_scenetype.h"
 
 namespace rgp {
 	class LevelOneScene final : public Scene {
@@ -12,7 +11,7 @@ namespace rgp {
 		explicit LevelOneScene(GameContext& ctx);
 		~LevelOneScene() override;
 
-		auto update() -> SceneType override;
+		void update() override;
 		void draw() override;
 
 	private:

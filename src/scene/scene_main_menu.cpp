@@ -3,6 +3,7 @@
 
 #include "constant/constant.h"
 #include "manager/manager_scene.h"
+#include "scene/scene_level_one.h"
 #include "util/util_math.h"
 
 constexpr float MIN_WIDTH = 200.0f;
@@ -51,15 +52,13 @@ rgp::MainMenuScene::~MainMenuScene() {
 	SDL_Log("Main menu scene unloaded.");
 }
 
-auto rgp::MainMenuScene::update() -> SceneType {
+void rgp::MainMenuScene::update() {
     const float dt = m_ctx.getTimeManager().getDeltaTime();
     m_now += dt;
 
     updateSelectedButton();
 
     animateButtonWidths(dt);
-
-    for (const auto& button : m_buttonList) button->update();
 
     const auto& input = m_ctx.getInputManager();
 
@@ -79,11 +78,14 @@ auto rgp::MainMenuScene::update() -> SceneType {
     }
 
     if (input.isKeyJustPressed(SDL_SCANCODE_RETURN)) {
-        if (m_selectedMenu == 0) return SceneType::LevelOne;
-        if (m_selectedMenu == m_buttonList.size() - 1) return SceneType::Exit;
-    }
+        if (m_selectedMenu == 0) {
+            m_ctx.getEventManager().publish<event::SceneChangeEvent>({ .scene = SceneType::LevelOne });
+            return;
+        }
 
-    return SceneType::Continue;
+        if (m_selectedMenu == 2)
+            m_ctx.getEventManager().publish<event::SceneChangeEvent>({ .scene = SceneType::Exit });
+    }
 }
 
 void rgp::MainMenuScene::updateSelectedButton() {

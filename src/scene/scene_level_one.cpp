@@ -13,18 +13,15 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 }
 
 rgp::LevelOneScene::~LevelOneScene() {
+	m_ctx.getTextureManager().unloadTexture(TextureType::PlayerOneSprite);
 	SDL_Log("Level 1 scene unloaded.");
 }
 
-auto rgp::LevelOneScene::update() -> SceneType {
+void rgp::LevelOneScene::update() {
 	m_player->update();
 
-	if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_P)) {
-		m_ctx.getTextureManager().unloadTexture(TextureType::PlayerOneSprite);
-		return SceneType::MainMenu;
-	}
-
-	return SceneType::Continue;
+	if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_P))
+		m_ctx.getEventManager().publish<event::SceneChangeEvent>({ .scene = SceneType::MainMenu });
 }
 
 void rgp::LevelOneScene::draw() {
