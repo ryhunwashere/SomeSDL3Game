@@ -175,21 +175,9 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         "${SDL3_MIXER_ROOT}/lib/x64/SDL3_mixer.dll"
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/SDL3_mixer.dll"
 
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${ASSET_SOURCE_DIR}/ZenMaruGothic-Medium.ttf"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/ZenMaruGothic-Medium.ttf"
-
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${ASSET_SOURCE_DIR}/player1_sprite.png"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/player1_sprite.png"
-
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${ASSET_SOURCE_DIR}/player_shoot.wav"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/player_shoot.wav"
-
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${ASSET_SOURCE_DIR}/menu_music.mp3"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset/menu_music.mp3"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${ASSET_SOURCE_DIR}"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset"
 
         COMMENT "Copying SDL3 DLLs and game assets to output directory"
 )

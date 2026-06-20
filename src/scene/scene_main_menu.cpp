@@ -49,6 +49,8 @@ rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
 }
 
 rgp::MainMenuScene::~MainMenuScene() {
+    m_menuMusic->stop();
+    m_ctx.getAudioManager().unloadAudio(AudioType::MenuMusic);
 	SDL_Log("Main menu scene unloaded.");
 }
 

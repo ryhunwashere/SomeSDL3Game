@@ -23,8 +23,9 @@ rgp::AudioManager::AudioManager() :
     m_audioPaths([]() -> std::array<const char*, static_cast<size_t>(AudioType::Count)> {
         std::array<const char*, static_cast<size_t>(AudioType::Count)> arr{};
 
-        arr[static_cast<size_t>(AudioType::PlayerShoot)] = constant::path::PLAYER_SHOOT_WAV_PATH;
-        arr[static_cast<size_t>(AudioType::MenuMusic)] = constant::path::MENU_MUSIC_MP3_PATH;
+        arr[static_cast<size_t>(AudioType::PlayerShoot)]    = constant::path::PLAYER_SHOOT_WAV_PATH;
+        arr[static_cast<size_t>(AudioType::MenuMusic)]      = constant::path::MENU_MUSIC_MP3_PATH;
+        arr[static_cast<size_t>(AudioType::LevelOneMusic)]  = constant::path::LEVEL_ONE_MP3_PATH;
 
         return arr;
     }())

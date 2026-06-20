@@ -7,6 +7,7 @@ namespace rgp::constant {
         constexpr auto ZEN_MARU_GOTHIC_MEDIUM_TTF_PATH  = "asset/ZenMaruGothic-Medium.ttf";
         constexpr auto PLAYER_SHOOT_WAV_PATH            = "asset/player_shoot.wav";
         constexpr auto MENU_MUSIC_MP3_PATH              = "asset/menu_music.mp3";
+        constexpr auto LEVEL_ONE_MP3_PATH               = "asset/level1_music.mp3";
     }
 
     namespace color {

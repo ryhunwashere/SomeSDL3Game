@@ -1,4 +1,7 @@
 #include "asset/asset_track.h"
+
+#include <algorithm>
+
 #include "asset/asset_audio.h"
 #include "manager/manager_audio.h"
 #include <cassert>
@@ -64,4 +67,9 @@ auto rgp::Track::isPlaying() const -> bool {
 void rgp::Track::setLooping(const bool looping) const {
     if (!SDL_SetNumberProperty(m_trackProps, MIX_PROP_PLAY_LOOPS_NUMBER, looping ? -1 : 0))
         throw SDLException("Props setting for track failed");
+}
+
+void rgp::Track::setGain(const float gain) const {
+    if (!MIX_SetTrackGain(m_trackPtr, std::clamp(gain, 0.0f, 1.0f)))
+        throw SDLException("Set track gain failed");
 }

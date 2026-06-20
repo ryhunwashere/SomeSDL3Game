@@ -27,12 +27,18 @@ namespace rgp {
         void setWidth(const float width)                    { m_width  = width; }
         void setHeight(const float height)                  { m_height = height; }
 
-        [[nodiscard]] auto getX()        const -> float     { return m_x; }
-        [[nodiscard]] auto getY()        const -> float     { return m_y; }
-        [[nodiscard]] auto getPosition() const -> Vector2F  { return Vector2F{ m_x, m_y }; }
-        [[nodiscard]] auto getWidth()    const -> float     { return m_width; }
-        [[nodiscard]] auto getHeight()   const -> float     { return m_height; }
-        [[nodiscard]] auto getFRect()    const -> SDL_FRect { return SDL_FRect{ m_x, m_y, m_width, m_height }; }
+        [[nodiscard]] auto getX()         const -> float      { return m_x; }
+        [[nodiscard]] auto getY()         const -> float      { return m_y; }
+        [[nodiscard]] auto getPosition()  const -> Vector2F   { return Vector2F{ m_x, m_y }; }
+        [[nodiscard]] auto getWidth()     const -> float      { return m_width; }
+        [[nodiscard]] auto getHeight()    const -> float      { return m_height; }
+        [[nodiscard]] auto getFRect()     const -> SDL_FRect  { return SDL_FRect{ m_x, m_y, m_width, m_height }; }
+
+        // Equals to width/2 + height/2
+        [[nodiscard]] auto getCenter()    const -> float      { return m_width/2 + m_height/2; }
+
+        // Equals to width/2
+        [[nodiscard]] auto getTopMiddle() const -> float      { return m_width/2; }
 
     private:
         float m_x       = 0.0f;

@@ -7,13 +7,18 @@
 
 rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	Scene(ctx),
-	m_player(std::make_unique<PlayerEntity>(ctx, TextureType::PlayerOneSprite, AudioType::PlayerShoot))
+	m_player(std::make_unique<PlayerEntity>(ctx, TextureType::PlayerOneSprite, AudioType::PlayerShoot)),
+	m_music(std::make_unique<Track>(ctx.getAudioManager(), AudioType::LevelOneMusic, false))
 {
+	m_music->setGain(0.4f);
+	m_music->play();
 	SDL_Log("Level 1 scene loaded.");
 }
 
 rgp::LevelOneScene::~LevelOneScene() {
+	m_music->stop();
 	m_ctx.getTextureManager().unloadTexture(TextureType::PlayerOneSprite);
+	m_ctx.getAudioManager().unloadAudio(AudioType::LevelOneMusic);
 	SDL_Log("Level 1 scene unloaded.");
 }
 

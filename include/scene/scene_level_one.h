@@ -16,5 +16,6 @@ namespace rgp {
 
 	private:
 		std::unique_ptr<PlayerEntity> m_player;
+		std::unique_ptr<Track> m_music;
 	};
 }

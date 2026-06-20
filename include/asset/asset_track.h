@@ -21,6 +21,7 @@ namespace rgp {
         [[nodiscard]] auto isPaused() const -> bool;
 
         void setLooping(bool looping) const;
+        void setGain(float gain) const;
 
     private:
         MIX_Track* m_trackPtr;
