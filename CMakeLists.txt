@@ -21,6 +21,7 @@ set(SOURCES
 
         src/entity/entity_player.cpp
         src/entity/entity_text.cpp
+        src/entity/entity_button.cpp
 
         src/manager/manager_input.cpp
         src/manager/manager_texture.cpp
@@ -95,6 +96,7 @@ set(HEADERS
 
         include/event/event.h
         include/event/event_scene_change.h
+        include/scene/scene_gameplay.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
