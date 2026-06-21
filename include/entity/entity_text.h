@@ -3,18 +3,15 @@
 #include <SDL3_ttf/SDL_ttf.h>
 
 #include "entity.h"
-#include "engine/engine_text.h"
+#include "game_context.h"
 #include "enum/enum_fonttype.h"
 #include "interface/interface_drawable.h"
-#include "factory/factory_font.h"
 #include "type/type_color.h"
 
 namespace rgp {
     class TextEntity final : public Entity, public IDrawable {
     public:
-        TextEntity(
-            const TextEngine& engine,
-            const FontFactory& factory,
+        TextEntity(GameContext& ctx,
             FontType fontType,
             std::string_view initialText);
 
@@ -23,7 +20,7 @@ namespace rgp {
         TextEntity(const TextEntity&) = delete;
         TextEntity& operator=(const TextEntity&) = delete;
 
-        TextEntity(TextEntity&& other) noexcept : m_textPtr(other.m_textPtr) {
+        TextEntity(TextEntity&& other) noexcept : m_renderer(other.m_renderer), m_textPtr(other.m_textPtr) {
             other.m_textPtr = nullptr;
         }
 
@@ -41,6 +38,7 @@ namespace rgp {
         void setColor(const Color& color) const;
 
     private:
+        RendererEngine& m_renderer;
         TTF_Text* m_textPtr;
     };
 }

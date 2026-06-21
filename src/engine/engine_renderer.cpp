@@ -6,6 +6,8 @@
 constexpr auto WINDOW_TITLE         = "This is a window";
 constexpr auto NULL_RENDERER_ERROR  = "Renderer is null";
 constexpr auto NULL_WINDOW_ERROR    = "Window is null";
+constexpr int LOGICAL_WIDTH  = 1920;
+constexpr int LOGICAL_HEIGHT = 1080;
 
 rgp::RendererEngine::RendererEngine() {
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
@@ -19,17 +21,19 @@ rgp::RendererEngine::RendererEngine() {
     if (!mode)
         throw SDLException("Failed to get desktop display mode");
 
-    const int targetWidth   = mode->w;
-    const int targetHeight  = mode->h;
+    // Keep the window creation matching the actual physical monitor
+    const int physicalWidth   = mode->w;
+    const int physicalHeight  = mode->h;
 
-    m_window = SDL_CreateWindow(WINDOW_TITLE, targetWidth, targetHeight, SDL_WINDOW_FULLSCREEN);
+    m_window = SDL_CreateWindow(WINDOW_TITLE, physicalWidth, physicalHeight, SDL_WINDOW_FULLSCREEN);
     if (!m_window)
         throw SDLException("Window initialization failed");
 
-    SDL_Log("Window initialized: %dx%d", targetWidth, targetHeight);
+    SDL_Log("Window initialized at physical desktop resolution: %dx%d", physicalWidth, physicalHeight);
 
     const SDL_PropertiesID props = SDL_CreateProperties();
     SDL_SetPointerProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, m_window);
+    SDL_SetNumberProperty(props, SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER, 2048);
     m_renderer = SDL_CreateRendererWithProperties(props);
     SDL_DestroyProperties(props);
 
@@ -41,10 +45,10 @@ rgp::RendererEngine::RendererEngine() {
     if (!SDL_SetRenderVSync(m_renderer, 1))
         throw SDLException("VSync setting failed");
 
-    if (!SDL_SetRenderLogicalPresentation(m_renderer, targetWidth, targetHeight, SDL_LOGICAL_PRESENTATION_LETTERBOX))
+    if (!SDL_SetRenderLogicalPresentation(m_renderer, LOGICAL_WIDTH, LOGICAL_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX))
         throw SDLException("Set renderer failed");
 
-    SDL_Log("Renderer initialized.");
+    SDL_Log("Renderer initialized with a 1080p Logical Canvas.");
 }
 
 rgp::RendererEngine::~RendererEngine() {
@@ -83,8 +87,9 @@ void rgp::RendererEngine::drawRect(const ColorF& colorF, const SDL_FRect* dstrec
 void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, const double angle, const float alpha) const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
-    if (!SDL_SetTextureColorModFloat(texture, OPAQUE_F.r, OPAQUE_F.g, OPAQUE_F.b) ||
-        !SDL_SetTextureAlphaModFloat(texture, alpha)) {
+    if (!SDL_SetTextureColorModFloat(texture, OPAQUE_F.r, OPAQUE_F.g, OPAQUE_F.b)
+        || !SDL_SetTextureAlphaModFloat(texture, alpha)
+        || !SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_LINEAR)) {
         throw SDLException("Set texture mod error");
     }
 

@@ -5,13 +5,12 @@
 
 #include "constant/constant.h"
 #include "manager/manager_scene.h"
-#include "factory/factory_text.h"
 
 rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	Scene(ctx),
 	m_bulletMng(m_ctx),
 	m_player(std::make_unique<PlayerEntity>(m_ctx, m_bulletMng, TextureType::PlayerOneSprite, AudioType::PlayerShoot)),
-	m_bulletCount(ctx.getTextFactory().create(FontType::ZenMaruMedium32Center, "Bullet Count: ")),
+	m_bulletCount(std::make_unique<TextEntity>(m_ctx, FontType::ZenMaruMedium32Left, "Active bullets: ")),
 	m_music(std::make_unique<Track>(m_ctx.getAudioManager(), AudioType::LevelOneMusic, false))
 {
 	m_bulletCount->setPosition({0.0f, 40.0f});

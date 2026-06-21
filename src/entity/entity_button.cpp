@@ -7,7 +7,8 @@ rgp::ButtonEntity::ButtonEntity(
     const std::string_view text) :
 m_renderer(ctx.getRendererEngine()),
 m_color(colorF),
-m_text(ctx.getTextFactory().create(FontType::ZenMaruMedium32Left, text)) {
+m_text(std::make_unique<TextEntity>(ctx, FontType::ZenMaruMedium32Left, text))
+{
     setSizeAndPosition(rect);
     m_text->setPosition(Vector2F{ getX(), getY() });
     m_text->setColor(constant::color::BLACK_OPAQUE);

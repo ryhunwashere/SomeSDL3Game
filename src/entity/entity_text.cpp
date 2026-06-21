@@ -2,14 +2,14 @@
 #include "except_sdl.h"
 
 rgp::TextEntity::TextEntity(
-    const TextEngine& engine,
-    const FontFactory& factory,
+    GameContext& ctx,
     const FontType fontType,
     const std::string_view initialText)
-:
-    m_textPtr(TTF_CreateText(
-        engine.getEnginePtr(),
-        factory.getFont(fontType)->getFontPtr(),
+:   m_renderer(ctx.getRendererEngine()),
+    m_textPtr(
+    TTF_CreateText(
+        ctx.getTextEngine().getEnginePtr(),
+        ctx.getFontFactory().getFont(fontType)->getFontPtr(),
         initialText.data(),
         initialText.length()))
 {
@@ -28,7 +28,19 @@ rgp::TextEntity::~TextEntity() {
 }
 
 void rgp::TextEntity::draw() {
-    if (!TTF_DrawRendererText(m_textPtr, getX(), getY()))
+    constexpr float OVERSAMPLE_SCALE = 2.0f;
+    constexpr float INVERSE_SCALE = 1.0f / OVERSAMPLE_SCALE;
+
+    const float scaledX = getX() * OVERSAMPLE_SCALE;
+    const float scaledY = getY() * OVERSAMPLE_SCALE;
+
+    SDL_SetRenderScale(m_renderer.getRenderer(), INVERSE_SCALE, INVERSE_SCALE);
+
+    const bool success = TTF_DrawRendererText(m_textPtr, scaledX, scaledY);
+
+    SDL_SetRenderScale(m_renderer.getRenderer(), 1.0f, 1.0f);
+
+    if (!success)
         throw SDLException("Failed to draw text Entity");
 }
 

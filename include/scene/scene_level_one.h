@@ -4,6 +4,7 @@
 #include "game_context.h"
 #include "scene.h"
 #include "entity/entity_player.h"
+#include "entity/entity_text.h"
 #include "manager/manager_bullet.h"
 
 namespace rgp {

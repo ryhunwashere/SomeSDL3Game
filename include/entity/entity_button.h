@@ -1,5 +1,6 @@
 #pragma once
 
+#include "entity_text.h"
 #include "game_context.h"
 #include "entity/entity.h"
 #include "type/type_color.h"

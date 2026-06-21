@@ -13,7 +13,6 @@ constexpr float SPEED_PER_SECOND = INCREMENT_SPEED * 60.0f;
 
 rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
     m_menuMusic(std::make_unique<Track>(m_ctx.getAudioManager(), AudioType::MenuMusic, true)),
-    m_musicStatusText(ctx.getTextFactory().create(FontType::ZenMaruMedium32Center, "")),
     m_buttonList([&ctx] {
         std::array<std::unique_ptr<ButtonEntity>, 3> buttons;
 
@@ -41,10 +40,6 @@ rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
     updateButtonColors();
     m_menuMusic->play();
 
-    m_musicStatusText->setColor(constant::color::WHITE_OPAQUE);
-    m_musicStatusText->setPosition({ 5.0f, 300.0f });
-    m_musicStatusText->setText("Music is playing");
-
     SDL_Log("Main menu scene loaded.");
 }
 
@@ -70,13 +65,10 @@ void rgp::MainMenuScene::update() {
     }
 
     if (input.isKeyJustPressed(SDL_SCANCODE_BACKSPACE)) {
-        if (m_menuMusic->isPaused()) {
+        if (m_menuMusic->isPaused())
             m_menuMusic->resume();
-            m_musicStatusText->setText("Music is playing");
-        } else if (m_menuMusic->isPlaying()) {
+        else if (m_menuMusic->isPlaying())
             m_menuMusic->pause();
-            m_musicStatusText->setText("Music is paused");
-        }
     }
 
     if (input.isKeyJustPressed(SDL_SCANCODE_RETURN)) {
@@ -149,6 +141,4 @@ void rgp::MainMenuScene::draw() {
     m_ctx.getRendererEngine().drawScreen({ red, green, blue, SDL_ALPHA_OPAQUE_FLOAT });
 
     for (const auto& button : m_buttonList) button->draw();
-
-    m_musicStatusText->draw();
 }

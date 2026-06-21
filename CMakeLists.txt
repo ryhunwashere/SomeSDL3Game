@@ -86,7 +86,6 @@ set(HEADERS
         include/constant/constant.h
 
         include/factory/factory_font.h
-        include/factory/factory_text.h
 
         include/enum/enum_fonttype.h
         include/enum/enum_scenetype.h
