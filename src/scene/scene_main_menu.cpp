@@ -22,7 +22,7 @@ rgp::MainMenuScene::MainMenuScene(GameContext& ctx) : Scene(ctx),
             const std::array<std::string, 3> labels = { "Play", "Options", "Exit" };
             constexpr float HEIGHT      = 50.0f;
             constexpr float BASE_Y      = 50.0f;
-            constexpr float OFFSET_Y    = 100.0f;
+            constexpr float OFFSET_Y    = 800.0f;
             const auto index = static_cast<float>(i);
             const auto destRect = SDL_FRect{
                 .x = 10.0f,
