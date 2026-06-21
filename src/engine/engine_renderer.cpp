@@ -3,8 +3,6 @@
 #include "engine/engine_renderer.h"
 #include <cassert>
 
-constexpr int WINDOW_WIDTH          = 800;
-constexpr int WINDOW_HEIGHT         = 600;
 constexpr auto WINDOW_TITLE         = "This is a window";
 constexpr auto NULL_RENDERER_ERROR  = "Renderer is null";
 constexpr auto NULL_WINDOW_ERROR    = "Window is null";
@@ -13,11 +11,22 @@ rgp::RendererEngine::RendererEngine() {
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
         throw SDLException("SDL video initialization failure");
 
-    m_window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
+    const SDL_DisplayID displayID = SDL_GetPrimaryDisplay();
+    if (displayID == 0)
+        throw SDLException("Failed to get primary display");
+
+    const SDL_DisplayMode* mode = SDL_GetDesktopDisplayMode(displayID);
+    if (!mode)
+        throw SDLException("Failed to get desktop display mode");
+
+    const int targetWidth   = mode->w;
+    const int targetHeight  = mode->h;
+
+    m_window = SDL_CreateWindow(WINDOW_TITLE, targetWidth, targetHeight, SDL_WINDOW_FULLSCREEN);
     if (!m_window)
         throw SDLException("Window initialization failed");
 
-    SDL_Log("Window initialized.");
+    SDL_Log("Window initialized: %dx%d", targetWidth, targetHeight);
 
     const SDL_PropertiesID props = SDL_CreateProperties();
     SDL_SetPointerProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, m_window);
@@ -32,7 +41,7 @@ rgp::RendererEngine::RendererEngine() {
     if (!SDL_SetRenderVSync(m_renderer, 1))
         throw SDLException("VSync setting failed");
 
-    if (!SDL_SetRenderLogicalPresentation(m_renderer, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX))
+    if (!SDL_SetRenderLogicalPresentation(m_renderer, targetWidth, targetHeight, SDL_LOGICAL_PRESENTATION_LETTERBOX))
         throw SDLException("Set renderer failed");
 
     SDL_Log("Renderer initialized.");
