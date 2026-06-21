@@ -2,27 +2,27 @@
 
 #include "game_context.h"
 #include "entity/entity.h"
-#include "interface/interface_drawable.h"
-#include "interface/interface_updatable.h"
 #include "asset/asset_texture.h"
 #include "asset/asset_track.h"
+#include "manager/manager_bullet.h"
 
 namespace rgp {
-    class PlayerEntity final : public Entity, public IDrawable, public IUpdatable {
+    class PlayerEntity final : public Entity {
     public:
-        PlayerEntity(GameContext& ctx, TextureType textureType, AudioType audioType);
+        PlayerEntity(GameContext& ctx, BulletManager& bulletManager, TextureType textureType, AudioType audioType);
         ~PlayerEntity() override = default;
 
-        void draw() override;
-        void update() override;
+        void draw() const;
+        void update();
 
     private:
+        BulletEntity m_bullet;
         const RendererEngine& m_renderer;
         const InputManager& m_input;
+        BulletManager& m_bulletMng;
         Texture* m_texturePtr;
         std::unique_ptr<Track> m_shootTrack;
 
-        static constexpr Uint64 s_cooldown = 100;
         Uint64 m_nextShootTime;
 
         void updatePosition();

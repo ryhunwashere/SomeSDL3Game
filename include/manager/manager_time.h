@@ -6,7 +6,7 @@ namespace rgp {
     public:
         TimeManager() : m_lastTime(SDL_GetTicksNS()), m_lastFpsUpdate(m_lastTime) {}
 
-        [[nodiscard]] static auto getElapsedGameTime() -> uint64_t { return SDL_GetTicksNS(); }
+        [[nodiscard]] static auto getElapsedGameTimeNS() -> uint64_t { return SDL_GetTicksNS(); }
 
         void updateDeltaTime();
 
@@ -17,8 +17,8 @@ namespace rgp {
         uint64_t m_lastTime      = 0;
         uint64_t m_lastFpsUpdate = 0;
         uint32_t m_frameCount    = 0;
-        float m_deltaTime        = 0.0f;
-        float m_currentFps       = 0.0f;
+        float m_deltaTime;
+        float m_currentFps;
         static constexpr uint64_t FPS_UPDATE_INTERVAL = 250'000'000;
 
         auto updateFps(uint64_t currentTime) -> void;

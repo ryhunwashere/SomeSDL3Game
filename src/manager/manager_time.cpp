@@ -7,6 +7,7 @@ void rgp::TimeManager::updateDeltaTime() {
     m_lastTime = currentTime;
 
     const std::chrono::nanoseconds duration(deltaTimeNS);
+
     m_deltaTime = std::chrono::duration<float>(duration).count();
 
     m_frameCount++;

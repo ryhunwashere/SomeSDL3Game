@@ -10,6 +10,7 @@ rgp::TextureManager::TextureManager(RendererEngine& renderer) :
         std::array<const char*, static_cast<size_t>(TextureType::Count)> arr{};
 
         arr[static_cast<size_t>(TextureType::PlayerOneSprite)] = constant::path::PLAYER_ONE_SPRITE_PATH;
+        arr[static_cast<size_t>(TextureType::PlayerOneBulletSprite)] = constant::path::PLAYER_ONE_BULLET_SPRITE_PATH;
 
         return arr;
     }()) {}

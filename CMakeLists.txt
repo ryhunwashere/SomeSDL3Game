@@ -28,6 +28,7 @@ set(SOURCES
         src/manager/manager_scene.cpp
         src/manager/manager_time.cpp
         src/manager/manager_event.cpp
+        src/manager/manager_bullet.cpp
 
         src/scene/scene_main_menu.cpp
         src/scene/scene_level_one.cpp
@@ -52,6 +53,7 @@ set(HEADERS
         include/entity/entity_player.h
         include/entity/entity_text.h
         include/entity/entity_button.h
+        include/entity/entity_bullet.h
 
         include/manager/manager_input.h
         include/manager/manager_texture.h
@@ -59,6 +61,7 @@ set(HEADERS
         include/manager/manager_time.h
         include/manager/manager_audio.h
         include/manager/manager_event.h
+        include/manager/manager_bullet.h
 
         include/scene/scene.h
         include/scene/scene_main_menu.h
@@ -88,6 +91,7 @@ set(HEADERS
         include/enum/enum_scenetype.h
         include/enum/enum_texture_type.h
         include/enum/enum_audio_type.h
+        include/enum/enum_bullet_type.h
 
         include/event/event.h
         include/event/event_scene_change.h

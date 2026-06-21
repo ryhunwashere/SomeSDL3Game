@@ -3,11 +3,11 @@
 #include "engine/engine_renderer.h"
 #include <cassert>
 
-constexpr int WINDOW_WIDTH      = 800;
-constexpr int WINDOW_HEIGHT     = 600;
-auto WINDOW_TITLE               = "This is a window";
-auto NULL_RENDERER_ERROR        = "Renderer is null";
-auto NULL_WINDOW_ERROR          = "Window is null";
+constexpr int WINDOW_WIDTH          = 800;
+constexpr int WINDOW_HEIGHT         = 600;
+constexpr auto WINDOW_TITLE         = "This is a window";
+constexpr auto NULL_RENDERER_ERROR  = "Renderer is null";
+constexpr auto NULL_WINDOW_ERROR    = "Window is null";
 
 rgp::RendererEngine::RendererEngine() {
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
@@ -71,15 +71,15 @@ void rgp::RendererEngine::drawRect(const ColorF& colorF, const SDL_FRect* dstrec
         throw SDLException("Render fill rect error");
 }
 
-void rgp::RendererEngine::drawTexture(const ColorF& colorF, const SDL_FRect* dstrect, SDL_Texture* texture) const {
+void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, const double angle, const float alpha) const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
-    if (!SDL_SetTextureColorModFloat(texture, colorF.r, colorF.g, colorF.b) ||
-        !SDL_SetTextureAlphaModFloat(texture, colorF.a)) {
+    if (!SDL_SetTextureColorModFloat(texture, OPAQUE_F.r, OPAQUE_F.g, OPAQUE_F.b) ||
+        !SDL_SetTextureAlphaModFloat(texture, alpha)) {
         throw SDLException("Set texture mod error");
     }
 
-    if (!SDL_RenderTexture(m_renderer, texture, nullptr, dstrect))
+    if (!SDL_RenderTextureRotated(m_renderer, texture, nullptr, destRect, angle, nullptr, SDL_FLIP_NONE))
         throw SDLException("Render texture error");
 }
 

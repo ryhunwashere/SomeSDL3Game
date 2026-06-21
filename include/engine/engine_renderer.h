@@ -1,9 +1,12 @@
 #pragma once
 #include <SDL3/SDL.h>
 
+#include "constant/constant.h"
 #include "type/type_color.h"
 
 namespace rgp {
+    constexpr auto OPAQUE_F  = constant::color::OPAQUE_F;
+
     class RendererEngine {
     public:
         RendererEngine();
@@ -11,7 +14,16 @@ namespace rgp {
 
         void drawScreen(const ColorF& colorF) const;
         void drawRect(const ColorF& colorF, const SDL_FRect* dstrect) const;
-        void drawTexture(const ColorF& colorF, const SDL_FRect* dstrect, SDL_Texture* texture) const;
+
+        void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture) const {
+            drawTexture(destRect, texture, 0.0, OPAQUE_F.a);
+        }
+
+        void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, const double angle) const {
+            drawTexture(destRect, texture, angle, OPAQUE_F.a);
+        }
+
+        void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle, float alpha) const;
 
         void present() const;
         void clear() const;
