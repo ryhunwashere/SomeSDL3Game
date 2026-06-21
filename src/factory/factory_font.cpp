@@ -1,8 +1,6 @@
 #include <cassert>
 
 #include "factory/factory_font.h"
-
-#include "except_sdl.h"
 #include "constant/constant.h"
 
 rgp::FontFactory::FontFactory() : m_fontArray([] {
