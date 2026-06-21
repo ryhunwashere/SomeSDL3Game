@@ -141,7 +141,7 @@ void rgp::MainMenuScene::updateButtonColors() const {
 }
 
 void rgp::MainMenuScene::draw() {
-    const auto interval = m_now * 2.0f;
+    const auto interval = m_now * 0.5f;
     const auto red      = 0.5f + 0.5f * SDL_sinf(interval);
     const auto green    = 0.5f + 0.5f * SDL_sinf(interval + SDL_PI_F * 2.0f / 3.0f);
     const auto blue     = 0.5f + 0.5f * SDL_sinf(interval + SDL_PI_F * 4.0f / 3.0f);
