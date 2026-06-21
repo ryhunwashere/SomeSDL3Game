@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include <SDL3/SDL.h>
 
 #include "constant/constant.h"
@@ -35,7 +36,7 @@ namespace rgp {
 
         void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle, float alpha) const;
 
-        void setViewport(const SDL_Rect* destRect) const;
+        void drawViewport(const SDL_Rect* destRect, const std::function<void()>& drawCallback) const;
 
         void present() const;
         void clear() const;

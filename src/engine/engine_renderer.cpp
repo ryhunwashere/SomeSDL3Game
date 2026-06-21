@@ -92,8 +92,13 @@ void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* te
         throw SDLException("Render texture error");
 }
 
-void rgp::RendererEngine::setViewport(const SDL_Rect* destRect) const {
+void rgp::RendererEngine::drawViewport(const SDL_Rect* destRect, const std::function<void()>& drawCallback) const {
     if (!SDL_SetRenderViewport(m_renderer, destRect))
+        throw SDLException("Viewport render set error");
+
+    drawCallback();
+
+    if (!SDL_SetRenderViewport(m_renderer, nullptr))
         throw SDLException("Viewport render set error");
 }
 

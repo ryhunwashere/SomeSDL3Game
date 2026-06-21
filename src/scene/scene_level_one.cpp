@@ -52,13 +52,12 @@ void rgp::LevelOneScene::update() {
 }
 
 void rgp::LevelOneScene::draw() {
-	m_ctx.getRendererEngine().setViewport(nullptr);
 	m_ctx.getRendererEngine().drawScreen(m_backgroundImg->getTexturePtr());
 	m_bulletCount->draw();
 
-	m_ctx.getRendererEngine().setViewport(&m_viewport);
-	m_ctx.getRendererEngine().drawScreen(constant::color::BLACK_OPAQUE_F);
-	m_player->draw();
-	m_bulletMng.draw();
-	m_ctx.getRendererEngine().setViewport(nullptr);
+	m_ctx.getRendererEngine().drawViewport(&m_viewport, [this]() -> void {
+		m_ctx.getRendererEngine().drawScreen(constant::color::BLACK_OPAQUE_F);
+		m_player->draw();
+		m_bulletMng.draw();
+	});
 }
