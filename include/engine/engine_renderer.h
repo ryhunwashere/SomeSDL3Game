@@ -9,10 +9,20 @@ namespace rgp {
 
     class RendererEngine {
     public:
+        static constexpr int LOGICAL_WIDTH  = 1920;
+        static constexpr int LOGICAL_HEIGHT = 1080;
+
         RendererEngine();
         ~RendererEngine();
 
-        void drawScreen(const ColorF& colorF) const;
+        void drawScreen(const ColorF& colorF) const {
+            drawRect(colorF, nullptr);
+        };
+
+        void drawScreen(SDL_Texture* texture) const {
+            drawTexture(nullptr, texture, 0.0, OPAQUE_F.a);
+        };
+
         void drawRect(const ColorF& colorF, const SDL_FRect* dstrect) const;
 
         void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture) const {
@@ -24,6 +34,8 @@ namespace rgp {
         }
 
         void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle, float alpha) const;
+
+        void setViewport(const SDL_Rect* destRect) const;
 
         void present() const;
         void clear() const;

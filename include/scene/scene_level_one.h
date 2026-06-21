@@ -19,7 +19,9 @@ namespace rgp {
 		[[nodiscard]] auto getBulletManager() -> BulletManager& { return m_bulletMng; }
 
 	private:
+		SDL_Rect m_viewport;
 		BulletManager m_bulletMng;
+		Texture* m_backgroundImg;
 		std::unique_ptr<PlayerEntity> m_player;
 		std::unique_ptr<TextEntity> m_bulletCount;
 		std::unique_ptr<Track> m_music;

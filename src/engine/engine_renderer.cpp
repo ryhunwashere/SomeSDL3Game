@@ -6,8 +6,7 @@
 constexpr auto WINDOW_TITLE         = "This is a window";
 constexpr auto NULL_RENDERER_ERROR  = "Renderer is null";
 constexpr auto NULL_WINDOW_ERROR    = "Window is null";
-constexpr int LOGICAL_WIDTH  = 1920;
-constexpr int LOGICAL_HEIGHT = 1080;
+constexpr auto BLACK_OPAQUE_F       = rgp::constant::color::BLACK_OPAQUE_F;
 
 rgp::RendererEngine::RendererEngine() {
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
@@ -70,10 +69,6 @@ auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
     return m_renderer;
 }
 
-void rgp::RendererEngine::drawScreen(const ColorF& colorF) const {
-    drawRect(colorF, nullptr);
-}
-
 void rgp::RendererEngine::drawRect(const ColorF& colorF, const SDL_FRect* dstrect) const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
@@ -95,6 +90,11 @@ void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* te
 
     if (!SDL_RenderTextureRotated(m_renderer, texture, nullptr, destRect, angle, nullptr, SDL_FLIP_NONE))
         throw SDLException("Render texture error");
+}
+
+void rgp::RendererEngine::setViewport(const SDL_Rect* destRect) const {
+    if (!SDL_SetRenderViewport(m_renderer, destRect))
+        throw SDLException("Viewport render set error");
 }
 
 void rgp::RendererEngine::present() const {
