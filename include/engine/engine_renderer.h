@@ -4,6 +4,7 @@
 
 #include "constant/constant.h"
 #include "type/type_color.h"
+#include "except_sdl.h"
 
 namespace rgp {
     constexpr auto OPAQUE_F  = constant::color::OPAQUE_F;
@@ -36,7 +37,15 @@ namespace rgp {
 
         void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle, float alpha) const;
 
-        void drawViewport(const SDL_Rect* destRect, const std::function<void()>& drawCallback) const;
+        void drawViewport(const SDL_Rect* destRect, std::invocable auto&& drawCallback) const {
+            if (!SDL_SetRenderViewport(m_renderer, destRect))
+                throw SDLException("Viewport render set error");
+
+            std::invoke(std::forward<decltype(drawCallback)>(drawCallback));
+
+            if (!SDL_SetRenderViewport(m_renderer, nullptr))
+                throw SDLException("Viewport render set error");
+        }
 
         void present() const;
         void clear() const;

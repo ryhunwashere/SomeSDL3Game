@@ -1,5 +1,4 @@
 #include <SDL3/SDL.h>
-#include "except_sdl.h"
 #include "engine/engine_renderer.h"
 #include <cassert>
 
@@ -90,16 +89,6 @@ void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* te
 
     if (!SDL_RenderTextureRotated(m_renderer, texture, nullptr, destRect, angle, nullptr, SDL_FLIP_NONE))
         throw SDLException("Render texture error");
-}
-
-void rgp::RendererEngine::drawViewport(const SDL_Rect* destRect, const std::function<void()>& drawCallback) const {
-    if (!SDL_SetRenderViewport(m_renderer, destRect))
-        throw SDLException("Viewport render set error");
-
-    drawCallback();
-
-    if (!SDL_SetRenderViewport(m_renderer, nullptr))
-        throw SDLException("Viewport render set error");
 }
 
 void rgp::RendererEngine::present() const {
