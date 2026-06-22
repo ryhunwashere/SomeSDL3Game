@@ -34,11 +34,13 @@ namespace rgp {
         }
 
         template <std::derived_from<event::Event> TEvent>
-        void subscribe(std::function<void(const TEvent&)> callbackFn) {
-            m_Listeners[std::type_index(typeid(TEvent))].push_back([callbackFn](const EventVariant& eventVariant) {
-                if (const auto* concreteEvent = std::get_if<TEvent>(&eventVariant))
-                    callbackFn(*concreteEvent);
-            });
+        void subscribe(std::invocable<const TEvent&> auto&& callbackFn) {
+            m_Listeners[std::type_index(typeid(TEvent))].push_back(
+                [callbackFn = std::forward<decltype(callbackFn)>(callbackFn)](const EventVariant& eventVariant) {
+                    if (const auto* concreteEvent = std::get_if<TEvent>(&eventVariant))
+                        std::invoke(callbackFn, *concreteEvent);
+                }
+            );
         }
 
         auto processEvent(const SDL_Event& event) -> bool;
