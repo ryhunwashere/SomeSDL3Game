@@ -1,4 +1,5 @@
 #pragma once
+#include <cassert>
 #include <functional>
 #include <SDL3/SDL.h>
 
@@ -47,12 +48,24 @@ namespace rgp {
                 throw SDLException("Viewport render set error");
         }
 
-        void present() const;
-        void clear() const;
+        void clearAndPresent(std::invocable auto&& drawCallback) const {
+            assert(m_renderer && NULL_RENDERER_ERROR);
+
+            if (!SDL_RenderClear(m_renderer))
+                throw SDLException("Render clear error");
+
+            std::invoke(std::forward<decltype(drawCallback)>(drawCallback));
+
+            if (!SDL_RenderPresent(m_renderer))
+                throw SDLException("Render present error");
+        }
+
         [[nodiscard]] auto getRenderer() const -> SDL_Renderer*;
 
     private:
         SDL_Window* m_window        = nullptr;
         SDL_Renderer* m_renderer    = nullptr;
+        static constexpr auto NULL_RENDERER_ERROR  = "Renderer is null";
+        static constexpr auto NULL_WINDOW_ERROR    = "Window is null";
     };
 }

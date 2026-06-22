@@ -29,9 +29,7 @@ auto rgp::Game::update() -> bool {
 }
 
 void rgp::Game::draw() {
-    m_ctx.getRendererEngine().clear();
-
-    m_sceneManager.drawCurrentScene();
-
-    m_ctx.getRendererEngine().present();
+    m_ctx.getRendererEngine().clearAndPresent([this]() -> void {
+        m_sceneManager.drawCurrentScene();
+    });
 }

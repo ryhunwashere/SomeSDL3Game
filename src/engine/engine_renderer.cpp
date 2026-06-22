@@ -1,10 +1,7 @@
 #include <SDL3/SDL.h>
 #include "engine/engine_renderer.h"
-#include <cassert>
 
 constexpr auto WINDOW_TITLE         = "This is a window";
-constexpr auto NULL_RENDERER_ERROR  = "Renderer is null";
-constexpr auto NULL_WINDOW_ERROR    = "Window is null";
 constexpr auto BLACK_OPAQUE_F       = rgp::constant::color::BLACK_OPAQUE_F;
 
 rgp::RendererEngine::RendererEngine() {
@@ -89,18 +86,4 @@ void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* te
 
     if (!SDL_RenderTextureRotated(m_renderer, texture, nullptr, destRect, angle, nullptr, SDL_FLIP_NONE))
         throw SDLException("Render texture error");
-}
-
-void rgp::RendererEngine::present() const {
-    assert(m_renderer && NULL_RENDERER_ERROR);
-
-    if (!SDL_RenderPresent(m_renderer))
-        throw SDLException("Render present error");
-}
-
-void rgp::RendererEngine::clear() const {
-    assert(m_renderer && NULL_RENDERER_ERROR);
-
-    if (!SDL_RenderClear(m_renderer))
-        throw SDLException("Render clear error");
 }
