@@ -95,7 +95,7 @@ set(HEADERS
 
         include/event/event.h
         include/event/event_scene_change.h
-        include/scene/scene_gameplay.h
+        include/event/event_player_died.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

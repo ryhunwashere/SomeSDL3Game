@@ -17,13 +17,12 @@ namespace rgp {
 
     private:
         BulletEntity m_bullet;
-        const RendererEngine& m_renderer;
-        const InputManager& m_input;
+        GameContext& m_ctx;
         BulletManager& m_bulletMng;
         Texture* m_texturePtr;
         std::unique_ptr<Track> m_shootTrack;
-
-        Uint64 m_nextShootTime;
+        uint64_t m_nextShootTime;
+        int8_t m_currentLives;
 
         void updatePosition();
         void updateShooting();

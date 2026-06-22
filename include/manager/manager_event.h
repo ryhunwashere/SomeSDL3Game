@@ -11,8 +11,9 @@
 
 #include "event/event.h"
 #include "event/event_scene_change.h"
-#include "except_sdl.h"
+#include "event/event_player_lives_change.h"
 
+#include "except_sdl.h"
 
 namespace rgp {
     class EventManager {
@@ -46,7 +47,7 @@ namespace rgp {
         auto processEvent(const SDL_Event& event) -> bool;
 
     private:
-        using EventVariant      = std::variant<event::SceneChangeEvent>;
+        using EventVariant      = std::variant<event::SceneChangeEvent, event::PlayerLivesChangeEvent>;
         using EventCallbackFn   = std::function<void(const EventVariant&)>;
 
         void dispatch(const EventVariant& eventVariant);
