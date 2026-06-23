@@ -37,7 +37,7 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	});
 	m_currentLivesText->setColor(constant::color::WHITE_OPAQUE);
 
-	m_ctx.getEventManager().subscribe<event::PlayerLivesChangeEvent>([this](const event::PlayerLivesChangeEvent& e) -> void {
+	m_ctx.getEventManager().subscribe<event::PlayerLivesChangeEvent>([this](const auto& e) -> void {
 		if (e.currentLives > 0)
 			m_currentLivesText->setText(std::format("Lives: {}", e.currentLives));
 		else
