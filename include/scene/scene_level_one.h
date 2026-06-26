@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 
 #include "game_context.h"
 #include "scene.h"
@@ -10,6 +9,9 @@
 namespace rgp {
 	class LevelOneScene final : public Scene {
 	public:
+		static constexpr int VIEWPORT_WIDTH  = 800;
+		static constexpr int VIEWPORT_HEIGHT = 1000;
+
 		explicit LevelOneScene(GameContext& ctx);
 		~LevelOneScene() override;
 
@@ -19,12 +21,11 @@ namespace rgp {
 		[[nodiscard]] auto getBulletManager() -> BulletManager& { return m_bulletMng; }
 
 	private:
-		SDL_Rect m_viewport;
 		BulletManager m_bulletMng;
+		PlayerEntity m_player;
+		TextEntity m_currentLivesText;
+		SDL_Rect m_viewport;
+		Track m_music;
 		Texture* m_backgroundImg;
-		std::unique_ptr<PlayerEntity> m_player;
-		std::unique_ptr<TextEntity> m_bulletCountText;
-		std::unique_ptr<TextEntity> m_currentLivesText;
-		std::unique_ptr<Track> m_music;
 	};
 }

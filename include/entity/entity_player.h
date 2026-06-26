@@ -17,12 +17,14 @@ namespace rgp {
 
     private:
         BulletEntity m_bullet;
+        Track m_shootTrack;
+        SDL_FRect m_hitbox;
         GameContext& m_ctx;
         BulletManager& m_bulletMng;
         Texture* m_texturePtr;
-        std::unique_ptr<Track> m_shootTrack;
         uint64_t m_nextShootTime;
         int8_t m_currentLives;
+        bool m_isSlow = false;
 
         void updatePosition();
         void updateShooting();

@@ -14,15 +14,15 @@ namespace rgp {
 		void draw() override;
 
 	private:
+		Track m_menuMusic;
 		size_t m_selectedMenu = 0;
 		float m_now = 0.0f;
-		std::unique_ptr<Track> m_menuMusic;
 
-		std::array<std::unique_ptr<ButtonEntity>, 3> m_buttonList;
+		std::array<ButtonEntity, 3> m_buttonList;
 		std::array<float, 3> m_buttonProgress{0.0f, 0.0f, 0.0f};
 
 		void updateSelectedButton();
 		void animateButtonWidths(float dt);
-		void updateButtonColors() const;
+		void updateButtonColors();
 	};
 }
