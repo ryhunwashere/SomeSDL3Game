@@ -6,11 +6,12 @@ void rgp::TimeManager::updateDeltaTime() {
     const auto deltaTimeNS = currentTime - m_lastTime;
     m_lastTime = currentTime;
 
-    const std::chrono::nanoseconds duration(deltaTimeNS);
+    const auto duration = std::chrono::nanoseconds(deltaTimeNS);
 
     m_deltaTime = std::chrono::duration<float>(duration).count();
 
     m_frameCount++;
+
     updateFps(currentTime);
 }
 

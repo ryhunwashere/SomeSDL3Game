@@ -18,9 +18,9 @@ namespace rgp {
         void drawCurrentScene() const;
 
     private:
-        GameContext& m_ctx;
-        std::unique_ptr<Scene> m_currentScene;
         std::unordered_map<SceneType, std::function<std::unique_ptr<Scene>()>> m_sceneMap;
+        std::unique_ptr<Scene> m_currentScene;
+        GameContext& m_ctx;
 
         // for displaying fps
         std::unique_ptr<TextEntity> m_fpsText;

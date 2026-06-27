@@ -47,8 +47,7 @@ rgp::MainMenuScene::~MainMenuScene() {
 	SDL_Log("Main menu scene unloaded.");
 }
 
-void rgp::MainMenuScene::update() {
-    const float dt = m_ctx.getTimeManager().getDeltaTime();
+void rgp::MainMenuScene::update(const float dt) {
     m_now += dt;
 
     updateSelectedButton();

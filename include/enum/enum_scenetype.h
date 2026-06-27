@@ -1,5 +1,5 @@
 #pragma once
 
 namespace rgp {
-    enum class SceneType { Continue, Exit, MainMenu, LevelOne };
+    enum class SceneType : uint8_t { Continue, Exit, MainMenu, LevelOne };
 }

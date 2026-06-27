@@ -15,7 +15,7 @@ namespace rgp {
 		explicit LevelOneScene(GameContext& ctx);
 		~LevelOneScene() override;
 
-		void update() override;
+		void update(float dt) override;
 		void draw() override;
 
 		[[nodiscard]] auto getBulletManager() -> BulletManager& { return m_bulletMng; }
@@ -27,5 +27,6 @@ namespace rgp {
 		SDL_Rect m_viewport;
 		Track m_music;
 		Texture* m_backgroundImg;
+		bool m_isPaused = false;
 	};
 }

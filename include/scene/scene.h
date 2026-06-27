@@ -8,8 +8,8 @@ namespace rgp {
         explicit Scene(GameContext& ctx) : m_ctx(ctx) {}
         virtual ~Scene() = default;
 
-        virtual void update()   = 0;
-        virtual void draw()     = 0;
+        virtual void update(float dt) = 0;
+        virtual void draw()           = 0;
 
     protected:
         GameContext& m_ctx;

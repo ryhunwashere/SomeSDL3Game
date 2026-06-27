@@ -6,8 +6,7 @@ rgp::BulletManager::BulletManager(GameContext& ctx) : m_ctx(ctx) {
     SDL_Log("Bullet manager loaded with O(1) Index Pools");
 }
 
-void rgp::BulletManager::update() {
-    const float dt = m_ctx.getTimeManager().getDeltaTime();
+void rgp::BulletManager::update(const float dt) {
     updateBullets(m_enemyPool, dt);
     updateBullets(m_playerPool, dt);
 }

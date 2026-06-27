@@ -14,7 +14,7 @@ namespace rgp {
         ~PlayerEntity() override = default;
 
         void draw() const;
-        void update();
+        void update(float dt);
 
     private:
         BulletManager& m_bulletMng;
@@ -27,7 +27,7 @@ namespace rgp {
         uint8_t m_currentLives;
         bool m_isSlow = false;
 
-        void updatePosition();
-        void updateShooting();
+        void updatePosition(float dt);
+        void updateShooting(float dt);
     };
 }

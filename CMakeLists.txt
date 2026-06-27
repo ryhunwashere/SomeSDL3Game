@@ -96,6 +96,7 @@ set(HEADERS
         include/event/event.h
         include/event/event_scene_change.h
         include/event/event_player_lives_change.h
+        include/event/event_pause_state_change.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

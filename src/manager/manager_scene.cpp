@@ -57,11 +57,11 @@ void rgp::SceneManager::changeScene(const SceneType targetScene) {
 }
 
 auto rgp::SceneManager::updateCurrentScene() const -> bool {
-	m_fpsText->setText("FPS: " + std::to_string(static_cast<uint64_t>(m_ctx.getTimeManager().getCurrentFps())));
+	const auto& timeMng = m_ctx.getTimeManager();
+	m_fpsText->setText("FPS: " + std::to_string(static_cast<uint64_t>(timeMng.getCurrentFps())));
 
 	if (!m_currentScene) return false;
-
-	m_currentScene->update();
+	m_currentScene->update(timeMng.getDeltaTime());
 	return true;
 }
 

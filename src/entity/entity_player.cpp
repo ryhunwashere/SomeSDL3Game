@@ -10,8 +10,8 @@
 #include "manager/manager_time.h"
 
 constexpr float TEXTURE_SIZE		= 100.0f;
-constexpr float MOVE_SPEED			= 10.0f;
-constexpr float MOVE_SPEED_SLOW		= 1.5f;
+constexpr float MOVE_SPEED			= 1000.0f;
+constexpr float MOVE_SPEED_SLOW		= 150.0f;
 constexpr uint64_t SHOOT_COOLDOWN	= 80;
 
 rgp::PlayerEntity::PlayerEntity(
@@ -70,7 +70,7 @@ void rgp::PlayerEntity::draw() const {
 		renderer.drawRect(constant::color::WHITE_OPAQUE_F, &m_hitbox);
 }
 
-void rgp::PlayerEntity::update() {
+void rgp::PlayerEntity::update(const float dt) {
 	if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_O)) {
 		--m_currentLives;
 		m_ctx.getEventManager().publish<event::PlayerLivesChangeEvent>({
@@ -78,11 +78,11 @@ void rgp::PlayerEntity::update() {
 		});
 	}
 
-	updatePosition();
-	updateShooting();
+	updatePosition(dt);
+	updateShooting(dt);
 }
 
-void rgp::PlayerEntity::updatePosition() {
+void rgp::PlayerEntity::updatePosition(const float dt) {
 	const auto& input = m_ctx.getInputManager();
 	Vector2F dir = { 0.0f, 0.0f };
 
@@ -96,14 +96,18 @@ void rgp::PlayerEntity::updatePosition() {
 
 	if (const float length = std::sqrt(dir.x * dir.x + dir.y * dir.y); length > 1.0f) dir /= length;
 
-	const auto deltaPos = m_isSlow ? dir * MOVE_SPEED_SLOW : dir * MOVE_SPEED;
+	const auto deltaPos = m_isSlow
+		? dir * MOVE_SPEED_SLOW * dt
+		: dir * MOVE_SPEED * dt;
 
 	movePosition(deltaPos);
 	m_hitbox.x += deltaPos.x;
 	m_hitbox.y += deltaPos.y;
 }
 
-void rgp::PlayerEntity::updateShooting() {
+void rgp::PlayerEntity::updateShooting(const float dt) {
+	if (dt <= 0.0f) return;
+
 	if (const uint64_t currentTime = SDL_GetTicks();
 		currentTime >= m_nextShootTime && m_ctx.getInputManager().isKeyDown(SDL_SCANCODE_L)) {
 

@@ -10,7 +10,7 @@ namespace rgp {
 		explicit MainMenuScene(GameContext& ctx);
 		~MainMenuScene() override;
 
-		void update() override;
+		void update(float dt) override;
 		void draw() override;
 
 	private:

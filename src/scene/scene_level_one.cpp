@@ -25,7 +25,9 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	});
 	m_currentLivesText.setColor(constant::color::WHITE_OPAQUE);
 
-	m_ctx.getEventManager().subscribe<event::PlayerLivesChangeEvent>([this](const auto& e) -> void {
+	auto& eventMng = m_ctx.getEventManager();
+
+	eventMng.subscribe<event::PlayerLivesChangeEvent>([this](const auto& e) -> void {
 		if (e.currentLives > 0)
 			m_currentLivesText.setText(std::format("Lives: {}", e.currentLives));
 		else
@@ -34,6 +36,7 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 
 	m_music.setGain(0.4f);
 	m_music.play();
+
 	SDL_Log("Level 1 scene loaded.");
 }
 
@@ -45,11 +48,21 @@ rgp::LevelOneScene::~LevelOneScene() {
 	SDL_Log("Level 1 scene unloaded.");
 }
 
-void rgp::LevelOneScene::update() {
-	m_player.update();
-	m_bulletMng.update();
+void rgp::LevelOneScene::update(const float dt) {
+	const float deltaTime = m_isPaused ? 0.0f : dt;
+	m_player.update(deltaTime);
+	m_bulletMng.update(deltaTime);
 
-	if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_ESCAPE))
+	const auto& input = m_ctx.getInputManager();
+
+	if (input.isKeyJustPressed(SDL_SCANCODE_SPACE)) {
+		m_isPaused = !m_isPaused;
+
+		if (m_music.isPlaying()) m_music.pause();
+		else m_music.resume();
+	}
+
+	if (input.isKeyJustPressed(SDL_SCANCODE_ESCAPE))
 		m_ctx.getEventManager().publish<event::SceneChangeEvent>({ .scene = SceneType::MainMenu });
 }
 

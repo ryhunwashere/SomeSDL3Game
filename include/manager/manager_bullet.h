@@ -24,7 +24,7 @@ namespace rgp {
         explicit BulletManager(GameContext& ctx);
         ~BulletManager() = default;
 
-        void update();
+        void update(float dt);
         void draw();
 
         void spawnPlayerBullet(const BulletEntity& bulletParams, Vector2F spawnPos);

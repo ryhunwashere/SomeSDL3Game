@@ -13,6 +13,7 @@
 #include "event/event.h"
 #include "event/event_scene_change.h"
 #include "event/event_player_lives_change.h"
+#include "event/event_pause_state_change.h"
 
 #include "except_sdl.h"
 
@@ -78,7 +79,8 @@ namespace rgp {
         using EventVariant = std::variant<
             std::monostate,
             event::SceneChangeEvent,
-            event::PlayerLivesChangeEvent
+            event::PlayerLivesChangeEvent,
+            event::PauseStateChangeEvent
         >;
         using EventCallbackFn = std::function<void(const void*)>;
 
