@@ -1,9 +1,10 @@
 #include <string>
-#include <complex>
 
-#include "entity/entity_bullet.h"
 #include "entity/entity_player.h"
 
+#include <cmath>
+
+#include "entity/entity_bullet.h"
 #include "event/event_player_lives_change.h"
 #include "type/type_vector2f.h"
 #include "manager/manager_time.h"
@@ -18,7 +19,9 @@ rgp::PlayerEntity::PlayerEntity(
 	BulletManager& bulletManager,
 	const TextureType textureType,
 	const AudioType audioType)
-:	m_bullet(
+:	m_bulletMng(bulletManager),
+	m_ctx(ctx),
+	m_bullet(
 		ctx.getTextureManager().getTexture(TextureType::PlayerOneBulletSprite),
 		-90.0,
 		1.0f,
@@ -26,8 +29,6 @@ rgp::PlayerEntity::PlayerEntity(
 		BulletBehaviour::Linear
 	),
 	m_shootTrack(Track(ctx.getAudioManager(), audioType, false)),
-	m_ctx(ctx),
-	m_bulletMng(bulletManager),
 	m_texturePtr(ctx.getTextureManager().getTexture(textureType)),
 	m_nextShootTime(SDL_GetTicks()),
 	m_currentLives(3)
@@ -54,7 +55,7 @@ rgp::PlayerEntity::PlayerEntity(
 	m_shootTrack.setGain(0.8f);
 
 	m_ctx.getEventManager().publish<event::PlayerLivesChangeEvent>({
-		.currentLives = std::max(m_currentLives, static_cast<int8_t>(0))
+		.currentLives = std::max(m_currentLives, static_cast<uint8_t>(0))
 	});
 }
 
@@ -73,7 +74,7 @@ void rgp::PlayerEntity::update() {
 	if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_O)) {
 		--m_currentLives;
 		m_ctx.getEventManager().publish<event::PlayerLivesChangeEvent>({
-			.currentLives = std::max(m_currentLives, static_cast<int8_t>(0))
+			.currentLives = std::max(m_currentLives, static_cast<uint8_t>(0))
 		});
 	}
 
@@ -114,9 +115,9 @@ void rgp::PlayerEntity::updateShooting() {
 		spawnPos2.x -= m_bullet.getWidth() / 2.0f;
 		spawnPos3.x -= m_bullet.getWidth() / 2.0f;
 
-		m_bulletMng.spawnBullet(m_bullet, spawnPos1);
-		m_bulletMng.spawnBullet(m_bullet, spawnPos2);
-		m_bulletMng.spawnBullet(m_bullet, spawnPos3);
+		m_bulletMng.spawnPlayerBullet(m_bullet, spawnPos1);
+		m_bulletMng.spawnPlayerBullet(m_bullet, spawnPos2);
+		m_bulletMng.spawnPlayerBullet(m_bullet, spawnPos3);
 
 		m_shootTrack.play();
 		m_nextShootTime = currentTime + SHOOT_COOLDOWN;

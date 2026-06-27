@@ -9,8 +9,8 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	m_player(PlayerEntity(m_ctx, m_bulletMng, TextureType::PlayerOneSprite, AudioType::PlayerShoot)),
 	m_currentLivesText(TextEntity(m_ctx, FontType::ZenMaruMedium32Left, "Lives: ")),
 	m_viewport(SDL_Rect{
-		.x = m_ctx.getRendererEngine().LOGICAL_WIDTH/2 - VIEWPORT_WIDTH/2,
-		.y = (m_ctx.getRendererEngine().LOGICAL_HEIGHT - VIEWPORT_HEIGHT)/2,
+		.x = RendererEngine::LOGICAL_WIDTH/2 - VIEWPORT_WIDTH/2,
+		.y = (RendererEngine::LOGICAL_HEIGHT - VIEWPORT_HEIGHT)/2,
 		.w = VIEWPORT_WIDTH,
 		.h = VIEWPORT_HEIGHT,
 	}),

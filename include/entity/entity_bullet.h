@@ -3,7 +3,7 @@
 #include "entity/entity.h"
 
 namespace rgp {
-    enum class BulletBehaviour { Linear, Sine, Homing };
+    enum class BulletBehaviour : uint8_t { Linear, Sine, Homing };
 
     struct BulletEntity final : Entity {
         Texture* texturePtr;

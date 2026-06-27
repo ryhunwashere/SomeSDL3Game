@@ -17,8 +17,8 @@ namespace rgp {
         uint64_t m_lastTime      = 0;
         uint64_t m_lastFpsUpdate = 0;
         uint32_t m_frameCount    = 0;
-        float m_deltaTime;
-        float m_currentFps;
+        float m_deltaTime        = 0;
+        float m_currentFps       = 0;
         static constexpr uint64_t FPS_UPDATE_INTERVAL = 250'000'000;
 
         auto updateFps(uint64_t currentTime) -> void;
