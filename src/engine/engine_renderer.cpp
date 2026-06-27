@@ -43,6 +43,9 @@ rgp::RendererEngine::RendererEngine() {
     if (!SDL_SetRenderLogicalPresentation(m_renderer, LOGICAL_WIDTH, LOGICAL_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX))
         throw SDLException("Set renderer failed");
 
+    if (!SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND))
+        throw SDLException("Set render blend mode error");
+
     SDL_Log("Renderer initialized with a 1080p Logical Canvas.");
 }
 

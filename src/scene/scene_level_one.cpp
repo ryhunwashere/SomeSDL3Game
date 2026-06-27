@@ -57,7 +57,6 @@ void rgp::LevelOneScene::update(const float dt) {
 
 	if (input.isKeyJustPressed(SDL_SCANCODE_SPACE)) {
 		m_isPaused = !m_isPaused;
-
 		if (m_music.isPlaying()) m_music.pause();
 		else m_music.resume();
 	}
@@ -74,5 +73,7 @@ void rgp::LevelOneScene::draw() {
 		m_ctx.getRendererEngine().drawScreen(constant::color::BLACK_OPAQUE_F);
 		m_player.draw();
 		m_bulletMng.draw();
+		if (m_isPaused)
+			m_ctx.getRendererEngine().drawScreen({0.0f, 0.0f, 0.0f, 0.5f});
 	});
 }
