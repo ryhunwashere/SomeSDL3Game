@@ -7,7 +7,7 @@ namespace rgp {
     public:
         virtual ~Entity() = 0;
 
-        void setPosition(const Vector2F& pos)                   { m_x = pos.x; m_y = pos.y; }
+        virtual void setPosition(const Vector2F& pos)           { m_x = pos.x; m_y = pos.y; }
         void movePosition(const Vector2F& deltaPos)             { m_x += deltaPos.x; m_y += deltaPos.y; }
         void setSize(const float width, const float height)     { m_width = width; m_height = height; }
         void setSizeAndPosition(const SDL_FRect& rect) {
@@ -40,7 +40,7 @@ namespace rgp {
         [[nodiscard]] auto getTopMiddle() const -> Vector2F     { return Vector2F{m_x + m_width/2, m_y}; }
         [[nodiscard]] auto getTopRight()  const -> Vector2F     { return Vector2F{m_x + m_width, m_y}; }
 
-    private:
+    protected:
         float m_x       = 0.0f;
         float m_y       = 0.0f;
         float m_width   = 0.0f;

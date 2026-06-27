@@ -38,7 +38,7 @@ rgp::PlayerEntity::PlayerEntity(
 	SDL_GetTextureSize(m_texturePtr->getTexturePtr(), &playerW, &playerH);
 	setSize(playerW, playerH);
 
-	constexpr float HITBOX_RECT_LENGTH = 3.0f;
+	constexpr float HITBOX_RECT_LENGTH = 8.0f;
 
 	m_hitbox = SDL_FRect{
 		.x = getCenter().x - HITBOX_RECT_LENGTH/2.0f,

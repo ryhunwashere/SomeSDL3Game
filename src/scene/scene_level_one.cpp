@@ -17,11 +17,12 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	m_music(Track(m_ctx.getAudioManager(), AudioType::LevelOneMusic, false)),
 	m_backgroundImg(m_ctx.getTextureManager().getTexture(TextureType::LevelOneBackground))
 {
-	constexpr float UI_X_OFFSET = 50.0f;
+	constexpr float UI_OFFSET_X = 50.0f;
+	constexpr float UI_OFFSET_Y = 80.0f;
 
 	m_currentLivesText.setPosition({
-		static_cast<float>(m_viewport.x + m_viewport.w) + UI_X_OFFSET,
-		80.0f
+		static_cast<float>(m_viewport.x + m_viewport.w) + UI_OFFSET_X,
+		UI_OFFSET_Y
 	});
 	m_currentLivesText.setColor(constant::color::WHITE_OPAQUE);
 
@@ -32,6 +33,13 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 			m_currentLivesText.setText(std::format("Lives: {}", e.currentLives));
 		else
 			m_ctx.getEventManager().publish<event::SceneChangeEvent>({.scene = SceneType::MainMenu});
+	});
+
+	constexpr float PLAYER_OFFSET_Y = 100.0f;
+
+	m_player.setPosition({
+		static_cast<float>(VIEWPORT_WIDTH) / 2.0f,
+		static_cast<float>(VIEWPORT_HEIGHT) - PLAYER_OFFSET_Y
 	});
 
 	m_music.setGain(0.4f);

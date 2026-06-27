@@ -15,13 +15,20 @@ namespace rgp {
 
         void draw() const;
         void update(float dt);
+        void setPosition(const Vector2F& pos) override {
+            m_x         = pos.x;
+            m_y         = pos.y;
+            m_hitbox.x  += pos.x;
+            m_hitbox.y  += pos.y;
+        }
+        [[nodiscard]] auto getHitbox() const -> const SDL_FRect*    { return &m_hitbox; }
 
     private:
         BulletManager& m_bulletMng;
         GameContext& m_ctx;
         BulletEntity m_bullet;
         Track m_shootTrack;
-        SDL_FRect m_hitbox;
+        SDL_FRect m_hitbox{};
         Texture* m_texturePtr;
         uint64_t m_nextShootTime;
         uint8_t m_currentLives;
