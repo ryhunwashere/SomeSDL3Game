@@ -7,6 +7,14 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	Scene(ctx),
 	m_bulletMng(m_ctx),
 	m_player(PlayerEntity(m_ctx, m_bulletMng, TextureType::PlayerOneSprite, AudioType::PlayerShoot)),
+	m_enemyBullet(
+		BulletEntity(
+			m_ctx.getTextureManager().getTexture(TextureType::CircleBulletSprite),
+			90.0f,
+			5.0f,
+			500.0f,
+			BulletBehaviour::Linear
+		)),
 	m_currentLivesText(TextEntity(m_ctx, FontType::ZenMaruMedium32Left, "Lives: ")),
 	m_viewport(SDL_Rect{
 		.x = RendererEngine::LOGICAL_WIDTH/2 - VIEWPORT_WIDTH/2,
@@ -42,6 +50,11 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 		static_cast<float>(VIEWPORT_HEIGHT) - PLAYER_OFFSET_Y
 	});
 
+	float enemyBulletW = 0.0f;
+	float enemyBulletH = 0.0f;
+	SDL_GetTextureSize(m_enemyBullet.texturePtr->getTexturePtr(), &enemyBulletW, &enemyBulletH);
+	m_enemyBullet.setSize(enemyBulletW, enemyBulletH);
+
 	m_music.setGain(0.4f);
 	m_music.play();
 
@@ -71,6 +84,44 @@ void rgp::LevelOneScene::update(const float dt) {
 
 	if (input.isKeyJustPressed(SDL_SCANCODE_ESCAPE))
 		m_ctx.getEventManager().publish<event::SceneChangeEvent>({ .scene = SceneType::MainMenu });
+
+	if (m_isPaused) return;
+
+	m_enemyShootCooldownTimer -= deltaTime;
+
+	if (m_enemyShootCooldownTimer <= 0.0f) {
+		constexpr float X_OFFSET = 20.0f;
+		constexpr float Y_OFFSET = 50.0f;
+
+		const Vector2F spawnPos1{
+			static_cast<float>(VIEWPORT_WIDTH) / 2.0f - X_OFFSET * 2,
+			Y_OFFSET
+		 };
+		const Vector2F spawnPos2{
+			static_cast<float>(VIEWPORT_WIDTH) / 2.0f - X_OFFSET,
+			Y_OFFSET
+		 };
+		const Vector2F spawnPos3{
+			static_cast<float>(VIEWPORT_WIDTH) / 2.0f,
+			Y_OFFSET
+		 };
+		const Vector2F spawnPos4{
+			static_cast<float>(VIEWPORT_WIDTH) / 2.0f + X_OFFSET,
+			Y_OFFSET
+		 };
+		const Vector2F spawnPos5{
+			static_cast<float>(VIEWPORT_WIDTH) / 2.0f + X_OFFSET * 2,
+			Y_OFFSET
+		 };
+
+		m_bulletMng.spawnEnemyBullet(m_enemyBullet, spawnPos1);
+		m_bulletMng.spawnEnemyBullet(m_enemyBullet, spawnPos2);
+		m_bulletMng.spawnEnemyBullet(m_enemyBullet, spawnPos3);
+		m_bulletMng.spawnEnemyBullet(m_enemyBullet, spawnPos4);
+		m_bulletMng.spawnEnemyBullet(m_enemyBullet, spawnPos5);
+
+		m_enemyShootCooldownTimer += ENEMY_SHOOT_COOLDOWN;
+	}
 }
 
 void rgp::LevelOneScene::draw() {

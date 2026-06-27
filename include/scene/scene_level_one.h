@@ -21,12 +21,16 @@ namespace rgp {
 		[[nodiscard]] auto getBulletManager() -> BulletManager& { return m_bulletMng; }
 
 	private:
+		static constexpr float ENEMY_SHOOT_COOLDOWN = 0.1f;
+
 		BulletManager m_bulletMng;
 		PlayerEntity m_player;
+		BulletEntity m_enemyBullet;
 		TextEntity m_currentLivesText;
 		SDL_Rect m_viewport;
 		Track m_music;
 		Texture* m_backgroundImg;
+		float m_enemyShootCooldownTimer = 0.0f;
 		bool m_isPaused = false;
 	};
 }

@@ -4,7 +4,9 @@
 namespace rgp::constant {
     namespace path {
         constexpr auto PLAYER_ONE_SPRITE_PATH           = "asset/player1_sprite.png";
+        constexpr auto ENEMY_ONE_SPRITE_PATH            = "asset/enemy1_sprite.png";
         constexpr auto PLAYER_ONE_BULLET_SPRITE_PATH    = "asset/player_bullet1.png";
+        constexpr auto CIRCLE_BULLET_SPRITE_PATH        = "asset/circle_bullet.png";
         constexpr auto LEVEL_ONE_BACKGROUND_IMG_PATH    = "asset/nareko.png";
         constexpr auto ZEN_MARU_GOTHIC_MEDIUM_TTF_PATH  = "asset/ZenMaruGothic-Medium.ttf";
         constexpr auto PLAYER_SHOOT_WAV_PATH            = "asset/player_shoot.wav";
