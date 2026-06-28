@@ -47,6 +47,9 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 		}
 	});
 
+	constexpr float COLLIDER_SCALE = 0.7f;
+	m_enemyBullet.collider.r *= COLLIDER_SCALE;
+
 	m_player.setPosition(SPAWN_POSITION);
 	m_music.setGain(0.4f);
 	m_music.play();
