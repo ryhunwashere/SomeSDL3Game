@@ -16,15 +16,9 @@ namespace rgp {
 
         BulletEntity(Texture* tex, const double angle, const float timeAlive, const float vel, const BulletBehaviour behaviour)
             : texturePtr(tex), angle(angle), timeAlive(timeAlive), velocity(vel), behaviour(behaviour) {
-            float width  = 0.0f;
-            float height = 0.0f;
+            setSize(texturePtr->getWidth(), texturePtr->getHeight());
 
-            if (!SDL_GetTextureSize(texturePtr->getTexturePtr(), &width, &height)) [[unlikely]]
-                throw SDLException("Failed to get texture size of a bullet");
-
-            setSize(width, height);
-
-            const float radius = width / 2.0f;
+            const float radius = texturePtr->getWidth() / 2.0f;
             collider = {
                 .x = getCenter().x,
                 .y = getCenter().y,

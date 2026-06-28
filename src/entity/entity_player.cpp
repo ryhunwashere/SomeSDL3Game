@@ -45,15 +45,7 @@ rgp::PlayerEntity::PlayerEntity(
 	m_nextShootTime(SDL_GetTicks()),
 	m_currentLives(3)
 {
-	float playerW = 0.0f;
-	float playerH = 0.0f;
-	SDL_GetTextureSize(m_texturePtr->getTexturePtr(), &playerW, &playerH);
-	setSize(playerW, playerH);
-
-	float bulletW = 0.0f;
-	float bulletH = 0.0f;
-	SDL_GetTextureSize(m_bullet.texturePtr->getTexturePtr(), &bulletW, &bulletH);
-	m_bullet.setSize(bulletW, bulletH);
+	setSize(m_texturePtr->getWidth(), m_texturePtr->getHeight());
 
 	m_shootTrack.setGain(0.8f);
 

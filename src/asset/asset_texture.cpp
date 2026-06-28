@@ -17,7 +17,11 @@ rgp::Texture::Texture(RendererEngine& renderer, std::string_view texturePath) :
         SDL_Log("Texture created");
 
         return texture;
-    }()) {}
+    }())
+{
+    if (!SDL_GetTextureSize(m_texturePtr, &m_textureWidth, &m_textureHeight)) [[unlikely]]
+        throw SDLException("Failed to get texture sizes");
+}
 
 rgp::Texture::~Texture() {
     if (m_texturePtr) {
