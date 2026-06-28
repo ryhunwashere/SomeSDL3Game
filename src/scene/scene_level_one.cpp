@@ -43,9 +43,9 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 			m_bulletMng.clearEnemyBullets();
 			m_player.setCurrentLives(e.currentLives);
 			m_currentLivesText.setText(std::format("Lives: {}", e.currentLives));
-		}
-		else
+		} else {
 			m_ctx.getEventManager().publish<event::SceneChangeEvent>({.scene = SceneType::MainMenu});
+		}
 	});
 
 	m_player.setPosition(SPAWN_POSITION);
@@ -90,7 +90,7 @@ void rgp::LevelOneScene::update(const float dt) {
 	if (m_isPaused) return;
 
 	// test collision & invoke player lives changed event
-	if (const auto hitbox = m_player.getHitbox(); util::intersect::hasIntersection(hitbox, m_circle)) {
+	if (util::intersect::hasIntersection(m_player.getCollider(), m_circle)) {
 		m_player.setPosition(SPAWN_POSITION);
 		const uint8_t updatedCurrentLives = m_player.getCurrentLives() - 1;
 		eventMng.publish<event::PlayerLivesChangeEvent>({ .currentLives = updatedCurrentLives });

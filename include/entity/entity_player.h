@@ -16,12 +16,12 @@ namespace rgp {
         void draw() const;
         void update(float dt);
         void setPosition(const Vector2F& pos) override {
-            m_x         = pos.x;
-            m_y         = pos.y;
-            m_hitbox.x  = getCenter().x - m_hitbox.w / 2.0f;
-            m_hitbox.y  = getCenter().y - m_hitbox.h / 2.0f;
+            m_x             = pos.x;
+            m_y             = pos.y;
+            m_collider.x    = getCenter().x;
+            m_collider.y    = getCenter().y;
         }
-        [[nodiscard]] auto getHitbox()            const -> SDL_FRect    { return m_hitbox; }
+        [[nodiscard]] auto getCollider()          const -> Circle       { return m_collider; }
         [[nodiscard]] auto getCurrentLives()      const -> uint8_t      { return m_currentLives; }
         void setCurrentLives(const uint8_t lives)                       { m_currentLives = lives; }
 
@@ -30,7 +30,7 @@ namespace rgp {
         GameContext& m_ctx;
         BulletEntity m_bullet;
         Track m_shootTrack;
-        SDL_FRect m_hitbox{};
+        Circle m_collider;
         Texture* m_texturePtr;
         uint64_t m_nextShootTime;
         uint8_t m_currentLives;

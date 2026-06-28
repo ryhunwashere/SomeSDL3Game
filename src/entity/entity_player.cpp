@@ -13,6 +13,7 @@ constexpr float TEXTURE_SIZE		= 100.0f;
 constexpr float MOVE_SPEED			= 1000.0f;
 constexpr float MOVE_SPEED_SLOW		= 150.0f;
 constexpr uint64_t SHOOT_COOLDOWN	= 80;
+constexpr float COLLIDER_RADIUS		= 4.0f;
 
 rgp::PlayerEntity::PlayerEntity(
 	GameContext& ctx,
@@ -29,6 +30,11 @@ rgp::PlayerEntity::PlayerEntity(
 		BulletBehaviour::Linear
 	),
 	m_shootTrack(Track(ctx.getAudioManager(), audioType, false)),
+	m_collider{
+		.x = getCenter().x,
+		.y = getCenter().y,
+		.r = COLLIDER_RADIUS,
+	},
 	m_texturePtr(ctx.getTextureManager().getTexture(textureType)),
 	m_nextShootTime(SDL_GetTicks()),
 	m_currentLives(3)
@@ -37,15 +43,6 @@ rgp::PlayerEntity::PlayerEntity(
 	float playerH = 0.0f;
 	SDL_GetTextureSize(m_texturePtr->getTexturePtr(), &playerW, &playerH);
 	setSize(playerW, playerH);
-
-	constexpr float HITBOX_RECT_LENGTH = 8.0f;
-
-	m_hitbox = SDL_FRect{
-		.x = getCenter().x - HITBOX_RECT_LENGTH/2.0f,
-		.y = getCenter().y - HITBOX_RECT_LENGTH/2.0f,
-		.w = HITBOX_RECT_LENGTH,
-		.h = HITBOX_RECT_LENGTH,
-	};
 
 	float bulletW = 0.0f;
 	float bulletH = 0.0f;
@@ -60,14 +57,14 @@ rgp::PlayerEntity::PlayerEntity(
 }
 
 void rgp::PlayerEntity::draw() const {
-	const auto& renderer = m_ctx.getRendererEngine();
+	auto& renderer = m_ctx.getRendererEngine();
 
 	const SDL_FRect destRect = getFRect();
 
 	renderer.drawTexture(&destRect, m_texturePtr->getTexturePtr());
 
 	if (m_isSlow)
-		renderer.drawRect(constant::color::WHITE_OPAQUE_F, &m_hitbox);
+		renderer.drawCircleOutline(m_collider, 16, constant::color::WHITE_OPAQUE);
 }
 
 void rgp::PlayerEntity::update(const float dt) {
@@ -94,8 +91,8 @@ void rgp::PlayerEntity::updatePosition(const float dt) {
 		: dir * MOVE_SPEED * dt;
 
 	movePosition(deltaPos);
-	m_hitbox.x += deltaPos.x;
-	m_hitbox.y += deltaPos.y;
+	m_collider.x += deltaPos.x;
+	m_collider.y += deltaPos.y;
 }
 
 void rgp::PlayerEntity::updateShooting(const float dt) {
