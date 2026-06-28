@@ -40,6 +40,7 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 
 	eventMng.subscribe<event::PlayerLivesChangeEvent>([this](const auto& e) -> void {
 		if (e.currentLives > 0) {
+			m_bulletMng.clearEnemyBullets();
 			m_player.setCurrentLives(e.currentLives);
 			m_currentLivesText.setText(std::format("Lives: {}", e.currentLives));
 		}

@@ -24,6 +24,10 @@ void rgp::BulletManager::spawnEnemyBullet(const BulletEntity& bulletParams, cons
     spawnBullet(m_enemyPool, bulletParams, spawnPos);
 }
 
+void rgp::BulletManager::clearEnemyBullets() {
+    for (auto& bullet : m_enemyPool.memoryPool) bullet.isActive = false;
+}
+
 template <size_t MaxBullets>
 void rgp::BulletManager::spawnBullet(BulletPool<MaxBullets>& pool, const BulletEntity& params, Vector2F spawnPos) {
     if (pool.availableCount == 0) {

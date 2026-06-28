@@ -30,6 +30,8 @@ namespace rgp {
         void spawnPlayerBullet(const BulletEntity& bulletParams, Vector2F spawnPos);
         void spawnEnemyBullet(const BulletEntity& bulletParams, Vector2F spawnPos);
 
+        void clearEnemyBullets();
+
     private:
         static constexpr float BULLET_ALPHA = 0.8f;
         BulletPool<MAX_PLAYER_BULLET_COUNT> m_playerPool{};
