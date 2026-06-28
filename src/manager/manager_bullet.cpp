@@ -70,6 +70,7 @@ void rgp::BulletManager::updateBullets(BulletPool<MaxBullets>& pool, const float
 
 template <size_t MaxBullets>
 void rgp::BulletManager::drawBullets(BulletPool<MaxBullets>& pool) {
+    auto& renderer = m_ctx.getRendererEngine();
     for (const auto& bullet : pool.memoryPool) {
         if (!bullet.isActive) continue;
 
@@ -79,6 +80,8 @@ void rgp::BulletManager::drawBullets(BulletPool<MaxBullets>& pool) {
             .w = bullet.getWidth(),
             .h = bullet.getHeight()
         };
-        m_ctx.getRendererEngine().drawTexture(&destRect, bullet.texturePtr->getTexturePtr(), bullet.angle, BULLET_ALPHA);
+
+        renderer.drawTexture(&destRect, bullet.texturePtr->getTexturePtr(), bullet.angle, BULLET_ALPHA);
+        renderer.drawCircleOutline(bullet.collider, 8, {255, 0, 0, 100});
     }
 }

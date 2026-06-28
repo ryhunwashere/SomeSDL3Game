@@ -8,7 +8,7 @@ namespace rgp {
         virtual ~Entity() = 0;
 
         virtual void setPosition(const Vector2F& pos)           { m_x = pos.x; m_y = pos.y; }
-        void movePosition(const Vector2F& deltaPos)             { m_x += deltaPos.x; m_y += deltaPos.y; }
+        virtual void movePosition(const Vector2F& deltaPos)     { m_x += deltaPos.x; m_y += deltaPos.y; }
         void setSize(const float width, const float height)     { m_width = width; m_height = height; }
         void setSizeAndPosition(const SDL_FRect& rect) {
             m_width     = rect.w;

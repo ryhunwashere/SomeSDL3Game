@@ -15,15 +15,26 @@ namespace rgp {
 
         void draw() const;
         void update(float dt);
+
         void setPosition(const Vector2F& pos) override {
             m_x             = pos.x;
             m_y             = pos.y;
             m_collider.x    = getCenter().x;
             m_collider.y    = getCenter().y;
         }
-        [[nodiscard]] auto getCollider()          const -> Circle       { return m_collider; }
-        [[nodiscard]] auto getCurrentLives()      const -> uint8_t      { return m_currentLives; }
-        void setCurrentLives(const uint8_t lives)                       { m_currentLives = lives; }
+
+        void movePosition(const Vector2F &deltaPos) override {
+            m_x           += deltaPos.x;
+            m_y           += deltaPos.y;
+            m_collider.x  += deltaPos.x;
+            m_collider.y  += deltaPos.y;
+        }
+
+        void setCurrentLives(const uint8_t lives)                   { m_currentLives = lives; }
+
+        [[nodiscard]] auto getCollider()        const -> Circle     { return m_collider; }
+        [[nodiscard]] auto getGrazeCollider()   const -> Circle     { return m_grazeCollider; }
+        [[nodiscard]] auto getCurrentLives()    const -> uint8_t    { return m_currentLives; }
 
     private:
         BulletManager& m_bulletMng;
@@ -31,6 +42,7 @@ namespace rgp {
         BulletEntity m_bullet;
         Track m_shootTrack;
         Circle m_collider;
+        Circle m_grazeCollider;
         Texture* m_texturePtr;
         uint64_t m_nextShootTime;
         uint8_t m_currentLives;

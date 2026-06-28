@@ -9,11 +9,12 @@
 #include "type/type_vector2f.h"
 #include "manager/manager_time.h"
 
-constexpr float TEXTURE_SIZE		= 100.0f;
-constexpr float MOVE_SPEED			= 1000.0f;
-constexpr float MOVE_SPEED_SLOW		= 150.0f;
-constexpr uint64_t SHOOT_COOLDOWN	= 80;
-constexpr float COLLIDER_RADIUS		= 4.0f;
+constexpr float TEXTURE_SIZE			= 100.0f;
+constexpr float MOVE_SPEED				= 1000.0f;
+constexpr float MOVE_SPEED_SLOW			= 150.0f;
+constexpr uint64_t SHOOT_COOLDOWN		= 80;
+constexpr float COLLIDER_RADIUS			= 4.0f;
+constexpr float GRAZE_COLLIDER_RADIUS	= 10.0f;
 
 rgp::PlayerEntity::PlayerEntity(
 	GameContext& ctx,
@@ -34,6 +35,11 @@ rgp::PlayerEntity::PlayerEntity(
 		.x = getCenter().x,
 		.y = getCenter().y,
 		.r = COLLIDER_RADIUS,
+	},
+	m_grazeCollider{
+		.x = getCenter().x,
+		.y = getCenter().y,
+		.r = GRAZE_COLLIDER_RADIUS,
 	},
 	m_texturePtr(ctx.getTextureManager().getTexture(textureType)),
 	m_nextShootTime(SDL_GetTicks()),
@@ -86,8 +92,8 @@ void rgp::PlayerEntity::updatePosition(const float dt) {
 	if (const float length = std::sqrt(dir.x * dir.x + dir.y * dir.y); length > 1.0f) dir /= length;
 
 	Vector2F deltaPos = m_isSlow
-	   ? dir * MOVE_SPEED_SLOW * dt
-	   : dir * MOVE_SPEED * dt;
+		? dir * MOVE_SPEED_SLOW * dt
+		: dir * MOVE_SPEED * dt;
 
 	const float nextColliderX = m_collider.x + deltaPos.x;
 	const float nextColliderY = m_collider.y + deltaPos.y;
@@ -104,8 +110,6 @@ void rgp::PlayerEntity::updatePosition(const float dt) {
 	deltaPos.y = clampedColliderY - m_collider.y;
 
 	movePosition(deltaPos);
-	m_collider.x = clampedColliderX;
-	m_collider.y = clampedColliderY;
 }
 
 void rgp::PlayerEntity::updateShooting(const float dt) {

@@ -8,23 +8,22 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	Scene(ctx),
 	m_bulletMng(m_ctx),
 	m_player(PlayerEntity(m_ctx, m_bulletMng, TextureType::PlayerOneSprite, AudioType::PlayerShoot)),
-	m_enemyBullet(
-		BulletEntity(
-			m_ctx.getTextureManager().getTexture(TextureType::CircleBulletSprite),
-			90.0f,
-			5.0f,
-			500.0f,
-			BulletBehaviour::Linear
-		)),
+	m_enemyBullet{
+		m_ctx.getTextureManager().getTexture(TextureType::CircleBulletSprite),
+		90.0f,
+		5.0f,
+		200.0f,
+		BulletBehaviour::Linear
+	},
 	m_currentLivesText(TextEntity(m_ctx, FontType::ZenMaruMedium32Left, "Lives: ")),
-	m_viewport(SDL_Rect{
+	m_viewport{
 		.x = RendererEngine::LOGICAL_WIDTH/2 - constant::dimension::VIEWPORT_WIDTH/2,
 		.y = (RendererEngine::LOGICAL_HEIGHT - constant::dimension::VIEWPORT_HEIGHT)/2,
 		.w = constant::dimension::VIEWPORT_WIDTH,
 		.h = constant::dimension::VIEWPORT_HEIGHT,
-	}),
+	},
 	m_music(Track(m_ctx.getAudioManager(), AudioType::LevelOneMusic, false)),
-	m_circle(Circle{50.0f, 200.0f, 50.0f}),
+	m_circle{50.0f, 200.0f, 50.0f},
 	m_backgroundImg(m_ctx.getTextureManager().getTexture(TextureType::LevelOneBackground))
 {
 	constexpr float UI_OFFSET_X = 50.0f;
@@ -49,12 +48,6 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	});
 
 	m_player.setPosition(SPAWN_POSITION);
-
-	float enemyBulletW = 0.0f;
-	float enemyBulletH = 0.0f;
-	SDL_GetTextureSize(m_enemyBullet.texturePtr->getTexturePtr(), &enemyBulletW, &enemyBulletH);
-	m_enemyBullet.setSize(enemyBulletW, enemyBulletH);
-
 	m_music.setGain(0.4f);
 	m_music.play();
 
