@@ -71,13 +71,6 @@ void rgp::PlayerEntity::draw() const {
 }
 
 void rgp::PlayerEntity::update(const float dt) {
-	if (m_ctx.getInputManager().isKeyJustPressed(SDL_SCANCODE_O)) {
-		--m_currentLives;
-		m_ctx.getEventManager().publish<event::PlayerLivesChangeEvent>({
-			.currentLives = std::max(m_currentLives, static_cast<uint8_t>(0))
-		});
-	}
-
 	updatePosition(dt);
 	updateShooting(dt);
 }

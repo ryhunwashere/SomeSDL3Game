@@ -22,6 +22,12 @@ namespace rgp {
 
 	private:
 		static constexpr float ENEMY_SHOOT_COOLDOWN = 0.1f;
+		static constexpr float PLAYER_OFFSET_Y = 100.0f;
+
+		const Vector2F SPAWN_POSITION{
+			static_cast<float>(VIEWPORT_WIDTH) / 2.0f,
+			static_cast<float>(VIEWPORT_HEIGHT) - PLAYER_OFFSET_Y
+		};
 
 		BulletManager m_bulletMng;
 		PlayerEntity m_player;
@@ -29,6 +35,7 @@ namespace rgp {
 		TextEntity m_currentLivesText;
 		SDL_Rect m_viewport;
 		Track m_music;
+		Circle m_circle;
 		Texture* m_backgroundImg;
 		float m_enemyShootCooldownTimer = 0.0f;
 		bool m_isPaused = false;

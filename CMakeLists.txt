@@ -79,9 +79,11 @@ set(HEADERS
 
         include/type/type_vector2f.h
         include/type/type_color.h
+        include/type/type_circle.h
 
         include/util/util_logger.h
         include/util/util_math.h
+        include/util/util_collision.h
 
         include/constant/constant.h
 
@@ -97,7 +99,6 @@ set(HEADERS
         include/event/event_scene_change.h
         include/event/event_player_lives_change.h
         include/event/event_pause_state_change.h
-        include/type/type_circleF.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

@@ -18,10 +18,12 @@ namespace rgp {
         void setPosition(const Vector2F& pos) override {
             m_x         = pos.x;
             m_y         = pos.y;
-            m_hitbox.x  += pos.x;
-            m_hitbox.y  += pos.y;
+            m_hitbox.x  = getCenter().x - m_hitbox.w / 2.0f;
+            m_hitbox.y  = getCenter().y - m_hitbox.h / 2.0f;
         }
-        [[nodiscard]] auto getHitbox() const -> const SDL_FRect*    { return &m_hitbox; }
+        [[nodiscard]] auto getHitbox()            const -> SDL_FRect    { return m_hitbox; }
+        [[nodiscard]] auto getCurrentLives()      const -> uint8_t      { return m_currentLives; }
+        void setCurrentLives(const uint8_t lives)                       { m_currentLives = lives; }
 
     private:
         BulletManager& m_bulletMng;

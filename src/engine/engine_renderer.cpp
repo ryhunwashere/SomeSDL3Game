@@ -94,7 +94,7 @@ void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* te
 }
 
 void rgp::RendererEngine::drawCircleOutline(const Circle& circle, const int segments, const Color color) {
-    if (segments < 3) return;
+    assert(segments >= 3 && "Circle must have 3 segments or more.");
 
     if (!SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a)) [[unlikely]]
         throw SDLException("Set draw color for circle failed");
@@ -109,6 +109,8 @@ void rgp::RendererEngine::drawCircleOutline(const Circle& circle, const int segm
         m_circlePointsBuffer[i].x = circle.x + cosf(angle) * circle.r;
         m_circlePointsBuffer[i].y = circle.y + sinf(angle) * circle.r;
     }
+
+    // Enclose the circle by connecting last point to first point
     m_circlePointsBuffer[segments] = m_circlePointsBuffer[0];
 
     if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), totalPoints)) [[unlikely]]

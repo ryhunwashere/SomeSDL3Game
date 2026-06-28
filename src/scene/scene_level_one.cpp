@@ -2,6 +2,7 @@
 #include <format>
 #include "scene/scene_level_one.h"
 #include "manager/manager_scene.h"
+#include "util/util_intersect.h"
 
 rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	Scene(ctx),
@@ -23,6 +24,7 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 		.h = VIEWPORT_HEIGHT,
 	}),
 	m_music(Track(m_ctx.getAudioManager(), AudioType::LevelOneMusic, false)),
+	m_circle(Circle{50.0f, 200.0f, 50.0f}),
 	m_backgroundImg(m_ctx.getTextureManager().getTexture(TextureType::LevelOneBackground))
 {
 	constexpr float UI_OFFSET_X = 50.0f;
@@ -37,18 +39,15 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	auto& eventMng = m_ctx.getEventManager();
 
 	eventMng.subscribe<event::PlayerLivesChangeEvent>([this](const auto& e) -> void {
-		if (e.currentLives > 0)
+		if (e.currentLives > 0) {
+			m_player.setCurrentLives(e.currentLives);
 			m_currentLivesText.setText(std::format("Lives: {}", e.currentLives));
+		}
 		else
 			m_ctx.getEventManager().publish<event::SceneChangeEvent>({.scene = SceneType::MainMenu});
 	});
 
-	constexpr float PLAYER_OFFSET_Y = 100.0f;
-
-	m_player.setPosition({
-		static_cast<float>(VIEWPORT_WIDTH) / 2.0f,
-		static_cast<float>(VIEWPORT_HEIGHT) - PLAYER_OFFSET_Y
-	});
+	m_player.setPosition(SPAWN_POSITION);
 
 	float enemyBulletW = 0.0f;
 	float enemyBulletH = 0.0f;
@@ -82,10 +81,19 @@ void rgp::LevelOneScene::update(const float dt) {
 		else m_music.resume();
 	}
 
+	auto& eventMng = m_ctx.getEventManager();
+
 	if (input.isKeyJustPressed(SDL_SCANCODE_ESCAPE))
-		m_ctx.getEventManager().publish<event::SceneChangeEvent>({ .scene = SceneType::MainMenu });
+		eventMng.publish<event::SceneChangeEvent>({ .scene = SceneType::MainMenu });
 
 	if (m_isPaused) return;
+
+	// test collision & invoke player lives changed event
+	if (const auto hitbox = m_player.getHitbox(); util::intersect::hasIntersection(hitbox, m_circle)) {
+		m_player.setPosition(SPAWN_POSITION);
+		const uint8_t updatedCurrentLives = m_player.getCurrentLives() - 1;
+		eventMng.publish<event::PlayerLivesChangeEvent>({ .currentLives = updatedCurrentLives });
+	}
 
 	m_enemyShootCooldownTimer -= deltaTime;
 
@@ -132,7 +140,7 @@ void rgp::LevelOneScene::draw() {
 		m_ctx.getRendererEngine().drawScreen(constant::color::BLACK_OPAQUE_F);
 		m_player.draw();
 		m_bulletMng.draw();
-		m_ctx.getRendererEngine().drawCircleOutline(Circle{50.0f, 200.0f, 50.0f}, 32, constant::color::WHITE_OPAQUE);
+		m_ctx.getRendererEngine().drawCircleOutline(m_circle, 16, constant::color::WHITE_OPAQUE);
 
 		if (m_isPaused)
 			m_ctx.getRendererEngine().drawScreen({0.0f, 0.0f, 0.0f, 0.5f});
