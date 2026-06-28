@@ -18,10 +18,10 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 		)),
 	m_currentLivesText(TextEntity(m_ctx, FontType::ZenMaruMedium32Left, "Lives: ")),
 	m_viewport(SDL_Rect{
-		.x = RendererEngine::LOGICAL_WIDTH/2 - VIEWPORT_WIDTH/2,
-		.y = (RendererEngine::LOGICAL_HEIGHT - VIEWPORT_HEIGHT)/2,
-		.w = VIEWPORT_WIDTH,
-		.h = VIEWPORT_HEIGHT,
+		.x = RendererEngine::LOGICAL_WIDTH/2 - constant::dimension::VIEWPORT_WIDTH/2,
+		.y = (RendererEngine::LOGICAL_HEIGHT - constant::dimension::VIEWPORT_HEIGHT)/2,
+		.w = constant::dimension::VIEWPORT_WIDTH,
+		.h = constant::dimension::VIEWPORT_HEIGHT,
 	}),
 	m_music(Track(m_ctx.getAudioManager(), AudioType::LevelOneMusic, false)),
 	m_circle(Circle{50.0f, 200.0f, 50.0f}),
@@ -103,23 +103,23 @@ void rgp::LevelOneScene::update(const float dt) {
 		constexpr float Y_OFFSET = 50.0f;
 
 		const Vector2F spawnPos1{
-			static_cast<float>(VIEWPORT_WIDTH) / 2.0f - X_OFFSET * 2,
+			static_cast<float>(constant::dimension::VIEWPORT_WIDTH) / 2.0f - X_OFFSET * 2,
 			Y_OFFSET
 		 };
 		const Vector2F spawnPos2{
-			static_cast<float>(VIEWPORT_WIDTH) / 2.0f - X_OFFSET,
+			static_cast<float>(constant::dimension::VIEWPORT_WIDTH) / 2.0f - X_OFFSET,
 			Y_OFFSET
 		 };
 		const Vector2F spawnPos3{
-			static_cast<float>(VIEWPORT_WIDTH) / 2.0f,
+			static_cast<float>(constant::dimension::VIEWPORT_WIDTH) / 2.0f,
 			Y_OFFSET
 		 };
 		const Vector2F spawnPos4{
-			static_cast<float>(VIEWPORT_WIDTH) / 2.0f + X_OFFSET,
+			static_cast<float>(constant::dimension::VIEWPORT_WIDTH) / 2.0f + X_OFFSET,
 			Y_OFFSET
 		 };
 		const Vector2F spawnPos5{
-			static_cast<float>(VIEWPORT_WIDTH) / 2.0f + X_OFFSET * 2,
+			static_cast<float>(constant::dimension::VIEWPORT_WIDTH) / 2.0f + X_OFFSET * 2,
 			Y_OFFSET
 		 };
 

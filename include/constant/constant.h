@@ -23,4 +23,9 @@ namespace rgp::constant {
         constexpr ColorF BLACK_OPAQUE_F = {0.0f, 0.0f, 0.0f, 255.0f};
         constexpr ColorF WHITE_OPAQUE_F = {255.0f, 255.0f, 255.0f, 255.0f};
     }
+
+    namespace dimension {
+        constexpr int VIEWPORT_WIDTH  = 800;
+        constexpr int VIEWPORT_HEIGHT = 1000;
+    }
 }

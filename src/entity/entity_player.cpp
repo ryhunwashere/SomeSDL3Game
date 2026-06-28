@@ -80,19 +80,32 @@ void rgp::PlayerEntity::updatePosition(const float dt) {
 
 	if (input.isKeyDown(SDL_SCANCODE_A)) dir.x -= 1.0f;
 	if (input.isKeyDown(SDL_SCANCODE_D)) dir.x += 1.0f;
-
 	if (input.isKeyDown(SDL_SCANCODE_W)) dir.y -= 1.0f;
 	if (input.isKeyDown(SDL_SCANCODE_S)) dir.y += 1.0f;
 
 	if (const float length = std::sqrt(dir.x * dir.x + dir.y * dir.y); length > 1.0f) dir /= length;
 
-	const auto deltaPos = m_isSlow
-		? dir * MOVE_SPEED_SLOW * dt
-		: dir * MOVE_SPEED * dt;
+	Vector2F deltaPos = m_isSlow
+	   ? dir * MOVE_SPEED_SLOW * dt
+	   : dir * MOVE_SPEED * dt;
+
+	const float nextColliderX = m_collider.x + deltaPos.x;
+	const float nextColliderY = m_collider.y + deltaPos.y;
+
+	const float minX = m_collider.r;
+	const float maxX = static_cast<float>(constant::dimension::VIEWPORT_WIDTH) - m_collider.r;
+	const float minY = m_collider.r;
+	const float maxY = static_cast<float>(constant::dimension::VIEWPORT_HEIGHT) - m_collider.r;
+
+	const float clampedColliderX = std::clamp(nextColliderX, minX, maxX);
+	const float clampedColliderY = std::clamp(nextColliderY, minY, maxY);
+
+	deltaPos.x = clampedColliderX - m_collider.x;
+	deltaPos.y = clampedColliderY - m_collider.y;
 
 	movePosition(deltaPos);
-	m_collider.x += deltaPos.x;
-	m_collider.y += deltaPos.y;
+	m_collider.x = clampedColliderX;
+	m_collider.y = clampedColliderY;
 }
 
 void rgp::PlayerEntity::updateShooting(const float dt) {

@@ -9,9 +9,6 @@
 namespace rgp {
 	class LevelOneScene final : public Scene {
 	public:
-		static constexpr int VIEWPORT_WIDTH  = 800;
-		static constexpr int VIEWPORT_HEIGHT = 1000;
-
 		explicit LevelOneScene(GameContext& ctx);
 		~LevelOneScene() override;
 
@@ -25,8 +22,8 @@ namespace rgp {
 		static constexpr float PLAYER_OFFSET_Y = 100.0f;
 
 		const Vector2F SPAWN_POSITION{
-			static_cast<float>(VIEWPORT_WIDTH) / 2.0f,
-			static_cast<float>(VIEWPORT_HEIGHT) - PLAYER_OFFSET_Y
+			static_cast<float>(constant::dimension::VIEWPORT_WIDTH) / 2.0f,
+			static_cast<float>(constant::dimension::VIEWPORT_HEIGHT) - PLAYER_OFFSET_Y
 		};
 
 		BulletManager m_bulletMng;
