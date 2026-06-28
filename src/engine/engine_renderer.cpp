@@ -1,6 +1,8 @@
 #include <SDL3/SDL.h>
 #include "engine/engine_renderer.h"
 
+#include <cmath>
+
 constexpr auto WINDOW_TITLE         = "This is a window";
 constexpr auto BLACK_OPAQUE_F       = rgp::constant::color::BLACK_OPAQUE_F;
 
@@ -89,4 +91,26 @@ void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* te
 
     if (!SDL_RenderTextureRotated(m_renderer, texture, nullptr, destRect, angle, nullptr, SDL_FLIP_NONE))
         throw SDLException("Render texture error");
+}
+
+void rgp::RendererEngine::drawCircleOutline(const Circle& circle, const int segments, const Color color) {
+    if (segments < 3) return;
+
+    if (!SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a)) [[unlikely]]
+        throw SDLException("Set draw color for circle failed");
+
+    const int totalPoints = segments + 1;
+    m_circlePointsBuffer.resize(totalPoints);
+
+    const float angleStep = 2.0f * static_cast<float>(std::numbers::pi) / static_cast<float>(segments);
+
+    for (int i = 0; i < segments; i++) {
+        const float angle = i * angleStep;
+        m_circlePointsBuffer[i].x = circle.x + cosf(angle) * circle.r;
+        m_circlePointsBuffer[i].y = circle.y + sinf(angle) * circle.r;
+    }
+    m_circlePointsBuffer[segments] = m_circlePointsBuffer[0];
+
+    if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), totalPoints)) [[unlikely]]
+        throw SDLException("Render lines for circle failed");
 }

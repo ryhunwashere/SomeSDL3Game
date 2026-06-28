@@ -6,6 +6,7 @@
 #include "constant/constant.h"
 #include "type/type_color.h"
 #include "except_sdl.h"
+#include "type/type_circle.h"
 
 namespace rgp {
     constexpr auto OPAQUE_F  = constant::color::OPAQUE_F;
@@ -48,6 +49,8 @@ namespace rgp {
                 throw SDLException("Viewport render set error");
         }
 
+        void drawCircleOutline(const Circle& circle, int segments, Color color);
+
         void clearAndPresent(std::invocable auto&& drawCallback) const {
             assert(m_renderer && NULL_RENDERER_ERROR);
 
@@ -63,6 +66,7 @@ namespace rgp {
         [[nodiscard]] auto getRenderer() const -> SDL_Renderer*;
 
     private:
+        std::vector<SDL_FPoint> m_circlePointsBuffer;
         SDL_Window* m_window        = nullptr;
         SDL_Renderer* m_renderer    = nullptr;
         static constexpr auto NULL_RENDERER_ERROR  = "Renderer is null";

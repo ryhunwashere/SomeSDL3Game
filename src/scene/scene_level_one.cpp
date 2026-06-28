@@ -132,6 +132,8 @@ void rgp::LevelOneScene::draw() {
 		m_ctx.getRendererEngine().drawScreen(constant::color::BLACK_OPAQUE_F);
 		m_player.draw();
 		m_bulletMng.draw();
+		m_ctx.getRendererEngine().drawCircleOutline(Circle{50.0f, 200.0f, 50.0f}, 32, constant::color::WHITE_OPAQUE);
+
 		if (m_isPaused)
 			m_ctx.getRendererEngine().drawScreen({0.0f, 0.0f, 0.0f, 0.5f});
 	});
