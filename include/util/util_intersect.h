@@ -5,7 +5,7 @@
 #include "type/type_circle.h"
 
 namespace rgp::util::intersect {
-    static bool hasIntersection(const Circle& circleA, const Circle& circleB) {
+    static auto hasIntersection(const Circle& circleA, const Circle& circleB) -> bool {
         const float distanceSquared = math::distanceSquared(circleA.x, circleA.y, circleB.x, circleB.y);
         const float radiusSquared   = (circleA.r + circleB.r) * (circleA.r + circleB.r);
 
