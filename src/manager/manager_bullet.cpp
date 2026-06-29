@@ -43,6 +43,18 @@ void rgp::BulletManager::updateBullets(BulletPool<MaxBullets>& pool, const float
     for (size_t i = 0; i < pool.activeCount; ) {
         auto& bullet = pool.memoryPool[i];
 
+        if (bullet.getX() < -VIEWPORT_OFFSIDE_MARGIN ||
+            bullet.getX() > constant::dimension::VIEWPORT_WIDTH + VIEWPORT_OFFSIDE_MARGIN ||
+            bullet.getY() < -VIEWPORT_OFFSIDE_MARGIN ||
+            bullet.getY() > constant::dimension::VIEWPORT_HEIGHT + VIEWPORT_OFFSIDE_MARGIN) [[likely]]
+        {
+            --pool.activeCount;
+            if (i < pool.activeCount)
+                pool.memoryPool[i] = std::move(pool.memoryPool[pool.activeCount]);
+
+            continue;
+        }
+
         bullet.timeAlive -= dt;
 
         if (bullet.timeAlive <= 0.0f) {
@@ -64,14 +76,16 @@ template <size_t MaxBullets>
 void rgp::BulletManager::drawBullets(BulletPool<MaxBullets>& pool) {
     auto& renderer = m_ctx.getRendererEngine();
     for (size_t i = 0; i < pool.activeCount; ++i) {
+        const auto& bullet = pool.memoryPool[i];
+
         SDL_FRect destRect{
-            .x = pool.memoryPool[i].getX(),
-            .y = pool.memoryPool[i].getY(),
-            .w = pool.memoryPool[i].getWidth(),
-            .h = pool.memoryPool[i].getHeight()
+            .x = bullet.getX(),
+            .y = bullet.getY(),
+            .w = bullet.getWidth(),
+            .h = bullet.getHeight()
         };
 
-        renderer.drawTexture(&destRect, pool.memoryPool[i].texturePtr->getTexturePtr(), pool.memoryPool[i].angle, BULLET_ALPHA);
-        renderer.drawCircleOutline(pool.memoryPool[i].collider, 8, {255, 0, 0, 100});
+        renderer.drawTexture(&destRect, bullet.texturePtr->getTexturePtr(), bullet.angle, BULLET_ALPHA);
+        renderer.drawCircleOutline(bullet.collider, 8, {255, 0, 0, 100});
     }
 }

@@ -28,7 +28,9 @@ namespace rgp {
         void clearEnemyBullets();
 
     private:
-        static constexpr float BULLET_ALPHA = 0.8f;
+        static constexpr float BULLET_ALPHA             = 0.8f;
+        static constexpr int   VIEWPORT_OFFSIDE_MARGIN  = 200;
+
         BulletPool<MAX_PLAYER_BULLET_COUNT> m_playerPool{};
         BulletPool<MAX_ENEMY_BULLET_COUNT> m_enemyPool{};
         size_t m_activeBullets = 0;
