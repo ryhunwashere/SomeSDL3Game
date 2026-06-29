@@ -116,7 +116,7 @@
     <ClInclude Include="src\interface_eventhandlable.h">
       <Filter>Header Files\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity_player.h">
+    <ClInclude Include="src\entity_character.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="src\engine_texture.h">

@@ -222,7 +222,7 @@ xcopy "$(SolutionDir)player1_sprite.png" "$(TargetDir)" /Y /I</Command>
   <ItemGroup>
     <ClInclude Include="src\engine_font.h" />
     <ClInclude Include="src\entity.h" />
-    <ClInclude Include="src\entity_player.h" />
+    <ClInclude Include="src\entity_character.h" />
     <ClInclude Include="src\entity_text.h" />
     <ClInclude Include="src\interface_drawable.h" />
     <ClInclude Include="src\interface_eventhandlable.h" />

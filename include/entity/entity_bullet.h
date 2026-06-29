@@ -7,15 +7,14 @@ namespace rgp {
 
     struct BulletEntity final : Entity {
         Circle collider{};
-        Texture* texturePtr;
-        double angle;
-        float timeAlive;
-        float velocity;
-        BulletBehaviour behaviour;
-        bool isActive = false;
+        BulletBehaviour behaviour{BulletBehaviour::Linear};
+        Texture* texturePtr{nullptr};
+        double angle{0.0};
+        float timeAlive{0.0};
+        float velocity{0.0};
 
         BulletEntity(Texture* tex, const double angle, const float timeAlive, const float vel, const BulletBehaviour behaviour)
-            : texturePtr(tex), angle(angle), timeAlive(timeAlive), velocity(vel), behaviour(behaviour) {
+            : behaviour(behaviour), texturePtr(tex), angle(angle), timeAlive(timeAlive), velocity(vel) {
             setSize(texturePtr->getWidth(), texturePtr->getHeight());
 
             const float radius = texturePtr->getWidth() / 2.0f;

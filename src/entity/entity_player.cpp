@@ -13,7 +13,6 @@ constexpr float TEXTURE_SIZE			= 100.0f;
 constexpr float MOVE_SPEED				= 1000.0f;
 constexpr float MOVE_SPEED_SLOW			= 150.0f;
 constexpr uint64_t SHOOT_COOLDOWN		= 80;
-constexpr float COLLIDER_RADIUS			= 4.0f;
 constexpr float GRAZE_COLLIDER_RADIUS	= 10.0f;
 
 rgp::PlayerEntity::PlayerEntity(
@@ -21,8 +20,7 @@ rgp::PlayerEntity::PlayerEntity(
 	BulletManager& bulletManager,
 	const TextureType textureType,
 	const AudioType audioType)
-:	m_bulletMng(bulletManager),
-	m_ctx(ctx),
+:	CharacterEntity(ctx, bulletManager, textureType),
 	m_bullet(
 		ctx.getTextureManager().getTexture(TextureType::PlayerOneBulletSprite),
 		-90.0,
@@ -31,17 +29,11 @@ rgp::PlayerEntity::PlayerEntity(
 		BulletBehaviour::Linear
 	),
 	m_shootTrack(Track(ctx.getAudioManager(), audioType, false)),
-	m_collider{
-		.x = getCenter().x,
-		.y = getCenter().y,
-		.r = COLLIDER_RADIUS,
-	},
 	m_grazeCollider{
 		.x = getCenter().x,
 		.y = getCenter().y,
 		.r = GRAZE_COLLIDER_RADIUS,
 	},
-	m_texturePtr(ctx.getTextureManager().getTexture(textureType)),
 	m_nextShootTime(SDL_GetTicks()),
 	m_currentLives(3)
 {

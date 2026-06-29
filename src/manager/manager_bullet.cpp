@@ -12,8 +12,8 @@ void rgp::BulletManager::update(const float dt) {
 }
 
 void rgp::BulletManager::draw() {
-    drawBullets(m_playerPool);
     drawBullets(m_enemyPool);
+    drawBullets(m_playerPool);
 }
 
 void rgp::BulletManager::spawnPlayerBullet(const BulletEntity& bulletParams, const Vector2F spawnPos) {
@@ -25,63 +25,53 @@ void rgp::BulletManager::spawnEnemyBullet(const BulletEntity& bulletParams, cons
 }
 
 void rgp::BulletManager::clearEnemyBullets() {
-    for (auto& bullet : m_enemyPool.memoryPool) bullet.isActive = false;
+    m_enemyPool.activeCount = 0;
 }
 
 template <size_t MaxBullets>
 void rgp::BulletManager::spawnBullet(BulletPool<MaxBullets>& pool, const BulletEntity& params, Vector2F spawnPos) {
-    if (pool.availableCount == 0) {
-        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Bullet pool exhausted! Max size: %zu", MaxBullets);
-        return;
-    }
+    if (pool.activeCount >= MaxBullets) [[unlikely]] return;
 
-    --pool.availableCount;
-    size_t targetIndex = pool.freeIndices[pool.availableCount];
-
-    auto& bullet = pool.memoryPool[targetIndex];
+    auto& bullet = pool.memoryPool[pool.activeCount];
     bullet = params;
     bullet.setPosition(spawnPos);
-    bullet.isActive = true;
+    ++pool.activeCount;
 }
 
 template <size_t MaxBullets>
 void rgp::BulletManager::updateBullets(BulletPool<MaxBullets>& pool, const float dt) {
-    for (size_t i = 0; i < MaxBullets; ++i) {
+    for (size_t i = 0; i < pool.activeCount; ) {
         auto& bullet = pool.memoryPool[i];
-        if (!bullet.isActive) continue;
 
         bullet.timeAlive -= dt;
-        if (bullet.timeAlive <= 0.0f) {
-            bullet.isActive = false;
 
-            pool.freeIndices[pool.availableCount] = i;
-            ++pool.availableCount;
+        if (bullet.timeAlive <= 0.0f) {
+            --pool.activeCount;
+            if (i < pool.activeCount)
+                pool.memoryPool[i] = std::move(pool.memoryPool[pool.activeCount]);
+
             continue;
         }
 
         const auto radians = static_cast<float>(bullet.angle * (std::numbers::pi / 180.0));
-        Vector2F deltaPos{
-            std::cos(radians) * bullet.velocity * dt,
-            std::sin(radians) * bullet.velocity * dt,
-        };
-        bullet.movePosition(deltaPos);
+        bullet.movePosition({std::cos(radians) * bullet.velocity * dt, std::sin(radians) * bullet.velocity * dt});
+
+        ++i;
     }
 }
 
 template <size_t MaxBullets>
 void rgp::BulletManager::drawBullets(BulletPool<MaxBullets>& pool) {
     auto& renderer = m_ctx.getRendererEngine();
-    for (const auto& bullet : pool.memoryPool) {
-        if (!bullet.isActive) continue;
-
+    for (size_t i = 0; i < pool.activeCount; ++i) {
         SDL_FRect destRect{
-            .x = bullet.getX(),
-            .y = bullet.getY(),
-            .w = bullet.getWidth(),
-            .h = bullet.getHeight()
+            .x = pool.memoryPool[i].getX(),
+            .y = pool.memoryPool[i].getY(),
+            .w = pool.memoryPool[i].getWidth(),
+            .h = pool.memoryPool[i].getHeight()
         };
 
-        renderer.drawTexture(&destRect, bullet.texturePtr->getTexturePtr(), bullet.angle, BULLET_ALPHA);
-        renderer.drawCircleOutline(bullet.collider, 8, {255, 0, 0, 100});
+        renderer.drawTexture(&destRect, pool.memoryPool[i].texturePtr->getTexturePtr(), pool.memoryPool[i].angle, BULLET_ALPHA);
+        renderer.drawCircleOutline(pool.memoryPool[i].collider, 8, {255, 0, 0, 100});
     }
 }

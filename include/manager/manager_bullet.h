@@ -11,12 +11,7 @@ namespace rgp {
     template <size_t MaxBullets>
     struct BulletPool {
         std::array<BulletEntity, MaxBullets> memoryPool{};
-        std::array<size_t, MaxBullets> freeIndices = [] {
-            std::array<size_t, MaxBullets> temp{};
-            for (size_t i = 0; i < MaxBullets; ++i) temp[i] = i;
-            return temp;
-        }();
-        size_t availableCount = MaxBullets;
+        size_t activeCount = 0;
     };
 
     class BulletManager {

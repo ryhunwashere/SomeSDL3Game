@@ -7,7 +7,7 @@
 rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 	Scene(ctx),
 	m_bulletMng(m_ctx),
-	m_player(PlayerEntity(m_ctx, m_bulletMng, TextureType::PlayerOneSprite, AudioType::PlayerShoot)),
+	m_player(m_ctx, m_bulletMng, TextureType::PlayerOneSprite, AudioType::PlayerShoot),
 	m_enemyBullet{
 		m_ctx.getTextureManager().getTexture(TextureType::CircleBulletSprite),
 		90.0f,

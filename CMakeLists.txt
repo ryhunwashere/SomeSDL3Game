@@ -51,7 +51,9 @@ set(HEADERS
         include/engine/engine_text.h
 
         include/entity/entity.h
+        include/entity/entity_character.h
         include/entity/entity_player.h
+        include/entity/entity_enemy.h
         include/entity/entity_text.h
         include/entity/entity_button.h
         include/entity/entity_bullet.h
@@ -83,7 +85,7 @@ set(HEADERS
 
         include/util/util_logger.h
         include/util/util_math.h
-        include/util/util_collision.h
+        include/util/util_intersect.h
 
         include/constant/constant.h
 
@@ -99,6 +101,7 @@ set(HEADERS
         include/event/event_scene_change.h
         include/event/event_player_lives_change.h
         include/event/event_pause_state_change.h
+        include/entity/entity_player.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
