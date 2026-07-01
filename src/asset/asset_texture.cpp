@@ -2,6 +2,7 @@
 #include "asset/asset_texture.h"
 
 #include "except_sdl.h"
+#include "engine/engine_renderer.h"
 
 rgp::Texture::Texture(RendererEngine& renderer, std::string_view texturePath) :
     m_texturePtr([&renderer, &texturePath]() -> SDL_Texture* {

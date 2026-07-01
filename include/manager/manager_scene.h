@@ -2,12 +2,14 @@
 #include <unordered_map>
 #include <memory>
 #include <functional>
-#include "game_context.h"
-#include "enum/enum_scenetype.h"
-#include "scene/scene.h"
+
 #include "entity/entity_text.h"
+#include "scene/scene.h"
+#include "enum/enum_scenetype.h"
 
 namespace rgp {
+    class GameContext;
+
     class SceneManager {
     public:
         explicit SceneManager(GameContext& ctx);

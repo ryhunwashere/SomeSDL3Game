@@ -11,9 +11,7 @@
 namespace rgp {
     class GameContext {
     public:
-        GameContext() :
-            m_textEngine(m_rendererEngine),
-            m_textureManager(m_rendererEngine) {}
+        GameContext() : m_textEngine(m_rendererEngine), m_textureManager(m_rendererEngine) {}
 
         [[nodiscard]] auto getRendererEngine()  -> RendererEngine&  { return m_rendererEngine; }
         [[nodiscard]] auto getTextEngine()      -> TextEngine&      { return m_textEngine; }

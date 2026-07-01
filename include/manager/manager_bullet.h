@@ -1,12 +1,14 @@
 #pragma once
 #include <array>
 
-#include "game_context.h"
 #include "entity/entity_bullet.h"
 #include "interface/interface_drawable.h"
 #include "interface/interface_fixed_updatable.h"
 
 namespace rgp {
+    struct Vector2F;
+    class GameContext;
+
     static constexpr size_t MAX_PLAYER_BULLET_COUNT = 128;
     static constexpr size_t MAX_ENEMY_BULLET_COUNT  = 1024;
 

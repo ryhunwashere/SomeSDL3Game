@@ -26,7 +26,7 @@ rgp::PlayerEntity::PlayerEntity(
 		3000.0f,
 		BulletBehaviour::Linear
 	),
-	m_shootTrack(Track(ctx.getAudioManager(), audioType, false)),
+	m_shootTrack(ctx.getAudioManager(), audioType, false),
 	m_grazeCollider{
 		.x = getCenter().x,
 		.y = getCenter().y,

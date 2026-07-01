@@ -1,11 +1,13 @@
 #pragma once
 #include <array>
 #include <memory>
+
 #include "asset/asset_texture.h"
-#include "engine/engine_renderer.h"
 #include "enum/enum_texture_type.h"
 
 namespace rgp {
+    class RendererEngine;
+
     class TextureManager {
     public:
         explicit TextureManager(RendererEngine& renderer);

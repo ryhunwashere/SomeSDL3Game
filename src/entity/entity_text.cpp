@@ -1,5 +1,7 @@
 #include "entity/entity_text.h"
 #include "except_sdl.h"
+#include "game_context.h"
+#include "asset/asset_font.h"
 
 rgp::TextEntity::TextEntity(
     GameContext& ctx,

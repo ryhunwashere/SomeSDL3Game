@@ -1,5 +1,4 @@
 #pragma once
-#include "game_context.h"
 #include "scene.h"
 #include "asset/asset_track.h"
 #include "entity/entity_button.h"

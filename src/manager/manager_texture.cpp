@@ -1,12 +1,15 @@
+#include "manager/manager_texture.h"
+
 #include <SDL3/SDL.h>
 #include <memory>
-#include "manager/manager_texture.h"
+
+#include "asset/asset_texture.h"
 #include "constant/constant.h"
-#include "engine/engine_renderer.h"
+#include "enum/enum_texture_type.h"
 
 rgp::TextureManager::TextureManager(RendererEngine& renderer) :
     m_renderer(renderer),
-    m_texturePaths([]() -> std::array<const char*, static_cast<size_t>(TextureType::Count)> {
+    m_texturePaths([]() -> std::array<const char*, static_cast<size_t>(rgp::TextureType::Count)> {
         std::array<const char*, static_cast<size_t>(TextureType::Count)> arr{};
 
         arr[static_cast<size_t>(TextureType::PlayerOneSprite)] = constant::path::PLAYER_ONE_SPRITE_PATH;

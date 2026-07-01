@@ -2,11 +2,10 @@
 
 #include <algorithm>
 
-#include "asset/asset_audio.h"
-#include "manager/manager_audio.h"
 #include <cassert>
 
 #include "except_sdl.h"
+#include "manager/manager_audio.h"
 
 rgp::Track::Track(AudioManager& audioManager, const AudioType type, const bool isLooping) :
     m_trackPtr(MIX_CreateTrack(audioManager.getMixer())) {

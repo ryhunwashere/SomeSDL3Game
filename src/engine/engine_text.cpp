@@ -1,5 +1,6 @@
 #include "engine/engine_text.h"
 #include "except_sdl.h"
+#include "engine/engine_renderer.h"
 
 rgp::TextEngine::TextEngine(const RendererEngine& renderer) {
     if (!TTF_Init())

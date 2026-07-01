@@ -10,12 +10,11 @@
 #include <mutex>
 #include <SDL3/SDL_events.h>
 
-#include "event/event.h"
-#include "event/event_scene_change.h"
-#include "event/event_player_lives_change.h"
-#include "event/event_pause_state_change.h"
-
 #include "except_sdl.h"
+#include "event/event.h"
+#include "event/event_pause_state_change.h"
+#include "event/event_player_lives_change.h"
+#include "event/event_scene_change.h"
 
 namespace rgp {
     class EventManager {

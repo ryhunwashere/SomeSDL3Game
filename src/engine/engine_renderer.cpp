@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+#include "type/type_circle.h"
+
 constexpr auto WINDOW_TITLE         = "This is a window";
 constexpr auto BLACK_OPAQUE_F       = rgp::constant::color::BLACK_OPAQUE_F;
 

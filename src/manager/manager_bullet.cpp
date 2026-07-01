@@ -2,6 +2,9 @@
 
 #include <cmath>
 
+#include "game_context.h"
+#include "constant/constant.h"
+
 rgp::BulletManager::BulletManager(GameContext& ctx) : m_ctx(ctx) {
     SDL_Log("Bullet manager loaded with O(1) Index Pools");
 }

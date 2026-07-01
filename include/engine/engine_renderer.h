@@ -3,12 +3,11 @@
 #include <functional>
 #include <SDL3/SDL.h>
 
-#include "constant/constant.h"
-#include "type/type_color.h"
 #include "except_sdl.h"
-#include "type/type_circle.h"
+#include "constant/constant.h"
 
 namespace rgp {
+    struct Circle;
     constexpr auto OPAQUE_F  = constant::color::OPAQUE_F;
 
     class RendererEngine {
@@ -51,7 +50,7 @@ namespace rgp {
 
         void drawCircleOutline(const Circle& circle, int segments, Color color);
 
-        void clearAndPresent(std::invocable auto&& drawCallback) const {
+        void clearAndPresent(std::invocable auto &&drawCallback) const {
             assert(m_renderer && NULL_RENDERER_ERROR);
 
             if (!SDL_RenderClear(m_renderer))
@@ -62,7 +61,6 @@ namespace rgp {
             if (!SDL_RenderPresent(m_renderer))
                 throw SDLException("Render present error");
         }
-
         [[nodiscard]] auto getRenderer() const -> SDL_Renderer*;
 
     private:

@@ -1,7 +1,6 @@
 #include <SDL3/SDL.h>
 #include <format>
 #include "scene/scene_level_one.h"
-#include "manager/manager_scene.h"
 #include "util/util_intersect.h"
 
 rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :

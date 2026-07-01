@@ -3,17 +3,17 @@
 #include <SDL3_ttf/SDL_ttf.h>
 
 #include "entity.h"
-#include "game_context.h"
-#include "enum/enum_fonttype.h"
 #include "interface/interface_drawable.h"
-#include "type/type_color.h"
 
 namespace rgp {
+    class RendererEngine;
+    struct Color;
+    enum class FontType;
+    class GameContext;
+
     class TextEntity final : public Entity, public IDrawable {
     public:
-        TextEntity(GameContext& ctx,
-            FontType fontType,
-            std::string_view initialText);
+        TextEntity(GameContext& ctx, FontType fontType, std::string_view initialText);
 
         ~TextEntity() override;
 

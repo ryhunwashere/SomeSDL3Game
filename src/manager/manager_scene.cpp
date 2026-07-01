@@ -5,13 +5,11 @@
 #include <cassert>
 #include <format>
 
-#include "constant/constant.h"
-#include "scene/scene_main_menu.h"
 #include "scene/scene_level_one.h"
-#include "enum/enum_scenetype.h"
+#include "scene/scene_main_menu.h"
 
-rgp::SceneManager::SceneManager(GameContext& ctx) : m_ctx(ctx),
-	m_fpsText(std::make_unique<TextEntity>(m_ctx, FontType::ZenMaruMedium32Left, "FPS: "))
+rgp::SceneManager::SceneManager(GameContext& ctx)
+: m_ctx(ctx), m_fpsText(std::make_unique<TextEntity>(m_ctx, FontType::ZenMaruMedium32Left, "FPS: "))
 {
 	m_sceneMap[SceneType::MainMenu] = [this] {
 		return std::make_unique<MainMenuScene>(m_ctx);

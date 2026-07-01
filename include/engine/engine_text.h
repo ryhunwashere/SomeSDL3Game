@@ -1,8 +1,9 @@
 #pragma once
 #include <SDL3_ttf/SDL_ttf.h>
-#include "engine_renderer.h"
 
 namespace rgp {
+    class RendererEngine;
+
     class TextEngine {
     public:
         explicit TextEngine(const RendererEngine& renderer);

@@ -1,6 +1,7 @@
 #pragma once
 #include "asset/asset_texture.h"
 #include "entity/entity.h"
+#include "type/type_circle.h"
 
 namespace rgp {
     enum class BulletBehaviour : uint8_t { Linear, Sine, Homing };

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "entity/entity_character.h"
 #include "asset/asset_track.h"
 

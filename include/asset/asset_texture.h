@@ -1,9 +1,10 @@
 #pragma once
 #include <SDL3/SDL.h>
-
-#include "engine/engine_renderer.h"
+#include <string_view>
 
 namespace rgp {
+    class RendererEngine;
+
     class Texture {
     public:
         Texture(RendererEngine& renderer, std::string_view texturePath);

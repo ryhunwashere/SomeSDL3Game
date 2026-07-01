@@ -1,6 +1,9 @@
 #include <cassert>
 
 #include "factory/factory_font.h"
+
+#include <SDL3_ttf/SDL_ttf.h>
+
 #include "constant/constant.h"
 
 rgp::FontFactory::FontFactory() : m_fontArray([] {

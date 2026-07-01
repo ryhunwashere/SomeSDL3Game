@@ -1,9 +1,10 @@
 #pragma once
 #include <SDL3_mixer/SDL_mixer.h>
 
-#include "manager/manager_audio.h"
-
 namespace rgp {
+    enum class AudioType;
+    class AudioManager;
+
     class Track {
     public:
         explicit Track(AudioManager& audioManager, AudioType type, bool isLooping);

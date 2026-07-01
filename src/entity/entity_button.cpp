@@ -1,5 +1,9 @@
 #include "entity/entity_button.h"
 
+#include "game_context.h"
+#include "entity/entity_text.h"
+#include "enum/enum_fonttype.h"
+
 rgp::ButtonEntity::ButtonEntity(
     GameContext& ctx,
     const SDL_FRect& rect,

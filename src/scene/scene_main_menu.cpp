@@ -1,9 +1,7 @@
 #include <SDL3/SDL.h>
 #include "scene/scene_main_menu.h"
 
-#include "constant/constant.h"
-#include "manager/manager_scene.h"
-#include "scene/scene_level_one.h"
+#include "entity/entity_text.h"
 #include "util/util_math.h"
 
 constexpr float MIN_WIDTH = 200.0f;

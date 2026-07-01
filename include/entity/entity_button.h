@@ -1,11 +1,16 @@
 #pragma once
+#include <memory>
+#include <string_view>
 
-#include "entity_text.h"
-#include "game_context.h"
-#include "entity/entity.h"
+#include "entity.h"
+#include "interface/interface_drawable.h"
 #include "type/type_color.h"
 
 namespace rgp {
+    class TextEntity;
+    class RendererEngine;
+    class GameContext;
+
     class ButtonEntity final : public Entity, public IDrawable {
     public:
         ButtonEntity(GameContext& ctx, const SDL_FRect& rect, const ColorF& colorF, std::string_view text);

@@ -6,6 +6,9 @@
 #include "enum/enum_fonttype.h"
 
 namespace rgp {
+    class Font;
+    enum class FontType;
+
     class FontFactory {
     public:
         explicit FontFactory();
