@@ -4,11 +4,12 @@
 #include "manager/manager_bullet.h"
 
 namespace rgp {
-    class EnemyEntity final : public CharacterEntity {
+    class EnemyEntity : public CharacterEntity {
     public:
-        EnemyEntity(GameContext &ctx, BulletManager &bulletManager, const TextureType textureType)
-            : CharacterEntity(ctx, bulletManager, textureType) {}
-
+        EnemyEntity(GameContext &ctx, BulletManager &bulletManager, TextureType textureType);
         ~EnemyEntity() override = default;
+
+        void fixedUpdate(float fixedDt) override;
+        void draw(float alpha) override;
     };
 }

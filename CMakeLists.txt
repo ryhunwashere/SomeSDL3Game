@@ -40,6 +40,7 @@ set(SOURCES
         src/asset/asset_track.cpp
 
         src/factory/factory_font.cpp
+        src/entity/entity_enemy.cpp
 )
 
 set(HEADERS
@@ -102,6 +103,7 @@ set(HEADERS
         include/event/event_player_lives_change.h
         include/event/event_pause_state_change.h
         include/entity/entity_player.h
+        include/interface/interface_fixed_updatable.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

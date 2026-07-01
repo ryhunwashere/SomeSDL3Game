@@ -57,15 +57,22 @@ void rgp::SceneManager::changeScene(const SceneType targetScene) {
 }
 
 auto rgp::SceneManager::updateCurrentScene() const -> bool {
-	const auto& timeMng = m_ctx.getTimeManager();
+	auto& timeMng = m_ctx.getTimeManager();
 	m_fpsText->setText("FPS: " + std::to_string(static_cast<uint64_t>(timeMng.getCurrentFps())));
 
 	if (!m_currentScene) return false;
+
+	while (timeMng.consumeFixedTick())
+		m_currentScene->fixedUpdate(timeMng.FIXED_DELTA_TIME);
+
 	m_currentScene->update(timeMng.getDeltaTime());
+
 	return true;
 }
 
 void rgp::SceneManager::drawCurrentScene() const {
-	if (m_currentScene) m_currentScene->draw();
-	m_fpsText->draw();
+	const auto alpha = m_ctx.getTimeManager().getInterpolationAlpha();
+
+	if (m_currentScene) m_currentScene->draw(alpha);
+	m_fpsText->draw(alpha);
 }

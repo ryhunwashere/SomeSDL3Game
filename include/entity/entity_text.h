@@ -33,7 +33,7 @@ namespace rgp {
             return *this;
         }
 
-        void draw() override;
+        void draw(float alpha) override;
         void setText(std::string_view text) const;
         void setColor(const Color& color) const;
 

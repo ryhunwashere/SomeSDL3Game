@@ -10,11 +10,11 @@ m_color(colorF),
 m_text(std::make_unique<TextEntity>(ctx, FontType::ZenMaruMedium32Left, text))
 {
     setSizeAndPosition(rect);
-    m_text->setPosition(Vector2F{ getX(), getY() });
+    m_text->setPosition(Vector2F{Entity::getX(), Entity::getY()});
     m_text->setColor(constant::color::BLACK_OPAQUE);
 }
 
-void rgp::ButtonEntity::draw() const {
+void rgp::ButtonEntity::draw(const float alpha) {
     const SDL_FRect destRect{
         .x = getX(),
         .y = getY(),
@@ -23,5 +23,5 @@ void rgp::ButtonEntity::draw() const {
     };
 
     m_renderer.drawRect(m_color, &destRect);
-    m_text->draw();
+    m_text->draw(alpha);
 }

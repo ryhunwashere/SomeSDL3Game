@@ -7,11 +7,14 @@ void rgp::TimeManager::updateDeltaTime() {
     m_lastTime = currentTime;
 
     const auto duration = std::chrono::nanoseconds(deltaTimeNS);
+    auto frameTime = std::chrono::duration<float>(duration).count();
 
-    m_deltaTime = std::chrono::duration<float>(duration).count();
+    if (frameTime > MAX_FRAME_TIME) frameTime = MAX_FRAME_TIME;
+
+    m_deltaTime = frameTime;
+    m_accumulator += frameTime;
 
     m_frameCount++;
-
     updateFps(currentTime);
 }
 
@@ -25,4 +28,13 @@ void rgp::TimeManager::updateFps(const uint64_t currentTime) {
         m_frameCount = 0;
         m_lastFpsUpdate = currentTime;
     }
+}
+
+auto rgp::TimeManager::consumeFixedTick() -> bool {
+    if (m_accumulator >= FIXED_DELTA_TIME) {
+        m_accumulator -= FIXED_DELTA_TIME;
+        return true;
+    }
+
+    return false;
 }

@@ -6,14 +6,14 @@ rgp::BulletManager::BulletManager(GameContext& ctx) : m_ctx(ctx) {
     SDL_Log("Bullet manager loaded with O(1) Index Pools");
 }
 
-void rgp::BulletManager::update(const float dt) {
-    updateBullets(m_enemyPool, dt);
-    updateBullets(m_playerPool, dt);
+void rgp::BulletManager::fixedUpdate(const float fixedDt) {
+    updateBullets(m_enemyPool, fixedDt);
+    updateBullets(m_playerPool, fixedDt);
 }
 
-void rgp::BulletManager::draw() {
-    drawBullets(m_enemyPool);
-    drawBullets(m_playerPool);
+void rgp::BulletManager::draw(const float alpha) {
+    drawBullets(m_enemyPool, alpha);
+    drawBullets(m_playerPool, alpha);
 }
 
 void rgp::BulletManager::spawnPlayerBullet(const BulletEntity& bulletParams, const Vector2F spawnPos) {
@@ -33,7 +33,10 @@ void rgp::BulletManager::spawnBullet(BulletPool<MaxBullets>& pool, const BulletE
     if (pool.activeCount >= MaxBullets) [[unlikely]] return;
 
     auto& bullet = pool.memoryPool[pool.activeCount];
+
     bullet = params;
+    bullet.currentPos  = spawnPos;
+    bullet.previousPos = spawnPos;
     bullet.setPosition(spawnPos);
     ++pool.activeCount;
 }
@@ -66,26 +69,36 @@ void rgp::BulletManager::updateBullets(BulletPool<MaxBullets>& pool, const float
         }
 
         const auto radians = static_cast<float>(bullet.angle * (std::numbers::pi / 180.0));
-        bullet.movePosition({std::cos(radians) * bullet.velocity * dt, std::sin(radians) * bullet.velocity * dt});
+
+        bullet.previousPos = bullet.currentPos;
+
+        bullet.movePosition({
+            std::cos(radians) * bullet.velocity * dt,
+            std::sin(radians) * bullet.velocity * dt
+        });
 
         ++i;
     }
 }
 
 template <size_t MaxBullets>
-void rgp::BulletManager::drawBullets(BulletPool<MaxBullets>& pool) {
+void rgp::BulletManager::drawBullets(BulletPool<MaxBullets>& pool, const float alpha) {
     auto& renderer = m_ctx.getRendererEngine();
     for (size_t i = 0; i < pool.activeCount; ++i) {
         const auto& bullet = pool.memoryPool[i];
 
+        const float renderX = std::lerp(bullet.previousPos.x, bullet.currentPos.x, alpha);
+        const float renderY = std::lerp(bullet.previousPos.y, bullet.currentPos.y, alpha);
+
         SDL_FRect destRect{
-            .x = bullet.getX(),
-            .y = bullet.getY(),
+            .x = renderX,
+            .y = renderY,
             .w = bullet.getWidth(),
             .h = bullet.getHeight()
         };
 
         renderer.drawTexture(&destRect, bullet.texturePtr->getTexturePtr(), bullet.angle, BULLET_ALPHA);
-        renderer.drawCircleOutline(bullet.collider, 8, {255, 0, 0, 100});
+
+        renderer.drawCircleOutline(bullet.collider, 8, Color{255, 0, 0, 100});
     }
 }

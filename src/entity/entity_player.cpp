@@ -7,12 +7,10 @@
 #include "entity/entity_bullet.h"
 #include "event/event_player_lives_change.h"
 #include "type/type_vector2f.h"
-#include "manager/manager_time.h"
 
 constexpr float TEXTURE_SIZE			= 100.0f;
 constexpr float MOVE_SPEED				= 1000.0f;
 constexpr float MOVE_SPEED_SLOW			= 150.0f;
-constexpr uint64_t SHOOT_COOLDOWN		= 80;
 constexpr float GRAZE_COLLIDER_RADIUS	= 10.0f;
 
 rgp::PlayerEntity::PlayerEntity(
@@ -34,7 +32,6 @@ rgp::PlayerEntity::PlayerEntity(
 		.y = getCenter().y,
 		.r = GRAZE_COLLIDER_RADIUS,
 	},
-	m_nextShootTime(SDL_GetTicks()),
 	m_currentLives(3)
 {
 	setSize(m_texturePtr->getWidth(), m_texturePtr->getHeight());
@@ -46,20 +43,31 @@ rgp::PlayerEntity::PlayerEntity(
 	});
 }
 
-void rgp::PlayerEntity::draw() const {
+void rgp::PlayerEntity::draw(const float alpha) {
 	auto& renderer = m_ctx.getRendererEngine();
 
-	const SDL_FRect destRect = getFRect();
+	const float renderX = std::lerp(m_prevX, m_x, alpha);
+	const float renderY = std::lerp(m_prevY, m_y, alpha);
+
+	const SDL_FRect destRect{
+		.x = renderX,
+		.y = renderY,
+		.w = getWidth(),
+		.h = getHeight()
+	};
 
 	renderer.drawTexture(&destRect, m_texturePtr->getTexturePtr());
 
 	if (m_isSlow)
-		renderer.drawCircleOutline(m_collider, 16, constant::color::WHITE_OPAQUE);
+		renderer.drawCircleOutline(m_collider, 8, constant::color::WHITE_OPAQUE);
 }
 
-void rgp::PlayerEntity::update(const float dt) {
-	updatePosition(dt);
-	updateShooting(dt);
+void rgp::PlayerEntity::fixedUpdate(const float fixedDt) {
+	m_prevX = m_x;
+	m_prevY = m_y;
+
+	updatePosition(fixedDt);
+	updateShooting(fixedDt);
 }
 
 void rgp::PlayerEntity::updatePosition(const float dt) {
@@ -99,9 +107,9 @@ void rgp::PlayerEntity::updatePosition(const float dt) {
 void rgp::PlayerEntity::updateShooting(const float dt) {
 	if (dt <= 0.0f) return;
 
-	if (const uint64_t currentTime = SDL_GetTicks();
-		currentTime >= m_nextShootTime && m_ctx.getInputManager().isKeyDown(SDL_SCANCODE_L)) {
+	if (m_shootCooldownTimer > 0.0f) m_shootCooldownTimer -= dt;
 
+	if (m_shootCooldownTimer <= 0.0f && m_ctx.getInputManager().isKeyDown(SDL_SCANCODE_L)) {
 		Vector2F spawnPos1 = getTopLeft();
 		Vector2F spawnPos2 = getTopMiddle();
 		Vector2F spawnPos3 = getTopRight();
@@ -115,6 +123,6 @@ void rgp::PlayerEntity::updateShooting(const float dt) {
 		m_bulletMng.spawnPlayerBullet(m_bullet, spawnPos3);
 
 		m_shootTrack.play();
-		m_nextShootTime = currentTime + SHOOT_COOLDOWN;
+		m_shootCooldownTimer = SHOOT_COOLDOWN_TIME;
 	}
 }

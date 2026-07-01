@@ -7,8 +7,8 @@ namespace rgp {
     public:
         virtual ~Entity() = 0;
 
-        virtual void setPosition(const Vector2F& pos)           { m_x = pos.x; m_y = pos.y; }
-        virtual void movePosition(const Vector2F& deltaPos)     { m_x += deltaPos.x; m_y += deltaPos.y; }
+        virtual void setPosition(const Vector2F pos)           { m_x = pos.x; m_y = pos.y; }
+        virtual void movePosition(const Vector2F deltaPos)     { m_x += deltaPos.x; m_y += deltaPos.y; }
         void setSize(const float width, const float height)     { m_width = width; m_height = height; }
         void setSizeAndPosition(const SDL_FRect& rect) {
             m_width     = rect.w;
@@ -27,8 +27,8 @@ namespace rgp {
         void setWidth(const float width)                        { m_width  = width; }
         void setHeight(const float height)                      { m_height = height; }
 
-        [[nodiscard]] auto getX()         const -> float        { return m_x; }
-        [[nodiscard]] auto getY()         const -> float        { return m_y; }
+        [[nodiscard]] virtual auto getX() const -> float        { return m_x; }
+        [[nodiscard]] virtual auto getY() const -> float        { return m_y; }
         [[nodiscard]] auto getPosition()  const -> Vector2F     { return Vector2F{m_x, m_y}; }
         [[nodiscard]] auto getWidth()     const -> float        { return m_width; }
         [[nodiscard]] auto getHeight()    const -> float        { return m_height; }

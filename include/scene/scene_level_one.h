@@ -14,7 +14,8 @@ namespace rgp {
 		~LevelOneScene() override;
 
 		void update(float dt) override;
-		void draw() override;
+		void fixedUpdate(float fixedDt) override;
+		void draw(float alpha) override;
 
 		[[nodiscard]] auto getBulletManager() -> BulletManager& { return m_bulletMng; }
 

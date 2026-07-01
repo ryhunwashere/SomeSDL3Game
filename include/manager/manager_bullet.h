@@ -3,6 +3,8 @@
 
 #include "game_context.h"
 #include "entity/entity_bullet.h"
+#include "interface/interface_drawable.h"
+#include "interface/interface_fixed_updatable.h"
 
 namespace rgp {
     static constexpr size_t MAX_PLAYER_BULLET_COUNT = 128;
@@ -14,13 +16,13 @@ namespace rgp {
         size_t activeCount = 0;
     };
 
-    class BulletManager {
+    class BulletManager final : public IFixedUpdatable, public IDrawable {
     public:
         explicit BulletManager(GameContext& ctx);
-        ~BulletManager() = default;
+        ~BulletManager() override = default;
 
-        void update(float dt);
-        void draw();
+        void fixedUpdate(float fixedDt) override;
+        void draw(float alpha) override;
 
         void spawnPlayerBullet(const BulletEntity& bulletParams, Vector2F spawnPos);
         void spawnEnemyBullet(const BulletEntity& bulletParams, Vector2F spawnPos);
@@ -43,6 +45,6 @@ namespace rgp {
         void updateBullets(BulletPool<MaxBullets>& pool, float dt);
 
         template <size_t MaxBullets>
-        void drawBullets(BulletPool<MaxBullets>& pool);
+        void drawBullets(BulletPool<MaxBullets>& pool, float alpha);
     };
 }

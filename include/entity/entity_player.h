@@ -9,8 +9,8 @@ namespace rgp {
         PlayerEntity(GameContext& ctx, BulletManager& bulletManager, TextureType textureType, AudioType audioType);
         ~PlayerEntity() override = default;
 
-        void draw() const override;
-        void update(float dt) override;
+        void fixedUpdate(float fixedDt) override;
+        void draw(float alpha) override;
 
         void setCurrentLives(const uint8_t lives)                   { m_currentLives = lives; }
 
@@ -22,11 +22,13 @@ namespace rgp {
         void updateShooting(float dt) override;
 
     private:
+        static constexpr float SHOOT_COOLDOWN_TIME = 0.1f; // 100ms cooldown
+
         BulletEntity m_bullet;
         Track m_shootTrack;
         Circle m_grazeCollider;
-        uint64_t m_nextShootTime;
         uint8_t m_currentLives;
+        float m_shootCooldownTimer = 0.0f;
         bool m_isSlow = false;
     };
 }

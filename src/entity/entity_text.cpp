@@ -27,7 +27,7 @@ rgp::TextEntity::~TextEntity() {
     }
 }
 
-void rgp::TextEntity::draw() {
+void rgp::TextEntity::draw([[maybe_unused]] float alpha) {
     constexpr float OVERSAMPLE_SCALE = 2.0f;
     constexpr float INVERSE_SCALE = 1.0f / OVERSAMPLE_SCALE;
 

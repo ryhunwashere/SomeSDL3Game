@@ -1,16 +1,15 @@
 #pragma once
 #include "game_context.h"
-#include "interface/interface_drawable.h"
 #include "manager/manager_scene.h"
 
 namespace rgp {
-    class Game final : public IDrawable {
+    class Game final {
     public:
         Game();
-        ~Game() override;
+        ~Game();
 
         auto update() -> bool;
-        void draw() override;
+        void draw();
         void handleEvent(const SDL_Event* event);
 
     private:

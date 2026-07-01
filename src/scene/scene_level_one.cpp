@@ -66,10 +66,6 @@ rgp::LevelOneScene::~LevelOneScene() {
 }
 
 void rgp::LevelOneScene::update(const float dt) {
-	const float deltaTime = m_isPaused ? 0.0f : dt;
-	m_player.update(deltaTime);
-	m_bulletMng.update(deltaTime);
-
 	const auto& input = m_ctx.getInputManager();
 
 	if (input.isKeyJustPressed(SDL_SCANCODE_SPACE)) {
@@ -82,17 +78,21 @@ void rgp::LevelOneScene::update(const float dt) {
 
 	if (input.isKeyJustPressed(SDL_SCANCODE_ESCAPE))
 		eventMng.publish<event::SceneChangeEvent>({ .scene = SceneType::MainMenu });
+}
 
-	if (m_isPaused) return;
+void rgp::LevelOneScene::fixedUpdate(const float fixedDt) {
+	const float deltaTime = m_isPaused ? 0.0f : fixedDt;
 
-	// test collision & invoke player lives changed event
+	m_player.fixedUpdate(deltaTime);
+	m_bulletMng.fixedUpdate(deltaTime);
+
 	if (util::intersect::hasIntersection(m_player.getCollider(), m_circle)) {
 		m_player.setPosition(SPAWN_POSITION);
 		const uint8_t updatedCurrentLives = m_player.getCurrentLives() - 1;
-		eventMng.publish<event::PlayerLivesChangeEvent>({ .currentLives = updatedCurrentLives });
+		m_ctx.getEventManager().publish<event::PlayerLivesChangeEvent>({ .currentLives = updatedCurrentLives });
 	}
 
-	m_enemyShootCooldownTimer -= deltaTime;
+	if (m_enemyShootCooldownTimer > 0.0f) m_enemyShootCooldownTimer -= deltaTime;
 
 	if (m_enemyShootCooldownTimer <= 0.0f) {
 		constexpr float X_OFFSET = 20.0f;
@@ -125,18 +125,18 @@ void rgp::LevelOneScene::update(const float dt) {
 		m_bulletMng.spawnEnemyBullet(m_enemyBullet, spawnPos4);
 		m_bulletMng.spawnEnemyBullet(m_enemyBullet, spawnPos5);
 
-		m_enemyShootCooldownTimer += ENEMY_SHOOT_COOLDOWN;
+		m_enemyShootCooldownTimer = ENEMY_SHOOT_COOLDOWN;
 	}
 }
 
-void rgp::LevelOneScene::draw() {
+void rgp::LevelOneScene::draw(const float alpha) {
 	m_ctx.getRendererEngine().drawScreen(m_backgroundImg->getTexturePtr());
-	m_currentLivesText.draw();
+	m_currentLivesText.draw(alpha);
 
-	m_ctx.getRendererEngine().drawViewport(&m_viewport, [this]() -> void {
+	m_ctx.getRendererEngine().drawViewport(&m_viewport, [this, alpha]() -> void {
 		m_ctx.getRendererEngine().drawScreen(constant::color::BLACK_OPAQUE_F);
-		m_player.draw();
-		m_bulletMng.draw();
+		m_player.draw(alpha);
+		m_bulletMng.draw(alpha);
 		m_ctx.getRendererEngine().drawCircleOutline(m_circle, 16, constant::color::WHITE_OPAQUE);
 
 		if (m_isPaused)

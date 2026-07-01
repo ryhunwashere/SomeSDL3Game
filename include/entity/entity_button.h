@@ -6,11 +6,11 @@
 #include "type/type_color.h"
 
 namespace rgp {
-    class ButtonEntity final : public Entity {
+    class ButtonEntity final : public Entity, public IDrawable {
     public:
         ButtonEntity(GameContext& ctx, const SDL_FRect& rect, const ColorF& colorF, std::string_view text);
 
-        void draw() const;
+        void draw(float alpha) override;
 
         void setColor(const ColorF& colorF)                 { m_color = colorF; }
         [[nodiscard]] auto getText() const -> TextEntity*   { return m_text.get(); }
