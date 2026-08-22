@@ -85,13 +85,13 @@ void rgp::RendererEngine::drawRect(const ColorF& colorF, const SDL_FRect* dstrec
 void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, const double angle, const float alpha) const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
-    if (!SDL_SetTextureColorModFloat(texture, OPAQUE_F.r, OPAQUE_F.g, OPAQUE_F.b)
-        || !SDL_SetTextureAlphaModFloat(texture, alpha)
-        || !SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_LINEAR)) {
-        throw SDLException("Set texture mod error");
-    }
+    float currentAlpha = 1.0f;
+    SDL_GetTextureAlphaModFloat(texture, &currentAlpha);
 
-    if (!SDL_RenderTextureRotated(m_renderer, texture, nullptr, destRect, angle, nullptr, SDL_FLIP_NONE))
+    if (currentAlpha != alpha)
+        SDL_SetTextureAlphaModFloat(texture, alpha);
+
+    if (!SDL_RenderTextureRotated(m_renderer, texture, nullptr, destRect, angle, nullptr, SDL_FLIP_NONE)) [[unlikely]]
         throw SDLException("Render texture error");
 }
 

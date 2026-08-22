@@ -15,6 +15,13 @@ rgp::Texture::Texture(RendererEngine& renderer, std::string_view texturePath) :
         if (!texture)
             throw SDLException("Texture creation error");
 
+        if (!SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_LINEAR))
+            throw SDLException("Failed to set texture scale mode");
+
+        if (!SDL_SetTextureColorModFloat(texture, 1.0f, 1.0f, 1.0f)
+            || !SDL_SetTextureAlphaModFloat(texture, 1.0f))
+            throw SDLException("Failed to set texture default color/alpha mod");
+
         SDL_Log("Texture created");
 
         return texture;
