@@ -39,12 +39,23 @@ namespace rgp {
         void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle, float alpha) const;
 
         void drawViewport(const SDL_Rect* destRect, std::invocable auto&& drawCallback) const {
-            if (!SDL_SetRenderViewport(m_renderer, destRect))
+            SDL_Rect currentViewport;
+            SDL_GetRenderViewport(m_renderer, &currentViewport);
+
+            const bool isViewportChanged = destRect != nullptr &&
+                (currentViewport.x != destRect->x
+                    || currentViewport.y != destRect->y
+                    || currentViewport.w != destRect->w
+                    || currentViewport.h != destRect->h);
+
+            if (!isViewportChanged) return;
+
+            if (!SDL_SetRenderViewport(m_renderer, destRect)) [[unlikely]]
                 throw SDLException("Viewport render set error");
 
             std::invoke(std::forward<decltype(drawCallback)>(drawCallback));
 
-            if (!SDL_SetRenderViewport(m_renderer, nullptr))
+            if (!SDL_SetRenderViewport(m_renderer, nullptr)) [[unlikely]]
                 throw SDLException("Viewport render set error");
         }
 
