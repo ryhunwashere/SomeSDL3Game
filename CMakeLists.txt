@@ -8,9 +8,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-set(SDL3_ROOT       "C:/DevGame/vclib/SDL3-3.4.8"       CACHE PATH "Root of SDL3 installation")
-set(SDL3_TTF_ROOT   "C:/DevGame/vclib/SDL3_ttf-3.2.0"   CACHE PATH "Root of SDL3_ttf installation")
-set(SDL3_MIXER_ROOT "C:/DevGame/vclib/SDL3_mixer-3.2.4" CACHE PATH "Root of SDL3_mixer installation")
+find_package(SDL3 REQUIRED)
+find_package(SDL3_ttf REQUIRED)
+find_package(SDL3_mixer REQUIRED)
 
 set(SOURCES
         src/main.cpp
@@ -118,16 +118,10 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE
         "${SDL3_MIXER_ROOT}/include"
 )
 
-target_link_directories(${PROJECT_NAME} PRIVATE
-        "${SDL3_ROOT}/lib/x64"
-        "${SDL3_TTF_ROOT}/lib/x64"
-        "${SDL3_MIXER_ROOT}/lib/x64"
-)
-
 target_link_libraries(${PROJECT_NAME} PRIVATE
-        SDL3.lib
-        SDL3_ttf.lib
-        SDL3_mixer.lib
+        SDL3::SDL3
+        SDL3_ttf::SDL3_ttf
+        SDL3_mixer::SDL3_mixer
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
@@ -176,24 +170,22 @@ endif()
 set(ASSET_SOURCE_DIR "${CMAKE_SOURCE_DIR}/asset")
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${SDL3_TTF_ROOT}/lib/x64/SDL3_ttf.dll"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/SDL3_ttf.dll"
-
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${SDL3_ROOT}/lib/x64/SDL3.dll"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/SDL3.dll"
-
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${SDL3_MIXER_ROOT}/lib/x64/SDL3_mixer.dll"
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/SDL3_mixer.dll"
-
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${ASSET_SOURCE_DIR}"
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/asset"
-
-        COMMENT "Copying SDL3 DLLs and game assets to output directory"
+        COMMENT "Copying game assets"
 )
+
+if(WIN32)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:SDL3::SDL3>
+            $<TARGET_FILE:SDL3_ttf::SDL3_ttf>
+            $<TARGET_FILE:SDL3_mixer::SDL3_mixer>
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>
+            COMMENT "Copying SDL3 DLLs"
+    )
+endif()
 
 if(MSVC)
     set(MANIFEST_CONTENT
