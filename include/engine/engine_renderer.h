@@ -38,25 +38,27 @@ namespace rgp {
 
         void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle, float alpha) const;
 
-        void drawViewport(const SDL_Rect* destRect, std::invocable auto&& drawCallback) const {
+        template <typename Callback>
+        requires std::invocable<Callback>
+        void drawViewport(
+            const SDL_Rect* targetViewport,
+            Callback&& drawCallback,
+            const SDL_Rect* nextViewport = nullptr) const
+        {
             SDL_Rect currentViewport;
             SDL_GetRenderViewport(m_renderer, &currentViewport);
 
-            const bool isViewportChanged = destRect != nullptr &&
-                (currentViewport.x != destRect->x
-                    || currentViewport.y != destRect->y
-                    || currentViewport.w != destRect->w
-                    || currentViewport.h != destRect->h);
+            const bool isViewportChanged = targetViewport != nullptr &&
+                (currentViewport.x != targetViewport->x || currentViewport.y != targetViewport->y ||
+                 currentViewport.w != targetViewport->w || currentViewport.h != targetViewport->h);
 
-            if (!isViewportChanged) return;
+            if (isViewportChanged && !SDL_SetRenderViewport(m_renderer, targetViewport))
+                throw SDLException("Failed to set target viewport");
 
-            if (!SDL_SetRenderViewport(m_renderer, destRect)) [[unlikely]]
-                throw SDLException("Viewport render set error");
+            std::invoke(std::forward<Callback>(drawCallback));
 
-            std::invoke(std::forward<decltype(drawCallback)>(drawCallback));
-
-            if (!SDL_SetRenderViewport(m_renderer, nullptr)) [[unlikely]]
-                throw SDLException("Viewport render set error");
+            if (targetViewport != nextViewport && !SDL_SetRenderViewport(m_renderer, nextViewport))
+                throw SDLException("Failed to transition to next viewport");
         }
 
         void drawCircleOutline(const Circle& circle, int segments, Color color);
