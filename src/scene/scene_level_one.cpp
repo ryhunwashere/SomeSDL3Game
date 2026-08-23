@@ -136,7 +136,9 @@ void rgp::LevelOneScene::draw(const float alpha) {
 		m_ctx.getRendererEngine().drawScreen(constant::color::BLACK_OPAQUE_F);
 		m_player.draw(alpha);
 		m_bulletMng.draw(alpha);
-		m_ctx.getRendererEngine().drawCircleOutline(m_circle, 16, constant::color::WHITE_OPAQUE);
+
+		// random big circle
+		m_ctx.getRendererEngine().drawCircleOutline(m_circle, constant::color::WHITE_OPAQUE);
 
 		if (m_isPaused)
 			m_ctx.getRendererEngine().drawScreen({0.0f, 0.0f, 0.0f, 0.5f});

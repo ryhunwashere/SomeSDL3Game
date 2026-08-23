@@ -53,7 +53,7 @@ namespace rgp {
                 throw SDLException("Failed to transition to next viewport");
         }
 
-        void drawCircleOutline(const Circle& circle, int segments, Color color);
+        void drawCircleOutline(const Circle& circle, Color color) const;
 
         void clearAndPresent(std::invocable auto &&drawCallback) const {
             assert(m_renderer && NULL_RENDERER_ERROR);
@@ -69,10 +69,14 @@ namespace rgp {
         [[nodiscard]] auto getRenderer() const -> SDL_Renderer*;
 
     private:
-        std::vector<SDL_FPoint> m_circlePointsBuffer;
+        std::vector<SDL_FPoint> m_unitCircleCache;
+        mutable std::vector<SDL_FPoint> m_circlePointsBuffer;
         SDL_Window* m_window        = nullptr;
         SDL_Renderer* m_renderer    = nullptr;
         static constexpr auto NULL_RENDERER_ERROR  = "Renderer is null";
         static constexpr auto NULL_WINDOW_ERROR    = "Window is null";
+        static constexpr int  CIRCLE_SEGMENTS      = 16;
+
+        inline void initCircleCache();
     };
 }

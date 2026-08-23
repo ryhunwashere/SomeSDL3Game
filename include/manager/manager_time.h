@@ -27,7 +27,7 @@ namespace rgp {
         float m_accumulator      = 0.0f;
         static constexpr float MAX_FRAME_TIME  = 0.25f;
 
-        static constexpr uint64_t FPS_UPDATE_INTERVAL = 250'000'000;
+        static constexpr uint64_t FPS_UPDATE_INTERVAL = 200'000'000;
 
         auto updateFps(uint64_t currentTime) -> void;
     };
