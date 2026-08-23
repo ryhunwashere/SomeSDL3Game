@@ -2,6 +2,7 @@
 #include "engine/engine_renderer.h"
 
 #include <cmath>
+#include <span>
 
 #include "type/type_circle.h"
 
@@ -125,4 +126,24 @@ void rgp::RendererEngine::drawCircleOutline(const Circle& circle, const Color co
 
     if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), CIRCLE_POINTS)) [[unlikely]]
         throw SDLException("Render lines for circle failed");
+}
+
+void rgp::RendererEngine::drawCircleOutlinesBatch(const std::span<const Circle> circles, const Color color) const {
+    if (circles.empty()) return;
+
+    if (!SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a)) [[unlikely]]
+        throw SDLException("Set draw color for circles failed");
+
+    static constexpr size_t POINTS_PER_CIRCLE = CIRCLE_SEGMENTS + 1;
+    m_circlePointsBuffer.resize(POINTS_PER_CIRCLE);
+
+    for (const auto& [x, y, r] : circles) {
+        for (size_t i = 0; i < POINTS_PER_CIRCLE; ++i) {
+            m_circlePointsBuffer[i].x = x + (m_unitCircleCache[i].x * r);
+            m_circlePointsBuffer[i].y = y + (m_unitCircleCache[i].y * r);
+        }
+
+        if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), POINTS_PER_CIRCLE)) [[unlikely]]
+            throw SDLException("Render lines for bulk circles failed");
+    }
 }

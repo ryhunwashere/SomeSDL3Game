@@ -1,10 +1,12 @@
 #pragma once
 #include <cassert>
 #include <functional>
+#include <span>
 #include <SDL3/SDL.h>
 
 #include "except_sdl.h"
 #include "constant/constant.h"
+#include "type/type_circle.h"
 
 namespace rgp {
     struct Circle;
@@ -54,6 +56,7 @@ namespace rgp {
         }
 
         void drawCircleOutline(const Circle& circle, Color color) const;
+        void drawCircleOutlinesBatch(std::span<const Circle> circles, Color color) const;
 
         void clearAndPresent(std::invocable auto &&drawCallback) const {
             assert(m_renderer && NULL_RENDERER_ERROR);

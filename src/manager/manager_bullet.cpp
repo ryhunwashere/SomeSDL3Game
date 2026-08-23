@@ -104,6 +104,8 @@ void rgp::BulletManager::drawBullets(BulletPool<MaxBullets>& pool, const float a
         renderer.drawTexture(&destRect, bullet.texturePtr->getTexturePtr(), bullet.angle, BULLET_ALPHA);
     }
 
+    m_circleColliderBuffer.clear();
+
     for (size_t i = 0; i < pool.activeCount; ++i) {
         const auto& bullet = pool.memoryPool[i];
 
@@ -111,10 +113,11 @@ void rgp::BulletManager::drawBullets(BulletPool<MaxBullets>& pool, const float a
         const float renderY = std::lerp(bullet.previousPos.y, bullet.currentPos.y, alpha);
 
         Circle lerpedCollider = bullet.collider;
-
         lerpedCollider.x = renderX + bullet.getWidth() * 0.5f;
         lerpedCollider.y = renderY + bullet.getHeight() * 0.5f;
 
-        renderer.drawCircleOutline(lerpedCollider, Color{255, 0, 0, 100});
+        m_circleColliderBuffer.push_back(lerpedCollider);
     }
+
+    renderer.drawCircleOutlinesBatch(m_circleColliderBuffer, Color{255, 0, 0, 100});
 }
