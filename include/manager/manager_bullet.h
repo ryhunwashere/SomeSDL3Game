@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <vector>
 
 #include "entity/entity_bullet.h"
 #include "interface/interface_drawable.h"
@@ -37,6 +38,7 @@ namespace rgp {
 
         BulletPool<MAX_PLAYER_BULLET_COUNT> m_playerPool{};
         BulletPool<MAX_ENEMY_BULLET_COUNT> m_enemyPool{};
+        std::vector<Circle> m_circleColliderBuffer{};
         size_t m_activeBullets = 0;
         GameContext& m_ctx;
 

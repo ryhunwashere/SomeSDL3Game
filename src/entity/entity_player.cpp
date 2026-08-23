@@ -59,7 +59,7 @@ void rgp::PlayerEntity::draw(const float alpha) {
 	renderer.drawTexture(&destRect, m_texturePtr->getTexturePtr());
 
 	if (m_isSlow)
-		renderer.drawCircleOutline(m_collider, 8, constant::color::WHITE_OPAQUE);
+		renderer.drawCircleOutline(m_collider, constant::color::WHITE_OPAQUE);
 }
 
 void rgp::PlayerEntity::fixedUpdate(const float fixedDt) {

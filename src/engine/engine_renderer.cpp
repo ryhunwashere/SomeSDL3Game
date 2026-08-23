@@ -2,6 +2,7 @@
 #include "engine/engine_renderer.h"
 
 #include <cmath>
+#include <span>
 
 #include "type/type_circle.h"
 
@@ -41,7 +42,7 @@ rgp::RendererEngine::RendererEngine() {
         throw SDLException("Renderer initialization failed");
     }
 
-    if (!SDL_SetRenderVSync(m_renderer, 1))
+    if (!SDL_SetRenderVSync(m_renderer, 0))
         throw SDLException("VSync setting failed");
 
     if (!SDL_SetRenderLogicalPresentation(m_renderer, LOGICAL_WIDTH, LOGICAL_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX))
@@ -51,6 +52,8 @@ rgp::RendererEngine::RendererEngine() {
         throw SDLException("Set render blend mode error");
 
     SDL_Log("Renderer initialized with a 1080p Logical Canvas.");
+
+    initCircleCache();
 }
 
 rgp::RendererEngine::~RendererEngine() {
@@ -65,6 +68,19 @@ rgp::RendererEngine::~RendererEngine() {
         m_window = nullptr;
         SDL_Log("Window unloaded.");
     }
+}
+
+inline void rgp::RendererEngine::initCircleCache() {
+    m_unitCircleCache.resize(CIRCLE_SEGMENTS + 1);
+
+    constexpr float angleStep = 2.0f * std::numbers::pi_v<float> / static_cast<float>(CIRCLE_SEGMENTS);
+    for (int i = 0; i < CIRCLE_SEGMENTS; ++i) {
+        const float angle = static_cast<float>(i) * angleStep;
+        m_unitCircleCache[i] = {.x = std::cos(angle), .y = std::sin(angle)};
+    }
+    m_unitCircleCache[CIRCLE_SEGMENTS] = m_unitCircleCache[0];
+
+    m_circlePointsBuffer.reserve(64);
 }
 
 auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
@@ -95,26 +111,39 @@ void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* te
         throw SDLException("Render texture error");
 }
 
-void rgp::RendererEngine::drawCircleOutline(const Circle& circle, const int segments, const Color color) {
-    assert(segments >= 3 && "Circle must have 3 segments or more.");
-
+void rgp::RendererEngine::drawCircleOutline(const Circle& circle, const Color color) const {
     if (!SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a)) [[unlikely]]
         throw SDLException("Set draw color for circle failed");
 
-    const int totalPoints = segments + 1;
-    m_circlePointsBuffer.resize(totalPoints);
+    static constexpr int CIRCLE_POINTS = CIRCLE_SEGMENTS + 1;
 
-    const float angleStep = 2.0f * static_cast<float>(std::numbers::pi) / static_cast<float>(segments);
+    m_circlePointsBuffer.resize(CIRCLE_POINTS);
 
-    for (int i = 0; i < segments; i++) {
-        const float angle = i * angleStep;
-        m_circlePointsBuffer[i].x = circle.x + cosf(angle) * circle.r;
-        m_circlePointsBuffer[i].y = circle.y + sinf(angle) * circle.r;
+    for (size_t i = 0; i < CIRCLE_POINTS; ++i) {
+        m_circlePointsBuffer[i].x = circle.x + m_unitCircleCache[i].x * circle.r;
+        m_circlePointsBuffer[i].y = circle.y + m_unitCircleCache[i].y * circle.r;
     }
 
-    // Enclose the circle by connecting last point to first point
-    m_circlePointsBuffer[segments] = m_circlePointsBuffer[0];
-
-    if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), totalPoints)) [[unlikely]]
+    if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), CIRCLE_POINTS)) [[unlikely]]
         throw SDLException("Render lines for circle failed");
+}
+
+void rgp::RendererEngine::drawCircleOutlinesBatch(const std::span<const Circle> circles, const Color color) const {
+    if (circles.empty()) return;
+
+    if (!SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a)) [[unlikely]]
+        throw SDLException("Set draw color for circles failed");
+
+    static constexpr size_t POINTS_PER_CIRCLE = CIRCLE_SEGMENTS + 1;
+    m_circlePointsBuffer.resize(POINTS_PER_CIRCLE);
+
+    for (const auto& [x, y, r] : circles) {
+        for (size_t i = 0; i < POINTS_PER_CIRCLE; ++i) {
+            m_circlePointsBuffer[i].x = x + (m_unitCircleCache[i].x * r);
+            m_circlePointsBuffer[i].y = y + (m_unitCircleCache[i].y * r);
+        }
+
+        if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), POINTS_PER_CIRCLE)) [[unlikely]]
+            throw SDLException("Render lines for bulk circles failed");
+    }
 }
