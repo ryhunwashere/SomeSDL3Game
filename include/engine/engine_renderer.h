@@ -28,15 +28,7 @@ namespace rgp {
 
         void drawRect(const ColorF& colorF, const SDL_FRect* dstrect) const;
 
-        void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture) const {
-            drawTexture(destRect, texture, 0.0, OPAQUE_F.a);
-        }
-
-        void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, const double angle) const {
-            drawTexture(destRect, texture, angle, OPAQUE_F.a);
-        }
-
-        void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle, float alpha) const;
+        void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle = 0.0, float alpha = OPAQUE_F.a) const;
 
         template <typename Callback>
         requires std::invocable<Callback>
