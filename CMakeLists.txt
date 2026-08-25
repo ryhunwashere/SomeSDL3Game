@@ -22,6 +22,7 @@ set(SOURCES
         src/entity/entity_player.cpp
         src/entity/entity_text.cpp
         src/entity/entity_button.cpp
+        src/entity/entity_enemy.cpp
 
         src/manager/manager_input.cpp
         src/manager/manager_texture.cpp
@@ -40,7 +41,6 @@ set(SOURCES
         src/asset/asset_track.cpp
 
         src/factory/factory_font.cpp
-        src/entity/entity_enemy.cpp
 )
 
 set(HEADERS
@@ -58,6 +58,7 @@ set(HEADERS
         include/entity/entity_text.h
         include/entity/entity_button.h
         include/entity/entity_bullet.h
+        include/entity/entity_player.h
 
         include/manager/manager_input.h
         include/manager/manager_texture.h
@@ -74,6 +75,7 @@ set(HEADERS
         include/interface/interface_drawable.h
         include/interface/interface_event_handlable.h
         include/interface/interface_updatable.h
+        include/interface/interface_fixed_updatable.h
 
         include/asset/asset_texture.h
         include/asset/asset_font.h
@@ -87,6 +89,7 @@ set(HEADERS
         include/util/util_logger.h
         include/util/util_math.h
         include/util/util_intersect.h
+        include/util/util_storage.h
 
         include/constant/constant.h
 
@@ -102,8 +105,6 @@ set(HEADERS
         include/event/event_scene_change.h
         include/event/event_player_lives_change.h
         include/event/event_pause_state_change.h
-        include/entity/entity_player.h
-        include/interface/interface_fixed_updatable.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
@@ -129,44 +130,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
         $<$<CONFIG:Release>:NDEBUG;_CONSOLE>
 )
 
-if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE
-            /W4                         # Warning level 4
-            /permissive-                # Conformance mode
-
-            # Debug-only flags
-            $<$<CONFIG:Debug>:
-            /MDd                    # MultiThreadedDebug runtime
-            /Oy-                    # Keep frame pointers
-            /GZ                     # No dynamic debug helpers (UseDynamicDebugging=false)
-            /Gw                     # String pooling
-            /EHsc                   # Exception handling (SyncCThrow)
-            /WX                     # Treat warnings as errors
-            /fsanitize=address      # ASAN (EnableASAN=true)
-            >
-
-            # Release-only flags
-            $<$<CONFIG:Release>:
-            /MT                     # MultiThreaded runtime
-            /Gy                     # Function-level linking
-            /Ob2                    # Inline any suitable
-            /Oi                     # Intrinsic functions
-            /Ot                     # Favor speed
-            /Oy                     # Omit frame pointers
-            /arch:AVX2              # AVX2 instruction set
-            /fp:fast                # Fast floating point
-            /EHsc                   # Exception handling (SyncCThrow)
-            /GF                     # String pooling
-            /GL                     # Whole-program optimisation (pairs with /LTCG)
-            >
-    )
-
-    target_link_options(${PROJECT_NAME} PRIVATE
-            $<$<CONFIG:Release>:/LTCG>
-            /MANIFEST                   # Enable manifest
-    )
-endif()
-
 set(ASSET_SOURCE_DIR "${CMAKE_SOURCE_DIR}/asset")
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
@@ -185,18 +148,4 @@ if(WIN32)
             $<TARGET_FILE_DIR:${PROJECT_NAME}>
             COMMENT "Copying SDL3 DLLs"
     )
-endif()
-
-if(MSVC)
-    set(MANIFEST_CONTENT
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
-<assembly xmlns=\"urn:schemas-microsoft-com:asm.v1\" manifestVersion=\"1.0\">
-  <application xmlns=\"urn:schemas-microsoft-com:asm.v3\">
-    <windowsSettings>
-      <heapType xmlns=\"http://schemas.microsoft.com/SMI/2020/WindowsSettings\">segmentHeap</heapType>
-    </windowsSettings>
-  </application>
-</assembly>")
-    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/SDL3Tutorial.manifest" "${MANIFEST_CONTENT}")
-    target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/SDL3Tutorial.manifest")
 endif()
