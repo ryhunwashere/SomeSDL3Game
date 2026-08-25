@@ -127,7 +127,7 @@ void rgp::MainMenuScene::updateButtonColors() {
     }
 }
 
-void rgp::MainMenuScene::draw(float alpha) {
+void rgp::MainMenuScene::draw(const float alpha) {
     const auto interval = m_now * 0.5f;
     const auto red      = 0.5f + 0.5f * SDL_sinf(interval);
     const auto green    = 0.5f + 0.5f * SDL_sinf(interval + SDL_PI_F * 2.0f / 3.0f);

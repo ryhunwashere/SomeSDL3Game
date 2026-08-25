@@ -22,7 +22,7 @@ rgp::LevelOneScene::LevelOneScene(GameContext& ctx) :
 		.h = constant::dimension::VIEWPORT_HEIGHT,
 	},
 	m_music(Track(m_ctx.getAudioManager(), AudioType::LevelOneMusic, false)),
-	m_circle{50.0f, 200.0f, 50.0f},
+	m_circle{.x = 50.0f, .y = 200.0f, .r = 50.0f},
 	m_backgroundImg(m_ctx.getTextureManager().getTexture(TextureType::LevelOneBackground))
 {
 	constexpr float UI_OFFSET_X = 50.0f;
@@ -64,7 +64,7 @@ rgp::LevelOneScene::~LevelOneScene() {
 	SDL_Log("Level 1 scene unloaded.");
 }
 
-void rgp::LevelOneScene::update(const float dt) {
+void rgp::LevelOneScene::update(const float) {
 	const auto& input = m_ctx.getInputManager();
 
 	if (input.isKeyJustPressed(SDL_SCANCODE_SPACE)) {

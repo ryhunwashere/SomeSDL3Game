@@ -61,7 +61,7 @@ auto rgp::SceneManager::updateCurrentScene() const -> bool {
 	if (!m_currentScene) return false;
 
 	while (timeMng.consumeFixedTick())
-		m_currentScene->fixedUpdate(timeMng.FIXED_DELTA_TIME);
+		m_currentScene->fixedUpdate(TimeManager::FIXED_DELTA_TIME);
 
 	m_currentScene->update(timeMng.getDeltaTime());
 

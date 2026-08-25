@@ -32,7 +32,7 @@ namespace rgp {
         [[nodiscard]] auto getPosition()  const -> Vector2F     { return Vector2F{m_x, m_y}; }
         [[nodiscard]] auto getWidth()     const -> float        { return m_width; }
         [[nodiscard]] auto getHeight()    const -> float        { return m_height; }
-        [[nodiscard]] auto getFRect()     const -> SDL_FRect    { return SDL_FRect{m_x, m_y, m_width, m_height}; }
+        [[nodiscard]] auto getFRect()     const -> SDL_FRect    { return SDL_FRect{.x = m_x, .y = m_y, .w = m_width, .h = m_height}; }
 
         [[nodiscard]] auto getCenter()    const -> Vector2F     { return Vector2F{m_x + m_width/2, m_y + m_height/2}; }
 

@@ -44,7 +44,7 @@ rgp::PlayerEntity::PlayerEntity(
 }
 
 void rgp::PlayerEntity::draw(const float alpha) {
-	auto& renderer = m_ctx.getRendererEngine();
+	const auto& renderer = m_ctx.getRendererEngine();
 
 	const float renderX = std::lerp(m_prevX, m_x, alpha);
 	const float renderY = std::lerp(m_prevY, m_y, alpha);

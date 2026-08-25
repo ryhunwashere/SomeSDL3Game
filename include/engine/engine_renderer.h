@@ -22,11 +22,11 @@ namespace rgp {
 
         void drawScreen(const ColorF& colorF) const {
             drawRect(colorF, nullptr);
-        };
+        }
 
         void drawScreen(SDL_Texture* texture) const {
             drawTexture(nullptr, texture, 0.0, OPAQUE_F.a);
-        };
+        }
 
         void drawRect(const ColorF& colorF, const SDL_FRect* dstrect) const;
 

@@ -139,8 +139,8 @@ void rgp::RendererEngine::drawCircleOutlinesBatch(const std::span<const Circle> 
 
     for (const auto& [x, y, r] : circles) {
         for (size_t i = 0; i < POINTS_PER_CIRCLE; ++i) {
-            m_circlePointsBuffer[i].x = x + (m_unitCircleCache[i].x * r);
-            m_circlePointsBuffer[i].y = y + (m_unitCircleCache[i].y * r);
+            m_circlePointsBuffer[i].x = x + m_unitCircleCache[i].x * r;
+            m_circlePointsBuffer[i].y = y + m_unitCircleCache[i].y * r;
         }
 
         if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), POINTS_PER_CIRCLE)) [[unlikely]]
