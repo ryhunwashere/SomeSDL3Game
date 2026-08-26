@@ -88,13 +88,13 @@ auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
     return m_renderer;
 }
 
-void rgp::RendererEngine::drawRect(const ColorF& colorF, const SDL_FRect* dstrect) const {
+void rgp::RendererEngine::drawRect(const ColorF& colorF, const SDL_FRect* destRect) const {
     assert(m_renderer && NULL_RENDERER_ERROR);
 
-    if (!SDL_SetRenderDrawColorFloat(m_renderer, colorF.r, colorF.g, colorF.b, colorF.a))
+    if (!SDL_SetRenderDrawColorFloat(m_renderer, colorF.r, colorF.g, colorF.b, colorF.a)) [[unlikely]]
         throw SDLException("Set render draw color error");
 
-    if (!SDL_RenderFillRect(m_renderer, dstrect))
+    if (!SDL_RenderFillRect(m_renderer, destRect)) [[unlikely]]
         throw SDLException("Render fill rect error");
 }
 
@@ -105,7 +105,8 @@ void rgp::RendererEngine::drawTexture(const SDL_FRect* destRect, SDL_Texture* te
     SDL_GetTextureAlphaModFloat(texture, &currentAlpha);
 
     if (currentAlpha != alpha)
-        SDL_SetTextureAlphaModFloat(texture, alpha);
+        if (!SDL_SetTextureAlphaModFloat(texture, alpha)) [[unlikely]]
+            throw SDLException("Set texture alpha error");
 
     if (!SDL_RenderTextureRotated(m_renderer, texture, nullptr, destRect, angle, nullptr, SDL_FLIP_NONE)) [[unlikely]]
         throw SDLException("Render texture error");

@@ -47,11 +47,11 @@ void rgp::TextEntity::draw([[maybe_unused]] float alpha) {
 }
 
 void rgp::TextEntity::setText(const std::string_view text) const {
-    if (!TTF_SetTextString(m_textPtr, text.data(), text.length()))
+    if (!TTF_SetTextString(m_textPtr, text.data(), text.length())) [[unlikely]]
         throw SDLException("Failed to set text Entity");
 }
 
 void rgp::TextEntity::setColor(const Color& color) const {
-    if (!TTF_SetTextColor(m_textPtr, color.r, color.g, color.b, color.a))
+    if (!TTF_SetTextColor(m_textPtr, color.r, color.g, color.b, color.a)) [[unlikely]]
         throw SDLException("Failed to set text color");
 }

@@ -28,7 +28,7 @@ namespace rgp {
             drawTexture(nullptr, texture, 0.0, OPAQUE_F.a);
         }
 
-        void drawRect(const ColorF& colorF, const SDL_FRect* dstrect) const;
+        void drawRect(const ColorF& colorF, const SDL_FRect* destRect) const;
 
         void drawTexture(const SDL_FRect* destRect, SDL_Texture* texture, double angle = 0.0, float alpha = OPAQUE_F.a) const;
 

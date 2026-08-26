@@ -34,22 +34,22 @@ rgp::Track::~Track() {
 }
 
 void rgp::Track::play() const {
-    if (!MIX_PlayTrack(m_trackPtr, m_trackProps))
+    if (!MIX_PlayTrack(m_trackPtr, m_trackProps)) [[unlikely]]
         throw SDLException("Failed to play track");
 }
 
 void rgp::Track::pause() const {
-    if (!MIX_PauseTrack(m_trackPtr))
+    if (!MIX_PauseTrack(m_trackPtr)) [[unlikely]]
         throw SDLException("Failed to pause track");
 }
 
 void rgp::Track::stop(const Sint64 fadeOutFrames) const {
-    if (!MIX_StopTrack(m_trackPtr, fadeOutFrames))
+    if (!MIX_StopTrack(m_trackPtr, fadeOutFrames)) [[unlikely]]
         throw SDLException("Failed to stop track");
 }
 
 void rgp::Track::resume() const {
-    if (!MIX_ResumeTrack(m_trackPtr))
+    if (!MIX_ResumeTrack(m_trackPtr)) [[unlikely]]
         throw SDLException("Failed to resume track");
 }
 
@@ -64,11 +64,11 @@ auto rgp::Track::isPlaying() const -> bool {
 }
 
 void rgp::Track::setLooping(const bool looping) const {
-    if (!SDL_SetNumberProperty(m_trackProps, MIX_PROP_PLAY_LOOPS_NUMBER, looping ? -1 : 0))
+    if (!SDL_SetNumberProperty(m_trackProps, MIX_PROP_PLAY_LOOPS_NUMBER, looping ? -1 : 0)) [[unlikely]]
         throw SDLException("Props setting for track failed");
 }
 
 void rgp::Track::setGain(const float gain) const {
-    if (!MIX_SetTrackGain(m_trackPtr, std::clamp(gain, 0.0f, 1.0f)))
+    if (!MIX_SetTrackGain(m_trackPtr, std::clamp(gain, 0.0f, 1.0f))) [[unlikely]]
         throw SDLException("Set track gain failed");
 }
