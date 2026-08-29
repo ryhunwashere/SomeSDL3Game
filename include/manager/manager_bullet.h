@@ -38,7 +38,9 @@ namespace rgp {
 
         BulletPool<MAX_PLAYER_BULLET_COUNT> m_playerPool{};
         BulletPool<MAX_ENEMY_BULLET_COUNT> m_enemyPool{};
+#if DEBUG_BUILD
         std::vector<Circle> m_circleColliderBuffer{};
+#endif
         size_t m_activeBullets = 0;
         GameContext& m_ctx;
 

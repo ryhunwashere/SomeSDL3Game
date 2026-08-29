@@ -79,8 +79,9 @@ inline void rgp::RendererEngine::initCircleCache() {
         m_unitCircleCache[i] = {.x = std::cos(angle), .y = std::sin(angle)};
     }
     m_unitCircleCache[CIRCLE_SEGMENTS] = m_unitCircleCache[0];
-
+#if DEBUG_BUILD
     m_circlePointsBuffer.reserve(64);
+#endif
 }
 
 auto rgp::RendererEngine::getRenderer() const -> SDL_Renderer* {
@@ -138,13 +139,15 @@ void rgp::RendererEngine::drawCircleOutlinesBatch(const std::span<const Circle> 
     static constexpr size_t POINTS_PER_CIRCLE = CIRCLE_SEGMENTS + 1;
     m_circlePointsBuffer.resize(POINTS_PER_CIRCLE);
 
-    for (const auto& [x, y, r] : circles) {
+    const size_t circleCount = circles.size();
+    for (size_t c = 0; c < circleCount; ++c) {
+        const auto& [x, y, r] = circles[c];
+
         for (size_t i = 0; i < POINTS_PER_CIRCLE; ++i) {
-            m_circlePointsBuffer[i].x = x + m_unitCircleCache[i].x * r;
-            m_circlePointsBuffer[i].y = y + m_unitCircleCache[i].y * r;
+            m_circlePointsBuffer[i].x = x + (m_unitCircleCache[i].x * r);
+            m_circlePointsBuffer[i].y = y + (m_unitCircleCache[i].y * r);
         }
 
-        if (!SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), POINTS_PER_CIRCLE)) [[unlikely]]
-            throw SDLException("Render lines for bulk circles failed");
+        SDL_RenderLines(m_renderer, m_circlePointsBuffer.data(), static_cast<int>(POINTS_PER_CIRCLE));
     }
 }

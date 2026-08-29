@@ -5,7 +5,7 @@
 #include <SDL3/SDL_main.h>
 #include "game.h"
 
-#ifdef NDEBUG
+#ifdef DEBUG_BUILD
     #include "util/util_logger.h"
 #endif
 
@@ -57,7 +57,7 @@ void SDL_AppQuit(void* appstate, const SDL_AppResult result) {
     SDL_Quit();
 
     if (result != SDL_APP_SUCCESS) {
-#ifdef NDEBUG
+#ifdef DEBUG_BUILD
         rgp::Util::logMessage(SDL_GetError());
 #else
         SDL_Log("%s", SDL_GetError());
